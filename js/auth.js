@@ -33,13 +33,9 @@ async function registerUser(userData) {
 // ── Login ─────────────────────────────────────────
 async function loginUser(email, password) {
   try {
-    // Clear old data first
     localStorage.clear();
-    
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
     if (error) return { success: false, message: error.message };
-    
-    // Force cache the new session immediately after login
     await cacheSession();
     return { success: true, user: data.user, session: data.session };
   } catch (e) {
@@ -49,12 +45,11 @@ async function loginUser(email, password) {
 
 // ── Get Session ───────────────────────────────────
 async function getSessionAsync() {
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { session } } = await sb.auth.getSession();
   return session;
 }
 
 function getSession() {
-  // Synchronous check from cached data
   const stored = localStorage.getItem('pgp_cached_session');
   if (!stored) return null;
   try {
@@ -67,13 +62,13 @@ function getSession() {
 // ── Cache session for sync access ─────────────────
 async function cacheSession() {
   try {
-    const { data: { session }, error: sessionErr } = await supabase.auth.getSession();
+    const { data: { session }, error: sessionErr } = await sb.auth.getSession();
     if (sessionErr || !session) {
       localStorage.removeItem('pgp_cached_session');
       return null;
     }
 
-    const { data: profile, error: profErr } = await supabase
+    const { data: profile, error: profErr } = await sb
       .from('profiles')
       .select('*')
       .eq('id', session.user.id)
@@ -90,8 +85,8 @@ async function cacheSession() {
     localStorage.setItem('pgp_cached_session', JSON.stringify(cached));
     return cached;
   } catch (err) {
-    console.warn("Auth lock or network issue:", err.message);
-    return getSession(); // Return existing cache if fails
+    console.warn("Auth lock issue:", err.message);
+    return getSession();
   }
 }
 
@@ -99,7 +94,7 @@ async function cacheSession() {
 async function getCurrentProfile() {
   const session = await getSessionAsync();
   if (!session) return null;
-  const { data } = await supabase
+  const { data } = await sb
     .from('profiles')
     .select('*')
     .eq('id', session.user.id)
@@ -111,7 +106,7 @@ async function getCurrentProfile() {
 async function updateUserProfile(updates) {
   const session = await getSessionAsync();
   if (!session) return { success: false };
-  const { error } = await supabase
+  const { error } = await sb
     .from('profiles')
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('id', session.user.id);
@@ -123,11 +118,11 @@ async function updateUserProfile(updates) {
 // ── Logout ────────────────────────────────────────
 async function logout(redirect = true) {
   try {
-    await supabase.auth.signOut();
+    await sb.auth.signOut();
   } catch (e) {
-    console.warn("SignOut error (likely lock issue), forcing local clear.");
+    console.warn("SignOut error, forcing local clear.");
   }
-  localStorage.clear(); // Clear everything to be safe
+  localStorage.clear();
   if (redirect) window.location.href = 'login.html';
 }
 
@@ -157,10 +152,8 @@ function populateUserUI(session) {
 }
 
 // ── Listen to auth changes ────────────────────────
-supabase.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_IN' && session) {
-    // We don't auto-cache here to avoid lock-fighting across tabs
-  } else if (event === 'SIGNED_OUT') {
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_OUT') {
     localStorage.clear();
   }
 });

@@ -11,7 +11,7 @@ async function savePrompt(promptData) {
       return null;
     }
 
-    const { data, error } = await supabase.from('prompts').insert({
+    const { data, error } = await sb.from('prompts').insert({
       user_id: session.userId,
       title: promptData.title || promptData.formData?.businessName || 'Tanpa Tajuk',
       business_type: promptData.businessType,
@@ -29,17 +29,16 @@ async function savePrompt(promptData) {
     return data;
   } catch (err) {
     console.error('savePrompt exception:', err);
-    showToast('Ralat teknikal semasa menyimpan. Sila cuba lagi atau log keluar & masuk semula.', 'error');
+    showToast('Ralat teknikal semasa menyimpan.', 'error');
     return null;
   }
 }
 
-// ── Get all prompts for current user ─────────────
 async function getUserPrompts() {
   const session = getSession();
   if (!session) return [];
 
-  const { data, error } = await supabase
+  const { data, error } = await sb
     .from('prompts')
     .select('*')
     .eq('user_id', session.userId)
@@ -49,9 +48,8 @@ async function getUserPrompts() {
   return data || [];
 }
 
-// ── Get single prompt ─────────────────────────────
 async function getPromptById(id) {
-  const { data, error } = await supabase
+  const { data, error } = await sb
     .from('prompts')
     .select('*')
     .eq('id', id)
@@ -60,14 +58,12 @@ async function getPromptById(id) {
   return data;
 }
 
-// ── Update prompt ─────────────────────────────────
 async function updatePrompt(promptId, updates) {
-  const { data, error } = await supabase
+  const { data, error } = await sb
     .from('prompts')
     .update({
       ...updates,
-      updated_at: new Date().toISOString(),
-      version: (updates.version || 1) + 1
+      updated_at: new Date().toISOString()
     })
     .eq('id', promptId)
     .select()
@@ -77,22 +73,20 @@ async function updatePrompt(promptId, updates) {
   return { success: true, prompt: data };
 }
 
-// ── Delete prompt ─────────────────────────────────
 async function deletePrompt(promptId) {
-  const { error } = await supabase
+  const { error } = await sb
     .from('prompts')
     .delete()
     .eq('id', promptId);
   return { success: !error };
 }
 
-// ── Toggle favourite ──────────────────────────────
 async function toggleFavourite(promptId) {
   const prompt = await getPromptById(promptId);
   if (!prompt) return false;
 
   const newVal = !prompt.is_favourite;
-  await supabase
+  await sb
     .from('prompts')
     .update({ is_favourite: newVal, updated_at: new Date().toISOString() })
     .eq('id', promptId);

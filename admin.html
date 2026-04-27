@@ -196,9 +196,9 @@
   }
 
   async function loadStats() {
-    const { count: userCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
-    const { count: promptCount } = await supabase.from('prompts').select('*', { count: 'exact', head: true });
-    const { data: activeSubs } = await supabase.from('subscriptions').select('amount').eq('status', 'active');
+    const { count: userCount } = await sb.from('profiles').select('*', { count: 'exact', head: true });
+    const { count: promptCount } = await sb.from('prompts').select('*', { count: 'exact', head: true });
+    const { data: activeSubs } = await sb.from('subscriptions').select('amount').eq('status', 'active');
     
     document.getElementById('statTotalUsers').textContent = userCount || 0;
     document.getElementById('statTotalPrompts').textContent = promptCount || 0;
@@ -209,7 +209,7 @@
   }
 
   async function loadRecentUsers() {
-    const { data } = await supabase.from('profiles').select('*').order('created_at', { ascending: false }).limit(5);
+    const { data } = await sb.from('profiles').select('*').order('created_at', { ascending: false }).limit(5);
     const tbody = document.getElementById('recentUsersTable');
     if (!data || data.length === 0) {
       tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Tiada pengguna terbaru</td></tr>';
@@ -240,7 +240,7 @@
   }
 
   async function loadAllUsers(query = '') {
-    let q = supabase.from('profiles').select('*').order('created_at', { ascending: false });
+    let q = sb.from('profiles').select('*').order('created_at', { ascending: false });
     if (query) q = q.or(`name.ilike.%${query}%,email.ilike.%${query}%`);
     
     const { data } = await q.limit(50);
@@ -268,13 +268,13 @@
   }
 
   async function updateUserPlan(userId, plan) {
-    const { error } = await supabase.from('profiles').update({ plan }).eq('id', userId);
+    const { error } = await sb.from('profiles').update({ plan }).eq('id', userId);
     if (error) showToast(error.message, "error");
     else showToast("Pelan pengguna dikemaskini", "success");
   }
 
   async function toggleUserAdmin(userId, isAdmin) {
-    const { error } = await supabase.from('profiles').update({ is_admin: isAdmin }).eq('id', userId);
+    const { error } = await sb.from('profiles').update({ is_admin: isAdmin }).eq('id', userId);
     if (error) showToast(error.message, "error");
     else {
       showToast("Status admin dikemaskini", "success");
@@ -290,7 +290,7 @@
   }
 
   async function loadAllSubs() {
-    const { data } = await supabase.from('subscriptions').select('*').order('created_at', { ascending: false });
+    const { data } = await sb.from('subscriptions').select('*').order('created_at', { ascending: false });
     const tbody = document.getElementById('allSubsTable');
     tbody.innerHTML = (data || []).map(s => `
       <tr>
@@ -304,7 +304,7 @@
   }
 
   async function loadAllPromos() {
-    const { data } = await supabase.from('promo_codes').select('*').order('created_at', { ascending: false });
+    const { data } = await sb.from('promo_codes').select('*').order('created_at', { ascending: false });
     const tbody = document.getElementById('allPromosTable');
     tbody.innerHTML = (data || []).map(p => `
       <tr>
@@ -328,7 +328,7 @@
     
     if(!code || !value) { showToast("Sila isi kod dan nilai", "error"); return; }
     
-    const { error } = await supabase.from('promo_codes').insert({ code, type, value: parseFloat(value) });
+    const { error } = await sb.from('promo_codes').insert({ code, type, value: parseFloat(value) });
     if (error) showToast(error.message, "error");
     else {
       showToast("Kod promo dicipta!", "success");
@@ -338,12 +338,12 @@
   }
 
   async function togglePromo(id, active) {
-    await supabase.from('promo_codes').update({ active }).eq('id', id);
+    await sb.from('promo_codes').update({ active }).eq('id', id);
     loadAllPromos();
   }
 
   async function loadAllWithdrawals() {
-    const { data } = await supabase.from('withdrawals').select('*').order('requested_at', { ascending: false });
+    const { data } = await sb.from('withdrawals').select('*').order('requested_at', { ascending: false });
     const tbody = document.getElementById('allWithdrawalsTable');
     tbody.innerHTML = (data || []).map(w => `
       <tr>
@@ -360,7 +360,7 @@
 
   async function approveWithdrawal(id) {
     if (!confirm("Sahkan pengeluaran ini telah dibayar?")) return;
-    const { error } = await supabase.from('withdrawals').update({ status: 'approved', approved_at: new Date().toISOString() }).eq('id', id);
+    const { error } = await sb.from('withdrawals').update({ status: 'approved', approved_at: new Date().toISOString() }).eq('id', id);
     if (error) showToast(error.message, "error");
     else {
       showToast("Withdrawal disahkan!", "success");
