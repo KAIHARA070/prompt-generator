@@ -5,7 +5,7 @@
 // ── Register ──────────────────────────────────────
 async function registerUser(userData) {
   try {
-    const { data, error } = await supabase.auth.signUp({
+    const { data, error } = await sb.auth.signUp({
       email: userData.email,
       password: userData.password,
       options: {
@@ -17,7 +17,7 @@ async function registerUser(userData) {
 
     // Update profile with extra info
     if (data.user) {
-      await supabase.from('profiles').update({
+      await sb.from('profiles').update({
         name: userData.name,
         business_type: userData.businessType,
         phone: userData.phone || null
@@ -149,6 +149,12 @@ function populateUserUI(session) {
   document.querySelectorAll('[data-user-email]').forEach(el => el.textContent = session.email);
   document.querySelectorAll('[data-user-initials]').forEach(el => el.textContent = session.initials);
   document.querySelectorAll('[data-user-plan]').forEach(el => el.textContent = session.plan === 'pro' ? '⭐ Pro' : session.plan === 'starter' ? '⚡ Starter' : session.plan === 'agency' ? '🏢 Agency' : 'Free');
+
+  // Admin visibility
+  document.querySelectorAll('[data-admin-only]').forEach(el => {
+    if (!session.isAdmin) el.style.display = 'none';
+    else el.style.display = '';
+  });
 }
 
 // ── Listen to auth changes ────────────────────────
