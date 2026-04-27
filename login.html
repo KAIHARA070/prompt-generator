@@ -181,6 +181,10 @@
     <button type="submit" class="btn-auth" id="loginBtn">
       <i class="fa fa-right-to-bracket"></i> Log Masuk
     </button>
+    <div class="divider">Atau</div>
+    <button type="button" class="btn-auth" style="background:#fff; color:#333; border:1px solid #ddd;" onclick="loginWithGoogle()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" style="margin-right:8px"/> Log Masuk dengan Google
+    </button>
     <div class="auth-switch">Belum ada akaun? <a href="#" onclick="switchTab('register')">Daftar sekarang</a></div>
   </form>
 
@@ -232,6 +236,10 @@
     </div>
     <button type="submit" class="btn-auth" id="registerBtn">
       <i class="fa fa-user-plus"></i> Daftar Sekarang
+    </button>
+    <div class="divider">Atau</div>
+    <button type="button" class="btn-auth" style="background:#fff; color:#333; border:1px solid #ddd;" onclick="loginWithGoogle()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" style="margin-right:8px"/> Daftar dengan Google
     </button>
     <div class="auth-switch">Sudah ada akaun? <a href="#" onclick="switchTab('login')">Log masuk</a></div>
   </form>

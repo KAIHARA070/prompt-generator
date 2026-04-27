@@ -43,6 +43,22 @@ async function loginUser(email, password) {
   }
 }
 
+// ── Google Login ──────────────────────────────────
+async function loginWithGoogle() {
+  try {
+    const { error } = await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + '/dashboard.html'
+      }
+    });
+    if (error) throw error;
+  } catch (e) {
+    console.error("Google login error:", e.message);
+    showToast(e.message, 'error');
+  }
+}
+
 // ── Get Session ───────────────────────────────────
 async function getSessionAsync() {
   const { data: { session } } = await sb.auth.getSession();
@@ -80,7 +96,8 @@ async function cacheSession() {
       email: session.user.email,
       plan: profile?.plan || 'free',
       isAdmin: profile?.is_admin || false,
-      initials: (profile?.name || 'U').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2)
+      initials: (profile?.name || session.user.user_metadata?.full_name || session.user.user_metadata?.name || 'U').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2),
+      avatar_url: profile?.avatar_url || session.user.user_metadata?.avatar_url || null
     };
     localStorage.setItem('pgp_cached_session', JSON.stringify(cached));
     return cached;
@@ -145,10 +162,24 @@ function redirectIfLoggedIn() {
 // ── Populate user UI ──────────────────────────────
 function populateUserUI(session) {
   if (!session) return;
+  
+  // Update text content
   document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = session.name);
   document.querySelectorAll('[data-user-email]').forEach(el => el.textContent = session.email);
   document.querySelectorAll('[data-user-initials]').forEach(el => el.textContent = session.initials);
-  document.querySelectorAll('[data-user-plan]').forEach(el => el.textContent = session.plan === 'pro' ? '⭐ Pro' : session.plan === 'starter' ? '⚡ Starter' : session.plan === 'agency' ? '🏢 Agency' : 'Free');
+  document.querySelectorAll('[data-user-plan]').forEach(el => {
+    const plan = session.plan?.toLowerCase();
+    el.textContent = plan === 'pro' ? '⭐ Pro' : plan === 'starter' ? '⚡ Starter' : plan === 'agency' ? '🏢 Agency' : 'Free';
+  });
+
+  // Handle avatars (from Google)
+  if (session.avatar_url) {
+    document.querySelectorAll('.user-avatar').forEach(el => {
+      el.style.backgroundImage = `url(${session.avatar_url})`;
+      el.style.backgroundSize = 'cover';
+      el.textContent = '';
+    });
+  }
 
   // Admin visibility
   document.querySelectorAll('[data-admin-only]').forEach(el => {

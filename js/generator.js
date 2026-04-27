@@ -52,7 +52,11 @@ const BUSINESS_TEMPLATES = {
   logistics  : { label:'🚚 Logistik / Penghantaran',    icon:'🚚', category:'Logistik',tone:'Pantas & Dipercayai', sections:['Perkhidmatan','Zon Penghantaran','Harga','Track'] },
 
   // ── E-COMMERCE ───────────────────────────────
-  ecommerce  : { label:'🛒 E-Commerce Umum',            icon:'🛒', category:'E-Commerce',tone:'Moden & Mesra',      sections:['Produk','Kategori','Cara Beli','FAQ'] }
+  ecommerce  : { label:'🛒 E-Commerce Umum',            icon:'🛒', category:'E-Commerce',tone:'Moden & Mesra',      sections:['Produk','Kategori','Cara Beli','FAQ'] },
+
+  // ── DIGITAL CARDS ─────────────────────────────
+  weddingCard: { label:'💍 Kad Kawin Digital',          icon:'💍', category:'Kad Digital',tone:'Romantik & Elegan', sections:['Mempelai','Aturcara','Peta Lokasi','RSVP','Galeri Gambar','Ucapan'] },
+  businessCard:{ label:'📇 Kad Bisnes Digital',         icon:'📇', category:'Kad Digital',tone:'Profesional & Moden',sections:['Profil','Hubungi','Social Media','vCard','Portfolio'] }
 };
 
 // ───────────────────────────────────────────────────
@@ -60,25 +64,35 @@ const BUSINESS_TEMPLATES = {
 // ───────────────────────────────────────────────────
 function generatePrompt(formData, businessType) {
   const tpl = BUSINESS_TEMPLATES[businessType] || {};
+  const lang = formData.language || 'ms'; // Default to Malay
+
+  const langMap = {
+    ms: { header: 'Cipta landing page HTML yang lengkap', info: 'MAKLUMAT PERNIAGAAN', design: 'REKA BENTUK & GAYA', features: 'CIRI KHUSUS', tech: 'KEPERLUAN TEKNIKAL', output: 'FORMAT OUTPUT' },
+    en: { header: 'Create a complete, responsive HTML landing page', info: 'BUSINESS INFORMATION', design: 'DESIGN & STYLE', features: 'SPECIFIC FEATURES', tech: 'TECHNICAL REQUIREMENTS', output: 'OUTPUT FORMAT' },
+    id: { header: 'Buat landing page HTML yang lengkap dan responsif', info: 'INFORMASI BISNIS', design: 'DESAIN & GAYA', features: 'FITUR KHUSUS', tech: 'PERSYARATAN TEKNIS', output: 'FORMAT OUTPUT' }
+  };
+
+  const l = langMap[lang] || langMap.ms;
 
   const parts = [
-    buildHeader(formData, businessType, tpl),
-    buildInfoSection(formData, tpl),
-    buildDesignSection(formData),
-    buildContactSection(formData),
-    buildFeaturesSection(formData, businessType, tpl),
-    buildTechnicalSection(tpl),
-    buildOutputFormat(formData)
+    buildHeader(formData, businessType, tpl, l, lang),
+    buildInfoSection(formData, tpl, l),
+    buildDesignSection(formData, l),
+    buildContactSection(formData, l),
+    buildFeaturesSection(formData, businessType, tpl, l),
+    buildTechnicalSection(tpl, l),
+    buildOutputFormat(formData, l, lang)
   ];
 
   return parts.filter(Boolean).join('\n\n');
 }
 
-function buildHeader(d, type, tpl) {
-  return `Cipta landing page HTML yang lengkap, responsif, dan menarik untuk ${d.businessName || 'perniagaan ini'}.
+function buildHeader(d, type, tpl, l, lang) {
+  return `${l.header} untuk ${d.businessName || 'perniagaan ini'}.
+  
+Bahasa Kandungan: Sila gunakan ${lang === 'ms' ? 'Bahasa Malaysia' : lang === 'en' ? 'English' : 'Bahasa Indonesia'} sepenuhnya untuk semua teks di dalam website.
 
-Ini adalah website ${tpl.label || type} yang memerlukan rekabentuk profesional, kod yang bersih,
-dan pengalaman pengguna yang luar biasa. Hasilkan KOD HTML PENUH yang boleh terus digunakan.`;
+Ini adalah website ${tpl.label || type} yang memerlukan rekabentuk profesional, kod yang bersih, dan pengalaman pengguna yang luar biasa. Hasilkan KOD HTML PENUH yang boleh terus digunakan.`;
 }
 
 function buildInfoSection(d, tpl) {
@@ -163,6 +177,8 @@ function buildFeaturesSection(d, businessType, tpl) {
     logistics  : `- Zon penghantaran & harga\n- Kalkulator kos penghantaran\n- Form tracking\n- Cara penghantaran`,
     gym        : `- Program latihan\n- Pakej keahlian dengan harga\n- Profil jurulatih\n- Kemudahan gim`,
     itService  : `- Senarai perkhidmatan IT\n- Portfolio projek\n- Teknologi yang digunakan\n- Pakej penyelenggaraan`,
+    weddingCard: `- Nama pengantin & latar belakang\n- Countdown timer ke tarikh majlis\n- RSVP form interaktif dengan database (simulasi)\n- Peta Google Maps & butang "Waze/Maps"\n- Galeri gambar carousel\n- Section ucapan (Guestbook)`,
+    businessCard: `- Foto profil & bio ringkas\n- Butang "Simpan Kenalan" (vCard simulation)\n- Social media icons yang besar & jelas\n- Portfolio mini atau link-link penting\n- Form hubungi atau WhatsApp`
   };
 
   const specific = specificMap[businessType] || `- Sertakan bahagian yang sesuai dengan jenis perniagaan ini\n- Pastikan ada section produk/perkhidmatan, galeri, dan hubungi`;

@@ -119,6 +119,14 @@
               <label class="form-label">Lokasi</label>
               <input type="text" class="form-control" id="bizLocation" placeholder="Contoh: Kuala Lumpur"/>
             </div>
+            <div class="form-group">
+              <label class="form-label">Bahasa Website</label>
+              <select class="form-control" id="bizLanguage">
+                <option value="ms">Bahasa Malaysia 🇲🇾</option>
+                <option value="en">English 🇬🇧</option>
+                <option value="id">Bahasa Indonesia 🇮🇩</option>
+              </select>
+            </div>
           </div>
           <div class="form-group">
             <label class="form-label">Penerangan Perniagaan *</label>
@@ -168,6 +176,23 @@
               <div class="tone-option" onclick="selectTone(this,'Ceria & Energetik')">🎉 Ceria & Energetik</div>
               <div class="tone-option" onclick="selectTone(this,'Tenang & Minimalis')">🌿 Tenang & Minimalis</div>
               <div class="tone-option" onclick="selectTone(this,'Berani & Moden')">⚡ Berani & Moden</div>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:20px">
+            <label class="form-label">Gaya Animasi</label>
+            <select class="form-control" id="animationStyle">
+              <option value="fade">Fade In (Lembut)</option>
+              <option value="slide">Slide Up (Dinamik)</option>
+              <option value="zoom">Zoom In (Menonjol)</option>
+              <option value="none">Tiada Animasi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tema Utama</label>
+            <div style="display:flex;gap:12px">
+              <label style="flex:1;cursor:pointer"><input type="radio" name="themeMode" value="light" checked/> ☀️ Light Mode</label>
+              <label style="flex:1;cursor:pointer"><input type="radio" name="themeMode" value="dark"/> 🌙 Dark Mode</label>
+              <label style="flex:1;cursor:pointer"><input type="radio" name="themeMode" value="auto"/> 🌓 Auto</label>
             </div>
           </div>
           <div class="form-group">
@@ -341,6 +366,9 @@ function buildPrompt() {
     tone           : selectedTone || (BUSINESS_TEMPLATES[selectedBizType]?.tone || 'Profesional & Mesra'),
     style          : 'Moden, bersih, dan profesional',
     cta            : document.getElementById('bizCta').value.trim() || 'Hubungi Kami Sekarang',
+    language       : document.getElementById('bizLanguage').value,
+    animationStyle : document.getElementById('animationStyle').value,
+    themeMode      : document.querySelector('input[name="themeMode"]:checked').value,
     extraFeatures  : extras,
     contact: {
       phone    : document.getElementById('contactPhone').value.trim(),

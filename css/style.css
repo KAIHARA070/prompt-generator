@@ -257,7 +257,10 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── MISC ── */
-.divider { height: 1px; background: var(--border); margin: 20px 0; }
+.divider { display: flex; align-items: center; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin: 20px 0; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.divider::before { margin-right: 15px; }
+.divider::after { margin-left: 15px; }
 .text-muted { color: var(--text-muted); }
 .text-secondary { color: var(--text-secondary); }
 .text-success { color: #3fb950; }
