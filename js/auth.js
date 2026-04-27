@@ -33,10 +33,14 @@ async function registerUser(userData) {
 // ── Login ─────────────────────────────────────────
 async function loginUser(email, password) {
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email, password
-    });
+    // Clear old data first
+    localStorage.clear();
+    
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) return { success: false, message: error.message };
+    
+    // Force cache the new session immediately after login
+    await cacheSession();
     return { success: true, user: data.user, session: data.session };
   } catch (e) {
     return { success: false, message: e.message || 'Ralat log masuk.' };
@@ -153,15 +157,10 @@ function populateUserUI(session) {
 }
 
 // ── Listen to auth changes ────────────────────────
-supabase.auth.onAuthStateChange(async (event, session) => {
+supabase.auth.onAuthStateChange((event, session) => {
   if (event === 'SIGNED_IN' && session) {
-    await cacheSession();
+    // We don't auto-cache here to avoid lock-fighting across tabs
   } else if (event === 'SIGNED_OUT') {
-    localStorage.removeItem('pgp_cached_session');
+    localStorage.clear();
   }
 });
-
-// ── Init: cache session on load ───────────────────
-(async function initAuth() {
-  await cacheSession();
-})();
