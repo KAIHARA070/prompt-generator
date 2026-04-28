@@ -4,59 +4,280 @@
 
 const BUSINESS_TEMPLATES = {
   // ── MAKANAN & MINUMAN ──────────────────────────
-  restaurant : { label:'🍜 Restoran / Kedai Makan', icon:'🍜', category:'Makanan', tone:'Kasual & Mesra',       sections:['Menu Pilihan','Galeri Makanan','Reservasi Online','Ulasan Pelanggan','Lokasi & Hubungi'] },
-  cafe       : { label:'☕ Kafe / Kedai Kopi',       icon:'☕', category:'Makanan', tone:'Santai & Trendy',      sections:['Menu Minuman','Ruang Santai','Wifi & Fasiliti','Acara Khas','Galeri'] },
-  bakery     : { label:'🍰 Kedai Kek & Bakeri',      icon:'🍰', category:'Makanan', tone:'Hangat & Manis',       sections:['Katalog Produk','Tempahan Khas','Penghantaran','Testimoni'] },
-  foodtruck  : { label:'🚐 Food Truck',              icon:'🚐', category:'Makanan', tone:'Kasual & Meriah',      sections:['Menu','Lokasi Harian','Cara Pesan','Galeri'] },
+  restaurant : { 
+    label:'🍜 Restoran / Kedai Makan', icon:'🍜', category:'Makanan', tone:'Kasual & Mesra', 
+    sections:['Menu Pilihan','Galeri Makanan','Reservasi Online','Ulasan Pelanggan','Lokasi & Hubungi'],
+    fields: [
+      { id:'cuisine', label:'Jenis Masakan', type:'text', placeholder:'Melayu, Thai, Barat, Fusion...' },
+      { id:'specialty', label:'Menu Signatur (Wajib Cuba)', type:'text', placeholder:'Nasi Lemak Pandan, Shellout...' },
+      { id:'vibe', label:'Suasana Kedai', type:'text', placeholder:'Santai keluarga, candle light, open-air...' }
+    ]
+  },
+  cafe : { 
+    label:'☕ Kafe / Kedai Kopi', icon:'☕', category:'Makanan', tone:'Santai & Trendy',
+    sections:['Menu Minuman','Ruang Santai','Wifi & Fasiliti','Acara Khas','Galeri'],
+    fields: [
+      { id:'coffee_beans', label:'Jenis Kopi/Biji Kopi', type:'text', placeholder:'Arabica, Robusta, Local Brew...' },
+      { id:'pastries', label:'Pilihan Pastri/Kek', type:'text', placeholder:'Croissant, Burnt Cheesecake...' },
+      { id:'working_friendly', label:'Kemudahan Bekerja', type:'text', placeholder:'Ada plug point, wifi laju, aircond...' }
+    ]
+  },
+  bakery : { 
+    label:'🍰 Kedai Kek & Bakeri', icon:'🍰', category:'Makanan', tone:'Hangat & Manis',
+    sections:['Katalog Produk','Tempahan Khas','Penghantaran','Testimoni'],
+    fields: [
+      { id:'cake_types', label:'Kategori Kek', type:'text', placeholder:'Wedding cake, birthday cake, brownies...' },
+      { id:'ingredients', label:'Kelebihan Bahan', type:'text', placeholder:'Pure butter, kurang manis, gluten-free...' }
+    ]
+  },
+  foodtruck : { 
+    label:'🚐 Food Truck', icon:'🚐', category:'Makanan', tone:'Kasual & Meriah',
+    sections:['Menu','Lokasi Harian','Cara Pesan','Galeri'],
+    fields: [
+      { id:'truck_locations', label:'Lokasi Operasi', type:'text', placeholder:'Taman Melawati, Tapak Urban Street Dining...' },
+      { id:'speed_service', label:'Kepantasan Servis', type:'text', placeholder:'Siap dalam 5 minit, grab & go...' }
+    ]
+  },
 
   // ── FESYEN & PAKAIAN ───────────────────────────
-  fashion    : { label:'👗 Butik / Fesyen',          icon:'👗', category:'Fesyen',  tone:'Mewah & Bergaya',      sections:['Koleksi Terbaru','Lookbook','Panduan Saiz','Cara Beli'] },
-  hijab      : { label:'🧕 Butik Hijab & Tudung',    icon:'🧕', category:'Fesyen',  tone:'Elegan & Sopan',       sections:['Koleksi','Tutorial Pakai','Testimoni','Kedai Online'] },
-  kids       : { label:'👶 Pakaian Kanak-kanak',     icon:'👶', category:'Fesyen',  tone:'Ceria & Selamat',      sections:['Koleksi','Panduan Umur','Promosi','Hubungi'] },
+  fashion : { 
+    label:'👗 Butik / Fesyen', icon:'👗', category:'Fesyen', tone:'Mewah & Bergaya',
+    sections:['Koleksi Terbaru','Lookbook','Panduan Saiz','Cara Beli'],
+    fields: [
+      { id:'style_type', label:'Gaya Pakaian', type:'text', placeholder:'Streetwear, Office wear, Casual...' },
+      { id:'material', label:'Jenis Kain/Material', type:'text', placeholder:'Cotton, Silk, Premium Linen...' }
+    ]
+  },
+  hijab : { 
+    label:'🧕 Butik Hijab & Tudung', icon:'🧕', category:'Fesyen', tone:'Elegan & Sopan',
+    sections:['Koleksi','Tutorial Pakai','Testimoni','Kedai Online'],
+    fields: [
+      { id:'hijab_type', label:'Jenis Tudung', type:'text', placeholder:'Bawal, Shawl, Instant, Khimar...' },
+      { id:'collection_name', label:'Nama Koleksi Terbaru', type:'text', placeholder:'Raya 2024, Seri Pagi...' }
+    ]
+  },
+  kids : { 
+    label:'👶 Pakaian Kanak-kanak', icon:'👶', category:'Fesyen', tone:'Ceria & Selamat',
+    sections:['Koleksi','Panduan Umur','Promosi','Hubungi'],
+    fields: [
+      { id:'age_range', label:'Peringkat Umur', type:'text', placeholder:'Newborn - 12 tahun, baby gear...' },
+      { id:'comfort', label:'Kelebihan Keselesaan', type:'text', placeholder:'100% Organic Cotton, tak gatal...' }
+    ]
+  },
 
   // ── KECANTIKAN & KESIHATAN ─────────────────────
-  salon      : { label:'💇 Salon / Barbershop',      icon:'💇', category:'Kecantikan',tone:'Profesional & Trendy',sections:['Perkhidmatan','Harga','Galeri','Tempah Temujanji'] },
-  spa        : { label:'💆 Spa & Wellness',           icon:'💆', category:'Kecantikan',tone:'Tenang & Mewah',     sections:['Rawatan','Pakej','Galeri','Tempahan'] },
-  skincare   : { label:'✨ Produk Skincare',          icon:'✨', category:'Kecantikan',tone:'Bersih & Saintifik', sections:['Produk','Bahan-bahan','Cara Guna','Sebelum & Selepas'] },
-  gym        : { label:'💪 Gym / Fitness',            icon:'💪', category:'Kecantikan',tone:'Energi & Motivasi',  sections:['Program','Jurulatih','Harga Keahlian','Kemudahan'] },
+  salon : { 
+    label:'💇 Salon / Barbershop', icon:'💇', category:'Kecantikan', tone:'Profesional & Trendy',
+    sections:['Perkhidmatan','Harga','Galeri','Tempah Temujanji'],
+    fields: [
+      { id:'services', label:'Servis Utama', type:'text', placeholder:'Hair coloring, treatment, perming...' },
+      { id:'stylist_exp', label:'Pengalaman Stylist', type:'text', placeholder:'10 tahun dalam industri, pakar mewarna...' }
+    ]
+  },
+  spa : { 
+    label:'💆 Spa & Wellness', icon:'💆', category:'Kecantikan', tone:'Tenang & Mewah',
+    sections:['Rawatan','Pakej','Galeri','Tempahan'],
+    fields: [
+      { id:'spa_treatments', label:'Jenis Rawatan', type:'text', placeholder:'Urutan tradisional, facial, body scrub...' },
+      { id:'aromatherapy', label:'Bau/Aroma', type:'text', placeholder:'Lavender, Lemongrass, Sandalwood...' }
+    ]
+  },
+  skincare : { 
+    label:'✨ Produk Skincare', icon:'✨', category:'Kecantikan', tone:'Bersih & Saintifik',
+    sections:['Produk','Bahan-bahan','Cara Guna','Sebelum & Selepas'],
+    fields: [
+      { id:'skin_problem', label:'Masalah Kulit Fokus', type:'text', placeholder:'Jerawat, jeragat, kulit kering...' },
+      { id:'hero_ingredient', label:'Bahan Utama (Hero)', type:'text', placeholder:'Retinol, Vitamin C, Habbatus Sauda...' }
+    ]
+  },
+  gym : { 
+    label:'💪 Gym / Fitness', icon:'💪', category:'Kecantikan', tone:'Energi & Motivasi',
+    sections:['Program','Jurulatih','Harga Keahlian','Kemudahan'],
+    fields: [
+      { id:'gym_type', label:'Jenis Gym', type:'text', placeholder:'Ladies only, 24-hours, CrossFit box...' },
+      { id:'membership_perks', label:'Kelebihan Ahli', type:'text', placeholder:'Free personal trainer trial, shower, sauna...' }
+    ]
+  },
 
   // ── PENDIDIKAN ────────────────────────────────
-  tuition    : { label:'📚 Pusat Tuisyen',            icon:'📚', category:'Pendidikan',tone:'Profesional & Mesra',sections:['Program','Guru Kami','Jadual','Daftar'] },
-  onlineCourse:{ label:'🎓 Kursus Online',            icon:'🎓', category:'Pendidikan',tone:'Motivasi & Profesional',sections:['Kursus','Kurikulum','Pengajar','Harga & Daftar'] },
-  kindergarten:{ label:'🏫 Tadika / Prasekolah',      icon:'🏫', category:'Pendidikan',tone:'Ceria & Mesra',      sections:['Program','Aktiviti','Kemudahan','Pendaftaran'] },
+  tuition : { 
+    label:'📚 Pusat Tuisyen', icon:'📚', category:'Pendidikan', tone:'Profesional & Mesra',
+    sections:['Program','Guru Kami','Jadual','Daftar'],
+    fields: [
+      { id:'subjects', label:'Subjek Ditawarkan', type:'text', placeholder:'Matematik, Sains, BM, Sejarah...' },
+      { id:'levels', label:'Tahap Pendidikan', type:'text', placeholder:'UPSR, PT3, SPM, IGCSE...' }
+    ]
+  },
+  onlineCourse : { 
+    label:'🎓 Kursus Online', icon:'🎓', category:'Pendidikan', tone:'Motivasi & Profesional',
+    sections:['Kursus','Kurikulum','Pengajar','Harga & Daftar'],
+    fields: [
+      { id:'learning_platform', label:'Platform Pembelajaran', type:'text', placeholder:'Zoom, Website sendiri, Mobile App...' },
+      { id:'course_benefit', label:'Apa Pelajar Dapat?', type:'text', placeholder:'Sijil, Lifetime access, Support group...' }
+    ]
+  },
+  kindergarten : { 
+    label:'🏫 Tadika / Prasekolah', icon:'🏫', category:'Pendidikan', tone:'Ceria & Mesra',
+    sections:['Program','Aktiviti','Kemudahan','Pendaftaran'],
+    fields: [
+      { id:'curriculum', label:'Silibus/Kurikulum', type:'text', placeholder:'Montessori, Islamic Integrated, KSPK...' },
+      { id:'operating_hours', label:'Waktu Operasi', type:'text', placeholder:'7:30 AM - 6:00 PM...' }
+    ]
+  },
 
   // ── PERKHIDMATAN PROFESIONAL ──────────────────
-  contractor : { label:'🏗️ Kontraktor / Pembinaan',  icon:'🏗️', category:'Profesional',tone:'Dipercayai & Kuat', sections:['Perkhidmatan','Portfolio','Testimoni','Sebutharga'] },
-  accounting : { label:'📊 Perakaunan / Cukai',       icon:'📊', category:'Profesional',tone:'Profesional',        sections:['Perkhidmatan','Pakej','FAQ','Hubungi'] },
-  legal      : { label:'⚖️ Firma Guaman',             icon:'⚖️', category:'Profesional',tone:'Authoriti & Formal', sections:['Bidang Amalan','Peguam','Kes Berjaya','Konsultasi'] },
-  insurance  : { label:'🛡️ Insurans / Takaful',       icon:'🛡️', category:'Profesional',tone:'Amanah & Selamat',   sections:['Produk','Kalkulator','Ejen','Hubungi'] },
+  contractor : { 
+    label:'🏗️ Kontraktor / Pembinaan', icon:'🏗️', category:'Profesional', tone:'Dipercayai & Kuat',
+    sections:['Perkhidmatan','Portfolio','Testimoni','Sebutharga'],
+    fields: [
+      { id:'construction_type', label:'Jenis Kerja', type:'text', placeholder:'Renovasi rumah, bina baru, wiring...' },
+      { id:'cidb', label:'Lesen/Gred CIDB', type:'text', placeholder:'Gred G3, Berdaftar dengan CIDB...' }
+    ]
+  },
+  accounting : { 
+    label:'📊 Perakaunan / Cukai', icon:'📊', category:'Profesional', tone:'Profesional',
+    sections:['Perkhidmatan','Pakej','FAQ','Hubungi'],
+    fields: [
+      { id:'acc_services', label:'Jenis Servis', type:'text', placeholder:'Audit, Tax filing, Bookkeeping...' },
+      { id:'client_focus', label:'Fokus Klien', type:'text', placeholder:'SME, Enterprise, Self-employed...' }
+    ]
+  },
+  legal : { 
+    label:'⚖️ Firma Guaman', icon:'⚖️', category:'Profesional', tone:'Authoriti & Formal',
+    sections:['Bidang Amalan','Peguam','Kes Berjaya','Konsultasi'],
+    fields: [
+      { id:'practice_area', label:'Bidang Utama', type:'text', placeholder:'Hartanah, Syariah, Jenayah, Korporat...' },
+      { id:'legal_team', label:'Ketua Peguam', type:'text', placeholder:'Dato Ariff & Co, 20 tahun pengalaman...' }
+    ]
+  },
+  insurance : { 
+    label:'🛡️ Insurans / Takaful', icon:'🛡️', category:'Profesional', tone:'Amanah & Selamat',
+    sections:['Produk','Kalkulator','Ejen','Hubungi'],
+    fields: [
+      { id:'agency_name', label:'Syarikat Utama', type:'text', placeholder:'Prudential, AIA, Great Eastern, Etiqa...' },
+      { id:'plan_focus', label:'Fokus Pelan', type:'text', placeholder:'Kad Medikal, Hibah, Pendidikan...' }
+    ]
+  },
 
   // ── HARTANAH ──────────────────────────────────
-  property   : { label:'🏠 Ejen Hartanah',            icon:'🏠', category:'Hartanah', tone:'Profesional & Amanah',sections:['Senarai Properti','Ejen','Kalkulator','Hubungi'] },
-  propDev    : { label:'🏢 Pemaju Hartanah',           icon:'🏢', category:'Hartanah', tone:'Mewah & Eksklusif',   sections:['Projek','Konsep','Kemudahan','Daftar Minat'] },
+  property : { 
+    label:'🏠 Ejen Hartanah', icon:'🏠', category:'Hartanah', tone:'Profesional & Amanah',
+    sections:['Senarai Properti','Ejen','Kalkulator','Hubungi'],
+    fields: [
+      { id:'property_type', label:'Jenis Hartanah', type:'text', placeholder:'Condo, Terrace, Land, Commercial...' },
+      { id:'location_focus', label:'Kawasan Fokus', type:'text', placeholder:'KLCC, Shah Alam, Cyberjaya...' },
+      { id:'price_range', label:'Julat Harga', type:'text', placeholder:'RM300k - RM1M...' }
+    ]
+  },
+  propDev : { 
+    label:'🏢 Pemaju Hartanah', icon:'🏢', category:'Hartanah', tone:'Mewah & Eksklusif',
+    sections:['Projek','Konsep','Kemudahan','Daftar Minat'],
+    fields: [
+      { id:'project_status', label:'Status Projek', type:'text', placeholder:'Pre-launch, Under-construction, Ready to move...' },
+      { id:'unique_selling', label:'Kelebihan Projek', type:'text', placeholder:'Freehold, Smart home system, Private lift...' }
+    ]
+  },
 
   // ── AUTOMOTIF ─────────────────────────────────
-  workshop   : { label:'🔧 Bengkel / Workshop',        icon:'🔧', category:'Automotif',tone:'Dipercayai & Teknikal',sections:['Perkhidmatan','Harga','Testimoni','Lokasi'] },
-  carRental  : { label:'🚗 Sewa Kereta',               icon:'🚗', category:'Automotif',tone:'Mudah & Fleksibel',    sections:['Armada','Pakej','Cara Tempah','Terma'] },
+  workshop : { 
+    label:'🔧 Bengkel / Workshop', icon:'🔧', category:'Automotif', tone:'Dipercayai & Teknikal',
+    sections:['Perkhidmatan','Harga','Testimoni','Lokasi'],
+    fields: [
+      { id:'car_brands', label:'Jenama Kereta', type:'text', placeholder:'Perodua, Proton, European, Luxury...' },
+      { id:'workshop_specialty', label:'Pakar Dalam', type:'text', placeholder:'Overhaul, Gearbox, Aircond, Painting...' }
+    ]
+  },
+  carRental : { 
+    label:'🚗 Sewa Kereta', icon:'🚗', category:'Automotif', tone:'Mudah & Fleksibel',
+    sections:['Armada','Pakej','Cara Tempah','Terma'],
+    fields: [
+      { id:'fleet_types', label:'Jenis Kereta', type:'text', placeholder:'Axia, Saga, Vellfire, Luxury sports...' },
+      { id:'delivery_service', label:'Penghantaran', type:'text', placeholder:'Airport delivery, Doorstep, Self-pickup...' }
+    ]
+  },
 
   // ── TEKNOLOGI ────────────────────────────────
-  itService  : { label:'💻 Perkhidmatan IT',           icon:'💻', category:'Teknologi',tone:'Moden & Inovatif',    sections:['Perkhidmatan','Teknologi','Portfolio','Hubungi'] },
-  webDesign  : { label:'🎨 Web Design / Dev',          icon:'🎨', category:'Teknologi',tone:'Kreatif & Profesional',sections:['Portfolio','Perkhidmatan','Proses','Harga'] },
-  app        : { label:'📱 Pembangunan Aplikasi',       icon:'📱', category:'Teknologi',tone:'Inovatif & Moden',    sections:['Perkhidmatan','Portfolio','Proses','Pakej'] },
+  itService : { 
+    label:'💻 Perkhidmatan IT', icon:'💻', category:'Teknologi', tone:'Moden & Inovatif',
+    sections:['Perkhidmatan','Teknologi','Portfolio','Hubungi'],
+    fields: [
+      { id:'it_focus', label:'Fokus Servis', type:'text', placeholder:'Cybersecurity, Cloud migration, Hardware repair...' },
+      { id:'response_time', label:'Masa Respons', type:'text', placeholder:'Support 24/7, Dalam masa 2 jam...' }
+    ]
+  },
+  webDesign : { 
+    label:'🎨 Web Design / Dev', icon:'🎨', category:'Teknologi', tone:'Kreatif & Profesional',
+    sections:['Portfolio','Perkhidmatan','Proses','Harga'],
+    fields: [
+      { id:'tech_stack', label:'Teknologi Digunakan', type:'text', placeholder:'React, WordPress, Shopify, Next.js...' },
+      { id:'industries', label:'Industri Fokus', type:'text', placeholder:'E-commerce, Corporate, Startup...' }
+    ]
+  },
+  app : { 
+    label:'📱 Pembangunan Aplikasi', icon:'📱', category:'Teknologi', tone:'Inovatif & Moden',
+    sections:['Perkhidmatan','Portfolio','Proses','Pakej'],
+    fields: [
+      { id:'app_platform', label:'Platform App', type:'text', placeholder:'iOS & Android (Hybrid), Native, Web App...' },
+      { id:'dev_process', label:'Proses Dev', type:'text', placeholder:'Agile development, 3-6 bulan jangka masa...' }
+    ]
+  },
 
   // ── ACARA & HIBURAN ───────────────────────────
-  event      : { label:'🎉 Penganjur Acara',            icon:'🎉', category:'Acara',   tone:'Meriah & Kreatif',    sections:['Perkhidmatan','Portfolio','Pakej','Tempah'] },
-  photography: { label:'📷 Fotografi / Videografi',     icon:'📷', category:'Acara',   tone:'Artistik & Profesional',sections:['Portfolio','Pakej','Cara Tempah','Hubungi'] },
+  event : { 
+    label:'🎉 Penganjur Acara', icon:'🎉', category:'Acara', tone:'Meriah & Kreatif',
+    sections:['Perkhidmatan','Portfolio','Pakej','Tempah'],
+    fields: [
+      { id:'event_type', label:'Jenis Acara', type:'text', placeholder:'Wedding, Corporate dinner, Birthday party...' },
+      { id:'vendor_network', label:'Rangkaian Vendor', type:'text', placeholder:'Catering, Sound & light, Emcee sedia ada...' }
+    ]
+  },
+  photography : { 
+    label:'📷 Fotografi / Videografi', icon:'📷', category:'Acara', tone:'Artistik & Profesional',
+    sections:['Portfolio','Pakej','Cara Tempah','Hubungi'],
+    fields: [
+      { id:'shoot_style', label:'Gaya Rakaman', type:'text', placeholder:'Cinematic, Candid, High-fashion, Vintage...' },
+      { id:'delivery_time', label:'Tempoh Siap', type:'text', placeholder:'Edit dalam 2 minggu, Raw files dlm 24 jam...' }
+    ]
+  },
 
   // ── LOGISTIK ─────────────────────────────────
-  logistics  : { label:'🚚 Logistik / Penghantaran',    icon:'🚚', category:'Logistik',tone:'Pantas & Dipercayai', sections:['Perkhidmatan','Zon Penghantaran','Harga','Track'] },
+  logistics : { 
+    label:'🚚 Logistik / Penghantaran', icon:'🚚', category:'Logistik', tone:'Pantas & Dipercayai',
+    sections:['Perkhidmatan','Zon Penghantaran','Harga','Track'],
+    fields: [
+      { id:'vehicle_types', label:'Jenis Kenderaan', type:'text', placeholder:'Van, 3-ton lorry, Cold chain truck...' },
+      { id:'safety_guarantee', label:'Jaminan Keselamatan', type:'text', placeholder:'Insurans barang, Real-time tracking...' }
+    ]
+  },
 
   // ── E-COMMERCE ───────────────────────────────
-  ecommerce  : { label:'🛒 E-Commerce Umum',            icon:'🛒', category:'E-Commerce',tone:'Moden & Mesra',      sections:['Produk','Kategori','Cara Beli','FAQ'] },
+  ecommerce : { 
+    label:'🛒 E-Commerce Umum', icon:'🛒', category:'E-Commerce', tone:'Moden & Mesra',
+    sections:['Produk','Kategori','Cara Beli','FAQ'],
+    fields: [
+      { id:'product_niche', label:'Niche Produk', type:'text', placeholder:'Gadget, Home decor, Pet supplies...' },
+      { id:'payment_gateways', label:'Sistem Bayaran', type:'text', placeholder:'FPX, Credit Card, ShopeePay, GrabPay...' }
+    ]
+  },
 
   // ── DIGITAL CARDS ─────────────────────────────
-  weddingCard: { label:'💍 Kad Kawin Digital',          icon:'💍', category:'Kad Digital',tone:'Romantik & Elegan', sections:['Mempelai','Aturcara','Peta Lokasi','RSVP','Galeri Gambar','Ucapan'] },
-  businessCard:{ label:'📇 Kad Bisnes Digital',         icon:'📇', category:'Kad Digital',tone:'Profesional & Moden',sections:['Profil','Hubungi','Social Media','vCard','Portfolio'] }
+  weddingCard : { 
+    label:'💍 Kad Kawin Digital', icon:'💍', category:'Kad Digital', tone:'Romantik & Elegan',
+    sections:['Mempelai','Aturcara','Peta Lokasi','RSVP','Galeri Gambar','Ucapan'],
+    fields: [
+      { id:'bride_groom', label:'Nama Pengantin', type:'text', placeholder:'Ali & Fatimah...' },
+      { id:'wedding_date', label:'Tarikh Majlis', type:'date', placeholder:'' },
+      { id:'theme', label:'Tema Warna/Majlis', type:'text', placeholder:'Pastel, Garden, Songket...' }
+    ]
+  },
+  businessCard : { 
+    label:'📇 Kad Bisnes Digital', icon:'📇', category:'Kad Digital', tone:'Profesional & Moden',
+    sections:['Profil','Hubungi','Social Media','vCard','Portfolio'],
+    fields: [
+      { id:'job_title', label:'Jawatan/Role', type:'text', placeholder:'CEO & Founder, Senior Consultant...' },
+      { id:'vcard_perk', label:'Kelebihan vCard', type:'text', placeholder:'Simpan terus ke fon dalam satu klik...' }
+    ]
+  }
 };
 
 // ───────────────────────────────────────────────────
@@ -103,7 +324,20 @@ function buildInfoSection(d, tpl) {
     ``,
     `Nama Perniagaan   : ${d.businessName || '-'}`,
     `Jenis Perniagaan  : ${tpl.label || '-'}`,
-    d.location ? `Lokasi            : ${d.location}` : '',
+    d.location ? `Lokasi            : ${d.location}` : ''
+  ];
+
+  // Tambah info khusus perniagaan jika ada
+  if (tpl.fields) {
+    tpl.fields.forEach(f => {
+      const val = d[f.id];
+      if (val) {
+        lines.push(`${f.label.padEnd(18)}: ${val}`);
+      }
+    });
+  }
+
+  lines.push(
     ``,
     `PENERANGAN:`,
     d.description || '(tiada penerangan)',
@@ -113,7 +347,8 @@ function buildInfoSection(d, tpl) {
     ``,
     `KELEBIHAN UNIK (USP):`,
     d.usp || '(tidak dinyatakan)'
-  ];
+  );
+
   return lines.filter(l => l !== null).join('\n');
 }
 

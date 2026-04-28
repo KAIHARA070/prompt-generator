@@ -140,6 +140,16 @@
             <label class="form-label">Kelebihan Unik (USP)</label>
             <textarea class="form-control" id="bizUsp" rows="3" placeholder="Apa yang membezakan anda dari pesaing? Kenapa pelanggan perlu pilih anda?"></textarea>
           </div>
+
+          <!-- DYNAMIC FIELDS CONTAINER -->
+          <div id="dynamicFields" class="form-grid-2" style="margin-top:20px; grid-column: 1 / -1; border-top: 1px solid var(--border); padding-top: 20px; display: none;">
+            <div style="grid-column: 1 / -1; margin-bottom: 10px;">
+              <h3 style="font-size: 1rem; color: var(--accent-light);">✨ Maklumat Khusus <span id="dynTitle">Perniagaan</span></h3>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">Sila isi maklumat tambahan ini untuk hasil prompt yang lebih tepat.</p>
+            </div>
+            <!-- Dinamik fields akan masuk sini -->
+          </div>
+
           <div class="nav-btns">
             <button class="btn btn-ghost" onclick="goStep(1)"><i class="fa fa-arrow-left"></i> Kembali</button>
             <button class="btn btn-primary" onclick="goStep(3)">Seterusnya <i class="fa fa-arrow-right"></i></button>
@@ -335,7 +345,34 @@ function selectBiz(key) {
   selectedBizType = key;
   document.getElementById('nextStep1').disabled = false;
   renderBizGrid(document.getElementById('bizSearch').value);
-  showToast('Dipilih: ' + BUSINESS_TEMPLATES[key].label, 'success');
+  
+  // Render dynamic fields for Step 2
+  const tpl = BUSINESS_TEMPLATES[key];
+  const container = document.getElementById('dynamicFields');
+  const dynTitle  = document.getElementById('dynTitle');
+  
+  if (tpl && tpl.fields && tpl.fields.length > 0) {
+    container.style.display = 'grid';
+    dynTitle.textContent = tpl.label.replace(/^[\S]+\s/,'');
+    
+    // Simpan HTML sedia ada kecuali header
+    const header = container.firstElementChild.outerHTML;
+    let fieldsHtml = header;
+    
+    tpl.fields.forEach(f => {
+      fieldsHtml += `
+        <div class="form-group">
+          <label class="form-label">${f.label}</label>
+          <input type="${f.type || 'text'}" class="form-control dynamic-input" id="dyn_${f.id}" data-id="${f.id}" placeholder="${f.placeholder || ''}"/>
+        </div>
+      `;
+    });
+    container.innerHTML = fieldsHtml;
+  } else {
+    container.style.display = 'none';
+  }
+  
+  showToast('Dipilih: ' + tpl.label, 'success');
 }
 
 function selectTone(el, tone) {
@@ -380,7 +417,15 @@ function buildPrompt() {
     }
   };
 
+  // AMBIL DATA DINAMIK
   const tpl = BUSINESS_TEMPLATES[selectedBizType] || {};
+  if (tpl.fields) {
+    tpl.fields.forEach(f => {
+      const el = document.getElementById('dyn_' + f.id);
+      if (el) formData[f.id] = el.value.trim();
+    });
+  }
+
   formData.businessTypeLabel = tpl.label || selectedBizType;
 
   generatedText = generatePrompt(formData, selectedBizType);
@@ -442,8 +487,26 @@ async function saveGenerated() {
       document.getElementById('nextStep1').disabled = false;
       // Pre-fill step 2
       document.getElementById('bizName').value    = p.form_data?.businessName || p.title || '';
+      document.getElementById('bizLocation').value= p.form_data?.location || '';
       document.getElementById('bizDesc').value    = p.form_data?.description  || '';
       document.getElementById('bizUsp').value     = p.form_data?.usp          || '';
+      document.getElementById('bizAudience').value= p.form_data?.targetAudience || '';
+      
+      // Pilih Biz & Render Dynamic Fields
+      selectBiz(selectedBizType);
+      
+      // Isi data dinamik jika ada
+      const tpl = BUSINESS_TEMPLATES[selectedBizType];
+      if (tpl && tpl.fields) {
+        tpl.fields.forEach(f => {
+          const val = p.form_data?.[f.id];
+          if (val) {
+            const el = document.getElementById('dyn_' + f.id);
+            if (el) el.value = val;
+          }
+        });
+      }
+
       goStep(2);
       renderBizGrid();
     }

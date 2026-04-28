@@ -29,18 +29,18 @@ async function upgradePlan(planId, billingCycle='monthly', promoCode='') {
 
   let discount = 0;
   if (promoCode) {
-    const { data: code } = await supabase.from('promo_codes')
+    const { data: code } = await sb.from('promo_codes')
       .select('*').eq('code', promoCode.toUpperCase()).eq('active', true).single();
     if (code) {
       discount = code.type==='percentage' ? price*(code.value/100) : code.value;
-      await supabase.from('promo_codes').update({ used_count: (code.used_count||0)+1 }).eq('id', code.id);
+      await sb.from('promo_codes').update({ used_count: (code.used_count||0)+1 }).eq('id', code.id);
     }
   }
 
   const expiresAt = new Date(Date.now() + expiryDays*864e5).toISOString();
 
   // Update profile
-  const { error: profErr } = await supabase.from('profiles').update({
+  const { error: profErr } = await sb.from('profiles').update({
     plan: planId,
     plan_billing_cycle: billingCycle,
     plan_started_at: new Date().toISOString(),
@@ -54,7 +54,7 @@ async function upgradePlan(planId, billingCycle='monthly', promoCode='') {
   if (profErr) return { success:false, message: profErr.message };
 
   // Insert subscription record
-  await supabase.from('subscriptions').insert({
+  await sb.from('subscriptions').insert({
     user_id: session.userId, plan: planId, billing_cycle: billingCycle,
     amount: price-discount, discount, promo_code: promoCode||null,
     status: 'active', expires_at: expiresAt, payment_method: 'toyyibpay'
@@ -102,7 +102,7 @@ async function deductAICredit(amount=1) {
   if (!session) return;
   const profile = await getCurrentProfile();
   if (profile?.plan === 'agency') return;
-  await supabase.from('profiles').update({
+  await sb.from('profiles').update({
     ai_credits_left: Math.max(0, (profile?.ai_credits_left||0) - amount)
   }).eq('id', session.userId);
 }
@@ -137,7 +137,7 @@ function showUpgradePrompt(reason='') {
 
 // ── Validate promo code ───────────────────────────
 async function validatePromoCode(code) {
-  const { data } = await supabase.from('promo_codes')
+  const { data } = await sb.from('promo_codes')
     .select('*').eq('code', code.toUpperCase()).eq('active', true).single();
   if (!data) return {valid:false, message:'Kod promo tidak sah.'};
   if (data.max_uses && data.used_count >= data.max_uses) return {valid:false, message:'Kod promo telah habis.'};

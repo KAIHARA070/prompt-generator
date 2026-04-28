@@ -6,14 +6,14 @@ const MIN_WITHDRAW = 50;
 
 // ── Generate affiliate code ───────────────────────
 async function generateAffiliateCode(userId) {
-  const { data: profile } = await supabase.from('profiles').select('name').eq('id', userId).single();
+  const { data: profile } = await sb.from('profiles').select('name').eq('id', userId).single();
   if (!profile) return null;
 
   const prefix = (profile.name||'USER').replace(/[^a-zA-Z]/g,'').toUpperCase().slice(0,4);
   const suffix = Math.random().toString(36).substring(2,6).toUpperCase();
   const code = prefix + suffix;
 
-  await supabase.from('profiles').update({
+  await sb.from('profiles').update({
     affiliate_code: code, affiliate_enabled: true, updated_at: new Date().toISOString()
   }).eq('id', userId);
 
@@ -22,20 +22,20 @@ async function generateAffiliateCode(userId) {
 
 // ── Get affiliate stats ───────────────────────────
 async function getAffiliateStats(userId) {
-  const { data: profile } = await supabase.from('profiles').select('*').eq('id', userId).single();
-  const { data: earnings } = await supabase.from('affiliate_earnings')
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', userId).single();
+  const { data: earnings } = await sb.from('affiliate_earnings')
     .select('*').eq('affiliate_id', userId).order('created_at', { ascending: false }).limit(20);
 
-  const { data: referrals } = await supabase.from('profiles').select('id, plan').eq('referred_by', userId);
+  const { data: referrals } = await sb.from('profiles').select('id, plan').eq('referred_by', userId);
   const activeReferrals = (referrals||[]).filter(u => u.plan && u.plan !== 'free');
 
   const monthStart = new Date(); monthStart.setDate(1); monthStart.setHours(0,0,0,0);
-  const { count: clicksThisMonth } = await supabase.from('affiliate_clicks')
+  const { count: clicksThisMonth } = await sb.from('affiliate_clicks')
     .select('*', { count: 'exact', head: true })
     .eq('affiliate_id', userId)
     .gte('clicked_at', monthStart.toISOString());
 
-  const { count: totalClicks } = await supabase.from('affiliate_clicks')
+  const { count: totalClicks } = await sb.from('affiliate_clicks')
     .select('*', { count: 'exact', head: true })
     .eq('affiliate_id', userId);
 
@@ -61,11 +61,11 @@ async function trackAffiliateClick(code) {
   if (!code) return;
   localStorage.setItem('pgp_ref', JSON.stringify({ code, at: new Date().toISOString() }));
 
-  const { data: aff } = await supabase.from('profiles')
+  const { data: aff } = await sb.from('profiles')
     .select('id').eq('affiliate_code', code).single();
   if (!aff) return;
 
-  await supabase.from('affiliate_clicks').insert({
+  await sb.from('affiliate_clicks').insert({
     affiliate_id: aff.id, code
   });
 }
@@ -78,43 +78,43 @@ async function processAffiliateCommission(newUserId, amount) {
     localStorage.removeItem('pgp_ref'); return;
   }
 
-  const { data: aff } = await supabase.from('profiles')
+  const { data: aff } = await sb.from('profiles')
     .select('id, affiliate_balance, affiliate_total_earned')
     .eq('affiliate_code', ref.code).single();
   if (!aff || aff.id === newUserId) return;
 
   const commission = Math.round(amount * COMMISSION_RATE * 100) / 100;
 
-  await supabase.from('affiliate_earnings').insert({
+  await sb.from('affiliate_earnings').insert({
     affiliate_id: aff.id, referred_user_id: newUserId,
     amount: commission, commission_rate: COMMISSION_RATE, status: 'approved'
   });
 
-  await supabase.from('profiles').update({
+  await sb.from('profiles').update({
     affiliate_balance: parseFloat(aff.affiliate_balance || 0) + commission,
     affiliate_total_earned: parseFloat(aff.affiliate_total_earned || 0) + commission,
     updated_at: new Date().toISOString()
   }).eq('id', aff.id);
 
-  await supabase.from('profiles').update({ referred_by: aff.id }).eq('id', newUserId);
+  await sb.from('profiles').update({ referred_by: aff.id }).eq('id', newUserId);
   localStorage.removeItem('pgp_ref');
 }
 
 // ── Request withdrawal ────────────────────────────
 async function requestWithdrawal(userId, amount, bankDetails) {
-  const { data: profile } = await supabase.from('profiles').select('affiliate_balance').eq('id', userId).single();
+  const { data: profile } = await sb.from('profiles').select('affiliate_balance').eq('id', userId).single();
   const balance = parseFloat(profile?.affiliate_balance || 0);
   if (balance < MIN_WITHDRAW) return { success:false, message:`Minimum RM${MIN_WITHDRAW}. Baki: RM${balance.toFixed(2)}` };
   if (amount > balance) return { success:false, message:'Jumlah melebihi baki.' };
 
-  const { error } = await supabase.from('withdrawals').insert({
+  const { error } = await sb.from('withdrawals').insert({
     user_id: userId, amount,
     bank_name: bankDetails.bankName, account_number: bankDetails.accountNumber,
     account_name: bankDetails.accountName
   });
   if (error) return { success:false, message: error.message };
 
-  await supabase.from('profiles').update({
+  await sb.from('profiles').update({
     affiliate_balance: balance - amount
   }).eq('id', userId);
 
@@ -123,7 +123,7 @@ async function requestWithdrawal(userId, amount, bankDetails) {
 
 // ── Get withdrawals ───────────────────────────────
 async function getWithdrawals(userId) {
-  const { data } = await supabase.from('withdrawals')
+  const { data } = await sb.from('withdrawals')
     .select('*').eq('user_id', userId).order('requested_at', { ascending: false });
   return data || [];
 }
