@@ -91,13 +91,23 @@
     </div>
 
     <div class="page-body">
-      <!-- PROGRESS -->
-      <div style="margin-bottom:28px">
-        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-          <span style="font-size:.82rem;color:var(--text-secondary)">Langkah <span id="stepNum">1</span> daripada 5</span>
-          <span style="font-size:.82rem;color:var(--accent-light)" id="stepLabel">Pilih Jenis Perniagaan</span>
+      <!-- PROGRESS & STATS (NEW) -->
+      <div class="stats-dashboard" style="margin-bottom: 28px;">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px;">
+          <div class="stat-card" style="text-align: center; background: var(--bg-card); padding: 12px; border-radius: var(--radius); border: 1px solid var(--border);">
+            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Kelengkapan</div>
+            <div id="completionRate" style="font-size: 1.2rem; font-weight: 700; color: var(--accent-light);">0%</div>
+          </div>
+          <div class="stat-card" style="text-align: center; background: var(--bg-card); padding: 12px; border-radius: var(--radius); border: 1px solid var(--border);">
+            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Diisi</div>
+            <div id="fieldCount" style="font-size: 1.2rem; font-weight: 700;">0/12</div>
+          </div>
+          <div class="stat-card" style="text-align: center; background: var(--bg-card); padding: 12px; border-radius: var(--radius); border: 1px solid var(--border);">
+            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Produk</div>
+            <div id="productCount" style="font-size: 1.2rem; font-weight: 700;">0</div>
+          </div>
         </div>
-        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
       </div>
 
       <div class="card">
@@ -159,6 +169,17 @@
             <!-- Dinamik fields akan masuk sini -->
           </div>
 
+          <!-- Product Catalog Section (NEW) -->
+          <div style="grid-column: 1 / -1; margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px;">
+            <h3 style="font-size: 1rem; color: var(--accent-light); margin-bottom: 15px;">🛍️ Katalog Produk & Harga (Optional)</h3>
+            <div id="productList" style="display: flex; flex-direction: column; gap: 15px;">
+              <!-- Products will be added here -->
+            </div>
+            <button class="btn btn-ghost btn-full" onclick="addProduct()" style="margin-top: 12px; border: 1px dashed var(--border);">
+              <i class="fa fa-plus"></i> Tambah Produk / Servis
+            </button>
+          </div>
+
           <div class="nav-btns">
             <button class="btn btn-ghost" onclick="goStep(1)"><i class="fa fa-arrow-left"></i> Kembali</button>
             <button class="btn btn-primary" onclick="goStep(3)">Seterusnya <i class="fa fa-arrow-right"></i></button>
@@ -216,7 +237,16 @@
           </div>
           <div class="form-group">
             <label class="form-label">Teks Call-to-Action (CTA)</label>
-            <input type="text" class="form-control" id="bizCta" placeholder="Contoh: Hubungi Kami Sekarang, Tempah Sekarang, Beli Sekarang"/>
+            <input type="text" class="form-control" id="bizCta" placeholder="Contoh: Hubungi Kami Sekarang, Tempah Sekarang, Beli Sekarang" oninput="updateProgress()"/>
+          </div>
+
+          <!-- Image Gallery Section (NEW) -->
+          <div class="form-group" style="margin-top:20px">
+            <label class="form-label">📸 Galeri Imej (URL)</label>
+            <div id="imageList" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;">
+              <input type="text" class="form-control biz-image-input" placeholder="https://example.com/image1.jpg" oninput="updateProgress()"/>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="addImageInput()"><i class="fa fa-plus"></i> Tambah Imej</button>
           </div>
           <div class="nav-btns">
             <button class="btn btn-ghost" onclick="goStep(2)"><i class="fa fa-arrow-left"></i> Kembali</button>
@@ -446,6 +476,68 @@ function selectTone(el, tone) {
   document.querySelectorAll('.tone-option').forEach(t => t.classList.remove('selected'));
   el.classList.add('selected');
   selectedTone = tone;
+  updateProgress();
+}
+
+function updateProgress() {
+  const fields = [
+    'bizName', 'bizDesc', 'bizUsp', 'bizAudience', 'bizCta', 
+    'contactPhone', 'contactWa', 'contactEmail'
+  ];
+  
+  let filled = 0;
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value.trim() !== '') filled++;
+  });
+
+  const total = fields.length;
+  const rate = Math.round((filled / total) * 100);
+  
+  const compRateEl = document.getElementById('completionRate');
+  const fieldCountEl = document.getElementById('fieldCount');
+  const progressFill = document.getElementById('progressFill');
+
+  if (compRateEl) compRateEl.innerText = rate + '%';
+  if (fieldCountEl) fieldCountEl.innerText = filled + '/' + total;
+  if (progressFill) progressFill.style.width = rate + '%';
+}
+
+function addProduct() {
+  const list = document.getElementById('productList');
+  const div = document.createElement('div');
+  div.className = 'product-item-card';
+  div.style = 'background: var(--bg-primary); padding: 12px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 10px;';
+  div.innerHTML = `
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="font-weight: 600; font-size: 0.85rem; color: var(--accent-light);">Produk/Servis</span>
+      <button onclick="this.parentElement.parentElement.remove(); updateProductCount();" style="background:none; border:none; color:var(--accent-secondary); cursor:pointer;">✕</button>
+    </div>
+    <div class="form-grid-2">
+      <input type="text" class="form-control form-control-sm p-name" placeholder="Nama Produk" oninput="updateProgress()">
+      <input type="text" class="form-control form-control-sm p-price" placeholder="Harga (RM)" oninput="updateProgress()">
+    </div>
+    <textarea class="form-control form-control-sm p-desc" style="margin-top:8px" placeholder="Penerangan ringkas..." rows="2" oninput="updateProgress()"></textarea>
+  `;
+  list.appendChild(div);
+  updateProductCount();
+}
+
+function updateProductCount() {
+  const count = document.querySelectorAll('.product-item-card').length;
+  const el = document.getElementById('productCount');
+  if (el) el.innerText = count;
+}
+
+function addImageInput() {
+  const list = document.getElementById('imageList');
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'form-control biz-image-input';
+  input.style = 'margin-top: 4px;';
+  input.placeholder = 'https://example.com/another-image.jpg';
+  input.oninput = updateProgress;
+  list.appendChild(input);
 }
 
 function toggleExtraForm(cb, formId) {
@@ -497,6 +589,16 @@ function buildPrompt() {
     animationStyle : document.getElementById('animationStyle').value,
     themeMode      : document.querySelector('input[name="themeMode"]:checked').value,
     extraFeatures  : extras,
+    qrInfo: {
+      type: document.getElementById('qrType').value,
+      url: document.getElementById('qrUrl').value.trim()
+    },
+    images: [...document.querySelectorAll('.biz-image-input')].map(i => i.value.trim()).filter(Boolean),
+    products: [...document.querySelectorAll('.product-item-card')].map(card => ({
+      name: card.querySelector('.p-name').value.trim(),
+      price: card.querySelector('.p-price').value.trim(),
+      desc: card.querySelector('.p-desc').value.trim()
+    })).filter(p => p.name),
     contact: {
       phone    : document.getElementById('contactPhone').value.trim(),
       whatsapp : document.getElementById('contactWa').value.trim(),

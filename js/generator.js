@@ -298,6 +298,7 @@ function generatePrompt(formData, businessType) {
   const parts = [
     buildHeader(formData, businessType, tpl, l, lang),
     buildInfoSection(formData, tpl, l),
+    buildProductSection(formData),
     buildDesignSection(formData, l),
     buildContactSection(formData, l),
     buildFeaturesSection(formData, businessType, tpl, l),
@@ -349,7 +350,38 @@ function buildInfoSection(d, tpl) {
     d.usp || '(tidak dinyatakan)'
   );
 
+  // Tambah Galeri Imej jika ada
+  if (d.images && d.images.length > 0) {
+    lines.push(
+      ``,
+      `🖼️ GALERI IMEJ UNTUK DIGUNAKAN:`,
+      ...d.images.map((img, i) => `${i+1}. ${img}`)
+    );
+  }
+
   return lines.filter(l => l !== null).join('\n');
+}
+
+function buildProductSection(d) {
+  if (!d.products || d.products.length === 0) return '';
+  
+  const lines = [
+    `═══════════════════════════════════════════════════════`,
+    `🛍️ KATALOG PRODUK / PERKHIDMATAN`,
+    `═══════════════════════════════════════════════════════`,
+    `Sila bina grid produk yang menarik dengan butang "Order WhatsApp" untuk setiap produk:`,
+    ``
+  ];
+
+  d.products.forEach((p, i) => {
+    lines.push(`Produk #${i+1}:`);
+    lines.push(`- Nama: ${p.name}`);
+    lines.push(`- Harga: RM ${p.price || 'Sila tentukan'}`);
+    if (p.desc) lines.push(`- Penerangan: ${p.desc}`);
+    lines.push(``);
+  });
+
+  return lines.join('\n');
 }
 
 function buildDesignSection(d) {
@@ -426,6 +458,12 @@ function buildFeaturesSection(d, businessType, tpl) {
     }).join('\n');
   }
 
+  // Tambah info QR jika ada
+  let qrNote = '';
+  if (d.qrInfo && d.qrInfo.url) {
+    qrNote = `\n\n💳 ARAHAN PEMBAYARAN:\n- Sila sertakan bahagian pembayaran menggunakan QR Code (${d.qrInfo.type || 'Pilihan'})\n- URL Gambar QR: ${d.qrInfo.url}`;
+  }
+
   return [
     `═══════════════════════════════════════════════════════`,
     `🏪 CIRI KHUSUS JENIS PERNIAGAAN`,
@@ -436,7 +474,8 @@ function buildFeaturesSection(d, businessType, tpl) {
     ``,
     `Arahan Khusus:`,
     specific,
-    extra
+    extra,
+    qrNote
   ].filter(Boolean).join('\n');
 }
 
