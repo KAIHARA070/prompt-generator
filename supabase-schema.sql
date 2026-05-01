@@ -104,6 +104,32 @@ CREATE TABLE public.withdrawals (
   approved_at TIMESTAMPTZ
 );
 
+-- 8. RATE LIMIT LOG (for tracking rate limits)
+CREATE TABLE public.rate_limit_log (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  key VARCHAR(255) NOT NULL,
+  action VARCHAR(50) NOT NULL,
+  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+  email VARCHAR(255),
+  ip VARCHAR(45),
+  timestamp TIMESTAMPTZ DEFAULT now()
+);
+
+-- Indexes for rate limit check performance
+CREATE INDEX idx_rate_limit_key ON public.rate_limit_log(key, timestamp DESC);
+CREATE INDEX idx_rate_limit_action ON public.rate_limit_log(action, timestamp DESC);
+CREATE INDEX idx_rate_limit_email ON public.rate_limit_log(email, timestamp DESC);
+CREATE INDEX idx_rate_limit_ip ON public.rate_limit_log(ip, timestamp DESC);
+
+-- Auto-cleanup old rate limit records (>24 hours old)
+CREATE OR REPLACE FUNCTION public.cleanup_rate_limit_log()
+RETURNS void AS $$
+BEGIN
+  DELETE FROM public.rate_limit_log 
+  WHERE timestamp < NOW() - INTERVAL '24 hours';
+END;
+$$ LANGUAGE plpgsql;
+
 -- =====================================================
 -- ROW LEVEL SECURITY (RLS)
 -- =====================================================
@@ -123,6 +149,7 @@ ALTER TABLE public.promo_codes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.affiliate_earnings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.affiliate_clicks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.withdrawals ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.rate_limit_log ENABLE ROW LEVEL SECURITY;
 
 -- PROFILES: users can read/update own profile; admins can read all
 CREATE POLICY "Users can view own profile" ON public.profiles FOR SELECT USING (auth.uid() = id);

@@ -410,6 +410,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
+<script src="js/rate-limiting.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/generator.js"></script>
@@ -590,6 +591,19 @@ function toggleExtraForm(cb, formId) {
 
 // ── Build & show prompt ──────────────────────────────
 function buildPrompt() {
+  const session = getSession();
+  if (!session) {
+    showToast('Sila log masuk dahulu!', 'error');
+    return;
+  }
+
+  // Rate limiting check for prompt generation
+  const rateLimit = checkPromptGenerationLimit(session.userId);
+  if (!rateLimit.allowed) {
+    showToast(rateLimit.message, 'error');
+    return;
+  }
+
   // Collect extra features with their details
   const extras = [];
   document.querySelectorAll('#extraFeatures input[type="checkbox"]:checked').forEach(cb => {
@@ -674,6 +688,20 @@ function openClaudeGenerated() { openInClaude(generatedText); }
 
 async function saveGenerated() {
   if (!generatedText) { showToast('Jana prompt dahulu!','error'); return; }
+  
+  const session = getSession();
+  if (!session) {
+    showToast('Sila log masuk dahulu!', 'error');
+    return;
+  }
+
+  // Rate limiting check for prompt save
+  const rateLimit = checkPromptSaveLimit(session.userId);
+  if (!rateLimit.allowed) {
+    showToast(rateLimit.message, 'error');
+    return;
+  }
+
   const tpl = BUSINESS_TEMPLATES[selectedBizType] || {};
   const name = document.getElementById('bizName').value.trim() || 'Tanpa Nama';
 
