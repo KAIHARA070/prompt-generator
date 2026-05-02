@@ -3,10 +3,10 @@
 // =====================================================
 
 const PLANS = {
-  free:    { id:'free',    name:'Percuma', icon:'🆓', price:{monthly:0,yearly:0},    limits:{promptsPerMonth:5,savedPrompts:10,aiCalls:0,teamMembers:1,export:['txt'],watermark:true,analytics:false,affiliate:false,apiAccess:false,whitelabel:false}, features:['5 prompt/bulan','10 prompt tersimpan','Template asas','Eksport .txt','Sokongan komuniti'], missing:['Jana AI sebenar','Eksport PDF/DOCX','Program affiliate','Analytics','API access'], color:'var(--text-muted)', cta:'Mulakan Percuma', badge:null },
-  starter: { id:'starter', name:'Starter', icon:'⚡', price:{monthly:29,yearly:19},   limits:{promptsPerMonth:50,savedPrompts:100,aiCalls:50,teamMembers:1,export:['txt','pdf'],watermark:false,analytics:false,affiliate:true,apiAccess:false,whitelabel:false}, features:['50 prompt/bulan','100 prompt tersimpan','Jana AI sebenar (50x/bln)','Eksport PDF','Program affiliate','Tiada watermark','Sokongan email'], missing:['DOCX export','Analytics','API access','White-label'], color:'#388BFD', cta:'Cuba 7 Hari Percuma', badge:'Popular' },
-  pro:     { id:'pro',     name:'Pro',     icon:'🔥', price:{monthly:79,yearly:55},   limits:{promptsPerMonth:300,savedPrompts:1000,aiCalls:300,teamMembers:3,export:['txt','pdf','docx','html'],watermark:false,analytics:true,affiliate:true,apiAccess:false,whitelabel:false}, features:['300 prompt/bulan','1,000 prompt tersimpan','Jana AI sebenar (300x/bln)','Eksport PDF+DOCX+HTML','Analytics lengkap','3 ahli pasukan','Sokongan keutamaan'], missing:['API access','White-label'], color:'var(--accent-light)', cta:'Mulakan Pro', badge:'Best Value' },
-  agency:  { id:'agency',  name:'Agency',  icon:'🏢', price:{monthly:199,yearly:149}, limits:{promptsPerMonth:-1,savedPrompts:-1,aiCalls:-1,teamMembers:10,export:['txt','pdf','docx','html','all'],watermark:false,analytics:true,affiliate:true,apiAccess:true,whitelabel:true}, features:['Prompt UNLIMITED','Simpan UNLIMITED','Jana AI UNLIMITED','Semua format eksport','10 ahli pasukan','API access','White-label','Dedicated manager'], missing:[], color:'#d2a8ff', cta:'Hubungi Jualan', badge:'Enterprise' }
+  free:    { id:'free',    name:'Percuma', icon:'<i class="fa fa-gift"></i>', price:{monthly:0,yearly:0},    limits:{promptsPerMonth:5,savedPrompts:10,aiCalls:0,teamMembers:1,export:['txt'],watermark:true,analytics:false,affiliate:false,apiAccess:false,whitelabel:false}, features:['5 prompt/bulan','10 prompt tersimpan','Template asas','Eksport .txt','Sokongan komuniti'], missing:['Jana AI sebenar','Eksport PDF/DOCX','Program affiliate','Analytics','API access'], color:'var(--text-muted)', cta:'Mulakan Percuma', badge:null },
+  starter: { id:'starter', name:'Starter', icon:'<i class="fa fa-bolt"></i>', price:{monthly:29,yearly:19},   limits:{promptsPerMonth:50,savedPrompts:100,aiCalls:50,teamMembers:1,export:['txt','pdf'],watermark:false,analytics:false,affiliate:true,apiAccess:false,whitelabel:false}, features:['50 prompt/bulan','100 prompt tersimpan','Jana AI sebenar (50x/bln)','Eksport PDF','Program affiliate','Tiada watermark','Sokongan email'], missing:['DOCX export','Analytics','API access','White-label'], color:'#388BFD', cta:'Cuba 7 Hari Percuma', badge:'Popular' },
+  pro:     { id:'pro',     name:'Pro',     icon:'<i class="fa fa-fire"></i>', price:{monthly:79,yearly:55},   limits:{promptsPerMonth:300,savedPrompts:1000,aiCalls:300,teamMembers:3,export:['txt','pdf','docx','html'],watermark:false,analytics:true,affiliate:true,apiAccess:false,whitelabel:false}, features:['300 prompt/bulan','1,000 prompt tersimpan','Jana AI sebenar (300x/bln)','Eksport PDF+DOCX+HTML','Analytics lengkap','3 ahli pasukan','Sokongan keutamaan'], missing:['API access','White-label'], color:'var(--accent-light)', cta:'Mulakan Pro', badge:'Best Value' },
+  agency:  { id:'agency',  name:'Agency',  icon:'<i class="fa fa-building"></i>', price:{monthly:199,yearly:149}, limits:{promptsPerMonth:-1,savedPrompts:-1,aiCalls:-1,teamMembers:10,export:['txt','pdf','docx','html','all'],watermark:false,analytics:true,affiliate:true,apiAccess:true,whitelabel:true}, features:['Prompt UNLIMITED','Simpan UNLIMITED','Jana AI UNLIMITED','Semua format eksport','10 ahli pasukan','API access','White-label','Dedicated manager'], missing:[], color:'#d2a8ff', cta:'Hubungi Jualan', badge:'Enterprise' }
 };
 const PLAN_ORDER = ['free','starter','pro','agency'];
 
@@ -116,14 +116,14 @@ function showUpgradePrompt(reason='') {
   if (!modal) {
     modal = document.createElement('div'); modal.id='upgradeModal'; modal.className='modal-overlay';
     modal.innerHTML = `<div class="modal" style="max-width:460px;text-align:center">
-      <div class="modal-header"><h3 class="modal-title">🚀 Naik Taraf Pelan</h3><button class="modal-close" onclick="closeModal('upgradeModal')">✕</button></div>
+      <div class="modal-header"><h3 class="modal-title"><i class="fa fa-rocket"></i> Naik Taraf Pelan</h3><button class="modal-close" onclick="closeModal('upgradeModal')"><i class="fa fa-xmark"></i></button></div>
       <div class="modal-body">
         <div style="font-size:2.5rem;margin-bottom:12px">${next.icon}</div>
         <p id="upgradeReason" style="color:var(--text-secondary);margin-bottom:20px"></p>
         <div style="background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px">
           <div style="font-size:1.6rem;font-weight:800;color:${next.color}">RM${next.price.monthly}<span style="font-size:.9rem;color:var(--text-muted)">/bulan</span></div>
           <ul style="list-style:none;text-align:left;font-size:.85rem;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;margin-top:12px">
-            ${next.features.slice(0,4).map(f=>`<li>✅ ${f}</li>`).join('')}
+            ${next.features.slice(0,4).map(f=>`<li><i class="fa fa-check"></i> ${f}</li>`).join('')}
           </ul>
         </div>
         <a href="pricing.html" class="btn btn-primary btn-block" style="margin-bottom:10px">${next.cta}</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -17,244 +17,67 @@
   <title>Prompt Generator Pro — Log Masuk</title>
   <meta name="description" content="Log masuk atau daftar untuk menggunakan Business Prompt Generator Pro"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <style>
-    :root{--bg:#0D1117;--bg2:#161B22;--card:#1C2128;--border:#30363D;--accent:#238636;--accent-l:#2EA043;--accent-glow:rgba(35,134,54,.3);--text:#E6EDF3;--text2:#8B949E;--muted:#484F58;--error:#DA3633;--radius:10px}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:stretch}
-
-    /* SPLIT LAYOUT */
-    .auth-left{flex:1;background:linear-gradient(135deg,#0D1117 0%,#0d2818 50%,#0D1117 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;position:relative;overflow:hidden;min-height:100vh}
-    .auth-left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(35,134,54,.15) 0%,transparent 70%)}
-    .auth-right{width:480px;min-width:380px;background:var(--bg2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 40px;border-left:1px solid var(--border);overflow-y:auto}
-
-    /* BRANDING */
-    .brand-logo{display:flex;align-items:center;gap:12px;margin-bottom:40px;z-index:1}
-    .brand-icon{width:52px;height:52px;background:linear-gradient(135deg,var(--accent),#388BFD);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 0 30px var(--accent-glow)}
-    .brand-name{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,var(--accent-l),#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .brand-sub{font-size:.75rem;color:var(--text2);margin-top:2px}
-
-    .hero-title{font-size:2.4rem;font-weight:800;text-align:center;line-height:1.3;z-index:1;margin-bottom:16px}
-    .hero-title span{background:linear-gradient(135deg,var(--accent-l),#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .hero-desc{color:var(--text2);text-align:center;max-width:400px;z-index:1;font-size:.95rem;line-height:1.7;margin-bottom:48px}
-
-    .feature-list{display:flex;flex-direction:column;gap:14px;z-index:1;width:100%;max-width:360px}
-    .feature-item{display:flex;align-items:center;gap:14px;background:rgba(28,33,40,.7);border:1px solid var(--border);border-radius:10px;padding:14px 18px;backdrop-filter:blur(10px)}
-    .feature-item .fi{font-size:1.4rem;width:32px;text-align:center}
-    .feature-item p{font-size:.85rem;color:var(--text2);line-height:1.5}
-    .feature-item p strong{color:var(--text);display:block;margin-bottom:2px}
-
-    /* FLOATING BLOBS */
-    .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.15;pointer-events:none}
-    .blob1{width:300px;height:300px;background:var(--accent);top:-100px;right:-100px}
-    .blob2{width:200px;height:200px;background:#388BFD;bottom:-80px;left:60px}
-
-    /* RIGHT PANEL */
-    .auth-panel-title{font-size:1.5rem;font-weight:800;margin-bottom:6px;text-align:center}
-    .auth-panel-sub{color:var(--text2);font-size:.88rem;margin-bottom:28px;text-align:center}
-
-    /* TABS */
-    .auth-tabs{display:flex;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:28px;width:100%}
-    .auth-tab{flex:1;padding:9px;text-align:center;font-weight:600;font-size:.88rem;cursor:pointer;border-radius:7px;transition:.25s;color:var(--text2);border:none;background:none;font-family:'Outfit',sans-serif}
-    .auth-tab.active{background:var(--accent);color:#fff;box-shadow:0 2px 10px var(--accent-glow)}
-
-    /* FORM */
-    .auth-form{width:100%}
-    .form-group{margin-bottom:16px}
-    .form-label{display:block;font-size:.8rem;font-weight:700;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
-    .form-control{width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Outfit',sans-serif;font-size:.92rem;padding:11px 14px;transition:.25s;outline:none}
-    .form-control:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-    .form-control::placeholder{color:var(--muted)}
-    .form-control.err{border-color:var(--error);box-shadow:0 0 0 3px rgba(218,54,51,.2)}
-    select.form-control{cursor:pointer}
-
-    .pw-wrap{position:relative}
-    .pw-wrap .pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text2);cursor:pointer;font-size:.9rem}
-
-    .form-err{font-size:.78rem;color:var(--error);margin-top:4px;display:none}
-    .form-err.show{display:block}
-
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
-    .check-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;font-size:.85rem}
-    .check-row label{display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--text2)}
-    .check-row input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px}
-    .check-row a{color:var(--accent-l);text-decoration:none;font-size:.82rem}
-    .check-row a:hover{text-decoration:underline}
-
-    .btn-auth{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:.25s;display:flex;align-items:center;justify-content:center;gap:10px}
-    .btn-auth:hover{background:var(--accent-l);box-shadow:0 0 24px var(--accent-glow)}
-    .btn-auth:disabled{opacity:.5;cursor:not-allowed}
-
-    .divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--muted);font-size:.8rem}
-    .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
-
-    .auth-switch{text-align:center;font-size:.85rem;color:var(--text2);margin-top:16px}
-    .auth-switch a{color:var(--accent-l);font-weight:600;text-decoration:none}
-    .auth-switch a:hover{text-decoration:underline}
-
-    .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
-    @keyframes spin{to{transform:rotate(360deg)}}
-
-    .toast-container{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px}
-    .toast{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px;min-width:280px;animation:toastIn .3s ease;box-shadow:0 8px 24px rgba(0,0,0,.5)}
-    .toast-success{border-left:3px solid var(--accent)}
-    .toast-error{border-left:3px solid var(--error)}
-    .toast-exit{animation:toastOut .3s ease forwards}
-    @keyframes toastIn{from{transform:translateX(110%);opacity:0}to{transform:translateX(0);opacity:1}}
-    @keyframes toastOut{from{transform:translateX(0);opacity:1}to{transform:translateX(110%);opacity:0}}
-
-    .hidden{display:none!important}
-
-    /* Password strength */
-    .pw-strength{height:3px;border-radius:2px;margin-top:6px;transition:.3s;background:var(--border)}
-    .pw-strength.weak{background:var(--error);width:33%}
-    .pw-strength.fair{background:var(--warning,#D29922);width:66%}
-    .pw-strength.strong{background:var(--accent);width:100%}
-
-    @media(max-width:900px){
-      .auth-left{display:none}
-      .auth-right{width:100%;min-width:unset;border-left:none;padding:40px 24px}
-    }
-  </style>
+  <link rel="stylesheet" href="styles/base.css"/>
+  <link rel="stylesheet" href="css/login-clean.css"/>
+  <link rel="stylesheet" href="css/fontello.css"/>
 </head>
 <body>
-
-<!-- LEFT BRANDING -->
-<div class="auth-left">
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-
-  <div class="brand-logo">
-    <div class="brand-icon">✨</div>
-    <div>
+<main class="login-page" aria-label="Login">
+  <section class="login-card" aria-labelledby="loginTitle">
+    <div class="brand-wrap">
+      <div class="brand-mark" aria-hidden="true">PG</div>
       <div class="brand-name">Prompt Generator Pro</div>
-      <div class="brand-sub">Business Website Builder</div>
+      <select id="langSwitcher" class="lang-switch" aria-label="Language" style="margin-left:auto"></select>
     </div>
-  </div>
 
-  <h1 class="hero-title">Jana Prompt AI untuk <span>Perniagaan Anda</span></h1>
-  <p class="hero-desc">Cipta prompt lengkap untuk 25+ jenis perniagaan Malaysia. Simpan, urus, dan gunakan dengan mudah.</p>
+    <h1 id="loginTitle" class="login-title" data-i18n="login.title">Sign in to your account</h1>
+    <p class="login-subtitle" data-i18n="login.subtitle">Welcome back. Please enter your details to continue.</p>
 
-  <div class="feature-list">
-    <div class="feature-item">
-      <span class="fi">🏪</span>
-      <p><strong>25+ Jenis Perniagaan</strong>Restoran, salon, butik, IT, hartanah & banyak lagi</p>
-    </div>
-    <div class="feature-item">
-      <span class="fi">✨</span>
-      <p><strong>Prompt AI Berkualiti</strong>Prompt terperinci untuk Claude, ChatGPT & Gemini</p>
-    </div>
-    <div class="feature-item">
-      <span class="fi">💾</span>
-      <p><strong>Simpan & Urus</strong>Simpan semua prompt, edit, cari & filter dengan mudah</p>
-    </div>
-    <div class="feature-item">
-      <span class="fi">📤</span>
-      <p><strong>Eksport Mudah</strong>Salin ke clipboard atau muat turun sebagai fail .txt</p>
-    </div>
-  </div>
-</div>
-
-<!-- RIGHT AUTH PANEL -->
-<div class="auth-right">
-  <div class="brand-logo" style="margin-bottom:24px">
-    <div class="brand-icon" style="width:40px;height:40px;font-size:1.2rem">✨</div>
-    <div class="brand-name" style="font-size:1.1rem">Prompt Generator Pro</div>
-  </div>
-
-  <!-- TABS -->
-  <div class="auth-tabs">
-    <button class="auth-tab active" id="tabLogin"   onclick="switchTab('login')">Log Masuk</button>
-    <button class="auth-tab"        id="tabRegister" onclick="switchTab('register')">Daftar</button>
-  </div>
-
-  <!-- ── LOGIN FORM ── -->
-  <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
-    <div class="form-group">
-      <label class="form-label">Email</label>
-      <input type="email" id="loginEmail" class="form-control" placeholder="nama@email.com" required/>
-      <div class="form-err" id="loginEmailErr"></div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Kata Laluan</label>
-      <div class="pw-wrap">
-        <input type="password" id="loginPassword" class="form-control" placeholder="Masukkan kata laluan" required/>
-        <button type="button" class="pw-toggle" onclick="togglePw('loginPassword',this)"><i class="fa fa-eye"></i></button>
-      </div>
-      <div class="form-err" id="loginPasswordErr"></div>
-    </div>
-    <div class="check-row">
-      <label><input type="checkbox" id="rememberMe"/> Ingat Saya</label>
-      <a href="#">Terlupa Kata Laluan?</a>
-    </div>
-    <button type="submit" class="btn-auth" id="loginBtn">
-      <i class="fa fa-right-to-bracket"></i> Log Masuk
-    </button>
-    <div class="divider">Atau</div>
-    <button type="button" class="btn-auth" style="background:#fff; color:#333; border:1px solid #ddd;" onclick="loginWithGoogle()">
-      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" style="margin-right:8px"/> Log Masuk dengan Google
-    </button>
-    <div class="auth-switch">Belum ada akaun? <a href="#" onclick="switchTab('register')">Daftar sekarang</a></div>
-  </form>
-
-  <!-- ── REGISTER FORM ── -->
-  <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
-    <div class="form-group">
-      <label class="form-label">Nama Penuh</label>
-      <input type="text" id="regName" class="form-control" placeholder="Ahmad bin Abdullah" required/>
-      <div class="form-err" id="regNameErr"></div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Email</label>
-      <input type="email" id="regEmail" class="form-control" placeholder="nama@email.com" required/>
-      <div class="form-err" id="regEmailErr"></div>
-    </div>
-    <div class="form-row">
+    <form class="login-form" id="loginForm" onsubmit="handleLogin(event)" novalidate>
       <div class="form-group">
-        <label class="form-label">Kata Laluan</label>
-        <div class="pw-wrap">
-          <input type="password" id="regPassword" class="form-control" placeholder="Min. 8 aksara" required oninput="checkPwStrength()"/>
-          <button type="button" class="pw-toggle" onclick="togglePw('regPassword',this)"><i class="fa fa-eye"></i></button>
+        <label class="form-label" for="loginEmail" data-i18n="login.email">Email address</label>
+        <div class="input-wrap">
+          <span class="input-icon icon-mail" aria-hidden="true"></span>
+          <input type="email" id="loginEmail" class="form-control" data-i18n-placeholder="login.email" placeholder="you@company.com" autocomplete="email" required/>
         </div>
-        <div class="pw-strength" id="pwStrength"></div>
-        <div class="form-err" id="regPasswordErr"></div>
+        <p class="form-err" id="loginEmailErr" aria-live="polite"></p>
       </div>
+
       <div class="form-group">
-        <label class="form-label">Sahkan K/Laluan</label>
-        <div class="pw-wrap">
-          <input type="password" id="regConfirm" class="form-control" placeholder="Ulang semula" required/>
-          <button type="button" class="pw-toggle" onclick="togglePw('regConfirm',this)"><i class="fa fa-eye"></i></button>
+        <label class="form-label" for="loginPassword" data-i18n="login.password">Password</label>
+        <div class="input-wrap pw-wrap">
+          <span class="input-icon icon-lock" aria-hidden="true"></span>
+          <input type="password" id="loginPassword" class="form-control" data-i18n-placeholder="login.passwordPlaceholder" placeholder="Enter your password" autocomplete="current-password" required/>
+          <button type="button" class="pw-toggle" onclick="togglePw('loginPassword',this)" aria-label="Show or hide password">Show</button>
         </div>
-        <div class="form-err" id="regConfirmErr"></div>
+        <p class="form-err" id="loginPasswordErr" aria-live="polite"></p>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Jenis Perniagaan Utama</label>
-      <select id="regBusiness" class="form-control">
-        <option value="">— Pilih kategori —</option>
-        <option value="makanan">🍜 Makanan & Minuman</option>
-        <option value="fesyen">👗 Fesyen & Pakaian</option>
-        <option value="kecantikan">💆 Kecantikan & Wellness</option>
-        <option value="pendidikan">📚 Pendidikan</option>
-        <option value="profesional">📊 Perkhidmatan Profesional</option>
-        <option value="hartanah">🏠 Hartanah</option>
-        <option value="teknologi">💻 Teknologi & IT</option>
-        <option value="ecommerce">🛒 E-Commerce</option>
-        <option value="lain">🔖 Lain-lain</option>
-      </select>
-    </div>
-    <button type="submit" class="btn-auth" id="registerBtn">
-      <i class="fa fa-user-plus"></i> Daftar Sekarang
-    </button>
-    <div class="divider">Atau</div>
-    <button type="button" class="btn-auth" style="background:#fff; color:#333; border:1px solid #ddd;" onclick="loginWithGoogle()">
-      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" style="margin-right:8px"/> Daftar dengan Google
-    </button>
-    <div class="auth-switch">Sudah ada akaun? <a href="#" onclick="switchTab('login')">Log masuk</a></div>
-  </form>
-</div>
+
+      <div class="check-row">
+        <label class="check-label"><input type="checkbox" id="rememberMe"/> <span data-i18n="login.remember">Remember me</span></label>
+        <a href="#" class="forgot-link" data-i18n="login.forgot">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="loginBtn" disabled>
+        <span class="btn-icon icon-login" aria-hidden="true"></span>
+        <span class="btn-text" data-i18n="login.signin">Sign in</span>
+      </button>
+
+      <div class="divider">or</div>
+
+      <button type="button" class="btn btn-secondary" id="googleLoginBtn" onclick="loginWithGoogle()">
+        <span class="btn-icon icon-google" aria-hidden="true"></span>
+        <span data-i18n="login.continueGoogle">Continue with Google</span>
+      </button>
+
+      <p class="auth-row"><span data-i18n="login.noAccount">Don't have an account?</span> <a href="register.html" data-i18n="login.createOne">Create one</a></p>
+    </form>
+
+    <p class="card-footer" data-i18n="login.secureNote">Protected access for authorized users only.</p>
+  </section>
+</main>
 
 <div class="toast-container" id="toastContainer"></div>
 
@@ -262,56 +85,65 @@
 <script src="js/supabase-config.js"></script>
 <script src="js/rate-limiting.js"></script>
 <script src="js/auth.js"></script>
+<script src="js/i18n.js"></script>
 <script>
+  initI18n('langSwitcher');
+
   // Redirect jika dah login
   (function() {
     const s = JSON.parse(localStorage.getItem('pgp_cached_session') || 'null');
     if (s && s.userId) window.location.href = 'dashboard.html';
   })();
 
-  function switchTab(tab) {
-    document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
-    document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
-    document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
-    document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
-  }
-
   function togglePw(id, btn) {
     const el = document.getElementById(id);
     const isText = el.type === 'text';
     el.type = isText ? 'password' : 'text';
-    btn.innerHTML = isText ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
-  }
-
-  function checkPwStrength() {
-    const pw  = document.getElementById('regPassword').value;
-    const bar = document.getElementById('pwStrength');
-    if (!pw) { bar.className = 'pw-strength'; return; }
-    const strong = pw.length >= 8 && /[A-Z]/.test(pw) && /[0-9]/.test(pw);
-    const fair   = pw.length >= 8;
-    bar.className = 'pw-strength ' + (strong ? 'strong' : fair ? 'fair' : 'weak');
+    btn.textContent = isText ? 'Show' : 'Hide';
   }
 
   function showErr(id, msg) {
     const el = document.getElementById(id);
-    el.textContent = msg; el.classList.add('show');
+    el.textContent = msg;
+    el.classList.add('show');
     document.getElementById(id.replace('Err','')).classList.add('err');
   }
+
   function clearErr(id) {
     const el = document.getElementById(id);
-    el.textContent = ''; el.classList.remove('show');
+    el.textContent = '';
+    el.classList.remove('show');
     document.getElementById(id.replace('Err','')).classList.remove('err');
   }
 
   function showToast(msg, type='info') {
     const c = document.getElementById('toastContainer');
-    const icons = {success:'✅',error:'❌',info:'ℹ️'};
+    const iconClasses = {success:'fa-circle-check',error:'fa-circle-xmark',info:'fa-circle-info'};
     const t = document.createElement('div');
     t.className = `toast toast-${type}`;
-    t.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span style="font-size:.88rem">${msg}</span>`;
+    const icon = document.createElement('span');
+    icon.className = 'toast-icon';
+    const iconEl = document.createElement('i');
+    iconEl.className = `fa-solid ${iconClasses[type] || 'fa-circle-info'}`;
+    icon.appendChild(iconEl);
+    const text = document.createElement('span');
+    text.className = 'toast-text';
+    text.textContent = msg;
+    t.appendChild(icon);
+    t.appendChild(text);
     c.appendChild(t);
     setTimeout(()=>{ t.classList.add('toast-exit'); setTimeout(()=>t.remove(),350); }, 3500);
   }
+
+  function updateLoginButtonState() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass = document.getElementById('loginPassword').value;
+    document.getElementById('loginBtn').disabled = !(email && pass);
+  }
+
+  document.getElementById('loginEmail').addEventListener('input', updateLoginButtonState);
+  document.getElementById('loginPassword').addEventListener('input', updateLoginButtonState);
+  updateLoginButtonState();
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -320,54 +152,27 @@
     const pass  = document.getElementById('loginPassword').value;
 
     let ok = true;
-    if (!email) { showErr('loginEmailErr','Email diperlukan'); ok=false; }
-    if (!pass)  { showErr('loginPasswordErr','Kata laluan diperlukan'); ok=false; }
+    if (!email) { showErr('loginEmailErr', i18nText('login.err.emailRequired','Email is required')); ok=false; }
+    if (!pass)  { showErr('loginPasswordErr', i18nText('login.err.passwordRequired','Password is required')); ok=false; }
     if (!ok) return;
 
     const btn = document.getElementById('loginBtn');
-    btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Memproses...';
+    btn.disabled = true;
+    btn.classList.add('is-loading');
+    btn.innerHTML = '<span class="spinner"></span><span class="btn-text">Signing in...</span>';
 
     const res = await loginUser(email, pass);
-    btn.disabled = false; btn.innerHTML = '<i class="fa fa-right-to-bracket"></i> Log Masuk';
+    btn.disabled = false;
+    btn.classList.remove('is-loading');
+    btn.innerHTML = '<span class="btn-icon icon-login" aria-hidden="true"></span><span class="btn-text">Sign in</span>';
     if (res.success) {
       await cacheSession();
-      showToast('Selamat datang!', 'success');
+      showToast(i18nText('login.toast.welcome','Welcome back!'), 'success');
       setTimeout(() => window.location.href = 'dashboard.html', 800);
     } else {
       showToast(res.message, 'error');
       showErr('loginPasswordErr', res.message);
-    }
-  }
-
-  async function handleRegister(e) {
-    e.preventDefault();
-    ['regName','regEmail','regPassword','regConfirm'].forEach(id=>clearErr(id+'Err'));
-
-    const name     = document.getElementById('regName').value.trim();
-    const email    = document.getElementById('regEmail').value.trim();
-    const password = document.getElementById('regPassword').value;
-    const confirm  = document.getElementById('regConfirm').value;
-    const biz      = document.getElementById('regBusiness').value;
-
-    let ok = true;
-    if (name.length < 3)     { showErr('regNameErr','Nama mesti sekurang-kurangnya 3 aksara'); ok=false; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('regEmailErr','Format email tidak sah'); ok=false; }
-    if (password.length < 8) { showErr('regPasswordErr','Kata laluan mesti sekurang-kurangnya 8 aksara'); ok=false; }
-    if (password !== confirm) { showErr('regConfirmErr','Kata laluan tidak sepadan'); ok=false; }
-    if (!ok) return;
-
-    const btn = document.getElementById('registerBtn');
-    btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Mendaftar...';
-
-    const res = await registerUser({ name, email, password, businessType: biz });
-    btn.disabled = false; btn.innerHTML = '<i class="fa fa-user-plus"></i> Daftar Sekarang';
-    if (res.success) {
-      await cacheSession();
-      showToast('Akaun berjaya dicipta! Mengalihkan...', 'success');
-      setTimeout(() => window.location.href = 'dashboard.html', 900);
-    } else {
-      showToast(res.message, 'error');
-      showErr('regEmailErr', res.message);
+      updateLoginButtonState();
     }
   }
 </script>

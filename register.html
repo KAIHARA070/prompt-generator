@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- SECURITY: Prevent caching of sensitive data -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <!-- SECURITY: Security headers -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://supabase.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; connect-src 'self' https:;" />
+
+  <title>Prompt Generator Pro — Register</title>
+  <meta name="description" content="Create your account for Prompt Generator Pro"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles/base.css"/>
+  <link rel="stylesheet" href="css/login-clean.css"/>
+  <link rel="stylesheet" href="css/fontello.css"/>
+</head>
+<body>
+<main class="login-page" aria-label="Register">
+  <section class="login-card" aria-labelledby="registerTitle">
+    <div class="brand-wrap">
+      <div class="brand-mark" aria-hidden="true">PG</div>
+      <div class="brand-name">Prompt Generator Pro</div>
+      <select id="langSwitcher" class="lang-switch" aria-label="Language" style="margin-left:auto"></select>
+    </div>
+
+    <h1 id="registerTitle" class="login-title" data-i18n="register.title">Create your account</h1>
+    <p class="login-subtitle" data-i18n="register.subtitle">Start building your prompts in minutes.</p>
+
+    <form class="login-form" id="registerForm" onsubmit="handleRegister(event)" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="regEmail" data-i18n="login.email">Email address</label>
+        <div class="input-wrap">
+          <span class="input-icon icon-mail" aria-hidden="true"></span>
+          <input type="email" id="regEmail" class="form-control" data-i18n-placeholder="login.email" placeholder="you@company.com" autocomplete="email" required/>
+        </div>
+        <p class="form-err" id="regEmailErr" aria-live="polite"></p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="regPassword" data-i18n="login.password">Password</label>
+        <div class="input-wrap pw-wrap">
+          <span class="input-icon icon-lock" aria-hidden="true"></span>
+          <input type="password" id="regPassword" class="form-control" data-i18n-placeholder="login.passwordPlaceholder" placeholder="Create a password" autocomplete="new-password" required/>
+          <button type="button" class="pw-toggle" onclick="togglePw('regPassword', this)" aria-label="Show or hide password">Show</button>
+        </div>
+        <p class="form-err" id="regPasswordErr" aria-live="polite"></p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="regConfirm" data-i18n="register.confirmPassword">Confirm password</label>
+        <div class="input-wrap pw-wrap">
+          <span class="input-icon icon-lock" aria-hidden="true"></span>
+          <input type="password" id="regConfirm" class="form-control" data-i18n-placeholder="register.confirmPassword" placeholder="Confirm your password" autocomplete="new-password" required/>
+          <button type="button" class="pw-toggle" onclick="togglePw('regConfirm', this)" aria-label="Show or hide password">Show</button>
+        </div>
+        <p class="form-err" id="regConfirmErr" aria-live="polite"></p>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="registerBtn" disabled>
+        <span class="btn-icon icon-login" aria-hidden="true"></span>
+        <span class="btn-text" data-i18n="register.createAccount">Create account</span>
+      </button>
+
+      <div class="divider">or</div>
+
+      <button type="button" class="btn btn-secondary" id="googleRegisterBtn" onclick="loginWithGoogle()">
+        <span class="btn-icon icon-google" aria-hidden="true"></span>
+        <span data-i18n="login.continueGoogle">Continue with Google</span>
+      </button>
+
+      <p class="auth-row"><span data-i18n="register.haveAccount">Already have an account?</span> <a href="login.html" data-i18n="register.signin">Sign in</a></p>
+    </form>
+
+    <p class="card-footer" data-i18n="login.secureNote">Protected access for authorized users only.</p>
+  </section>
+</main>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/rate-limiting.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/i18n.js"></script>
+<script>
+  initI18n('langSwitcher');
+
+  (function () {
+    const s = JSON.parse(localStorage.getItem('pgp_cached_session') || 'null');
+    if (s && s.userId) window.location.href = 'dashboard.html';
+  })();
+
+  function togglePw(id, btn) {
+    const el = document.getElementById(id);
+    const isText = el.type === 'text';
+    el.type = isText ? 'password' : 'text';
+    btn.textContent = isText ? 'Show' : 'Hide';
+  }
+
+  function showErr(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.classList.add('show');
+    document.getElementById(id.replace('Err', '')).classList.add('err');
+  }
+
+  function clearErr(id) {
+    const el = document.getElementById(id);
+    el.textContent = '';
+    el.classList.remove('show');
+    document.getElementById(id.replace('Err', '')).classList.remove('err');
+  }
+
+  function showToast(msg, type = 'info') {
+    const c = document.getElementById('toastContainer');
+    const iconClasses = {success:'fa-circle-check',error:'fa-circle-xmark',info:'fa-circle-info'};
+    const t = document.createElement('div');
+    t.className = `toast toast-${type}`;
+
+    const icon = document.createElement('span');
+    icon.className = 'toast-icon';
+    const iconEl = document.createElement('i');
+    iconEl.className = `fa-solid ${iconClasses[type] || 'fa-circle-info'}`;
+    icon.appendChild(iconEl);
+
+    const text = document.createElement('span');
+    text.className = 'toast-text';
+    text.textContent = msg;
+
+    t.appendChild(icon);
+    t.appendChild(text);
+    c.appendChild(t);
+    setTimeout(() => {
+      t.classList.add('toast-exit');
+      setTimeout(() => t.remove(), 350);
+    }, 3500);
+  }
+
+  function updateRegisterButtonState() {
+    const email = document.getElementById('regEmail').value.trim();
+    const pass = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regConfirm').value;
+    document.getElementById('registerBtn').disabled = !(email && pass && confirm);
+  }
+
+  document.getElementById('regEmail').addEventListener('input', updateRegisterButtonState);
+  document.getElementById('regPassword').addEventListener('input', updateRegisterButtonState);
+  document.getElementById('regConfirm').addEventListener('input', updateRegisterButtonState);
+  updateRegisterButtonState();
+
+  async function handleRegister(e) {
+    e.preventDefault();
+    ['regEmail', 'regPassword', 'regConfirm'].forEach((id) => clearErr(id + 'Err'));
+
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regConfirm').value;
+
+    let ok = true;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showErr('regEmailErr', i18nText('register.err.emailInvalid', 'Invalid email format'));
+      ok = false;
+    }
+    if (password.length < 8) {
+      showErr('regPasswordErr', i18nText('register.err.passwordShort', 'Password must be at least 8 characters'));
+      ok = false;
+    }
+    if (password !== confirm) {
+      showErr('regConfirmErr', i18nText('register.err.passwordMatch', 'Passwords do not match'));
+      ok = false;
+    }
+    if (!ok) return;
+
+    const btn = document.getElementById('registerBtn');
+    btn.disabled = true;
+    btn.classList.add('is-loading');
+    btn.innerHTML = '<span class="spinner"></span><span class="btn-text">Creating account...</span>';
+
+    const fallbackName = email.split('@')[0] || 'User';
+    const res = await registerUser({ name: fallbackName, email, password, businessType: '' });
+
+    btn.disabled = false;
+    btn.classList.remove('is-loading');
+    btn.innerHTML = '<span class="btn-icon icon-login" aria-hidden="true"></span><span class="btn-text">Create account</span>';
+
+    if (res.success) {
+      await cacheSession();
+      showToast(i18nText('register.toast.created', 'Account created successfully!'), 'success');
+      setTimeout(() => (window.location.href = 'dashboard.html'), 900);
+    } else {
+      showToast(res.message, 'error');
+      showErr('regEmailErr', res.message);
+      updateRegisterButtonState();
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,11 +1,23 @@
+require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
-const supabase = createClient('https://ddwdwbhcnonbhmlipuvm.supabase.co', 'sb_publishable_REOH4QcENBCviLSQJg3Tdg_N98y5CG7');
+
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+const SUPABASE_TEST_EMAIL = process.env.SUPABASE_TEST_EMAIL;
+const SUPABASE_TEST_PASSWORD = process.env.SUPABASE_TEST_PASSWORD;
+
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !SUPABASE_TEST_EMAIL || !SUPABASE_TEST_PASSWORD) {
+  console.error('Missing required env vars: SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_TEST_EMAIL, SUPABASE_TEST_PASSWORD');
+  process.exit(1);
+}
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function testSave() {
   console.log("1. Logging in...");
   const { data: authData, error: authErr } = await supabase.auth.signInWithPassword({
-    email: 'cloudhosting070@gmail.com',
-    password: 'P@ssw0rd'
+    email: SUPABASE_TEST_EMAIL,
+    password: SUPABASE_TEST_PASSWORD
   });
 
   if (authErr) {

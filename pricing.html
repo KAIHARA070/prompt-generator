@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Harga — PromptBiz Pro</title>
+  <title>Harga — Prompt Generator Pro</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles/base.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="stylesheet" href="css/style.css"/>
   <style>
@@ -59,19 +60,29 @@
     .order-summary{background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0}
     .order-row{display:flex;justify-content:space-between;font-size:.88rem;padding:6px 0}
     .order-row.total{border-top:1px solid var(--border);margin-top:8px;padding-top:12px;font-weight:700;font-size:1rem}
+    .billing-toggle button:focus-visible,.payment-method:focus-visible,.promo-row input:focus-visible,.plan-cta:focus-visible{outline:none;box-shadow:0 0 0 3px var(--accent-glow)}
+    .pricing-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--border);background:var(--bg-secondary)}
+    .pricing-nav-actions{display:flex;gap:10px}
     @media(max-width:900px){.plans-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:550px){.plans-grid{grid-template-columns:1fr}}
+    @media(max-width:700px){
+      .pricing-nav{padding:14px 16px;flex-direction:column;align-items:flex-start;gap:10px}
+      .pricing-nav-actions{width:100%}
+      .pricing-nav-actions .btn{flex:1;justify-content:center}
+      .promo-row{flex-direction:column}
+      .promo-row .btn{width:100%;justify-content:center}
+    }
   </style>
 </head>
 <body style="background:var(--bg-primary)">
 
   <!-- NAV -->
-  <nav style="display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--border);background:var(--bg-secondary)">
+  <nav class="pricing-nav">
     <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none">
-      <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--accent-primary),#388BFD);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">✨</div>
-      <span style="font-weight:800;font-size:1rem;background:linear-gradient(135deg,var(--accent-light),#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">PromptBiz Pro</span>
+      <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--accent-primary),#388BFD);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;letter-spacing:.03em;color:#fff">PG</div>
+      <span style="font-weight:800;font-size:1rem;background:linear-gradient(135deg,var(--accent-light),#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Prompt Generator Pro</span>
     </a>
-    <div style="display:flex;gap:10px" id="navActions">
+    <div class="pricing-nav-actions" id="navActions">
       <a href="login.html" class="btn btn-ghost btn-sm">Log Masuk</a>
       <a href="login.html" class="btn btn-primary btn-sm">Daftar Percuma</a>
     </div>
@@ -133,8 +144,8 @@
   <div class="modal-overlay checkout-modal" id="checkoutModal">
     <div class="modal">
       <div class="modal-header">
-        <h3 class="modal-title">🔒 Pembayaran Selamat</h3>
-        <button class="modal-close" onclick="closeModal('checkoutModal')">✕</button>
+        <h3 class="modal-title"><i class="fa fa-lock"></i> Pembayaran Selamat</h3>
+          <button class="modal-close" onclick="closeModal('checkoutModal')"><i class="fa fa-xmark"></i></button>
       </div>
       <div class="modal-body">
         <div class="order-summary" id="orderSummary"></div>
@@ -209,8 +220,8 @@
           <div class="plan-price"><span class="currency">RM</span>${price}<span class="period">/bln</span></div>
           <div class="plan-yearly">${billing==='yearly' && p.price.monthly?`Jimat RM${(p.price.monthly-p.price.yearly)*12}/thn`:billing==='monthly'&&p.price.yearly?`atau RM${p.price.yearly}/bln (tahunan)`:''}</div>
           <ul class="plan-features">
-            ${p.features.map(f=>`<li><span class="check">✅</span>${f}</li>`).join('')}
-            ${p.missing.map(f=>`<li class="disabled"><span class="cross">❌</span>${f}</li>`).join('')}
+            ${p.features.map(f=>`<li><span class="check"><i class="fa fa-check"></i></span>${f}</li>`).join('')}
+            ${p.missing.map(f=>`<li class="disabled"><span class="cross"><i class="fa fa-xmark"></i></span>${f}</li>`).join('')}
           </ul>
           ${isCurrent
             ?`<div class="plan-cta ghost" style="text-align:center;padding:12px;opacity:.7;cursor:default">Pelan Semasa</div>`
@@ -263,7 +274,7 @@
           const latest = sub[sub.length-1];
           if (latest) processAffiliateCommission(getSession().userId, latest.amount);
           closeModal('checkoutModal');
-          showToast('🎉 Pelan berjaya dinaik taraf! Selamat menggunakan ' + res.plan.name, 'success');
+          showToast('Pelan berjaya dinaik taraf! Selamat menggunakan ' + res.plan.name, 'success');
           setTimeout(()=>window.location.href='dashboard.html',1500);
         } else {
           showToast(res.message||'Pembayaran gagal.','error');

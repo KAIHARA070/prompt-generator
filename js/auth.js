@@ -308,7 +308,7 @@ function populateUserUI(session) {
   document.querySelectorAll('[data-user-initials]').forEach(el => el.textContent = session.initials);
   document.querySelectorAll('[data-user-plan]').forEach(el => {
     const plan = session.plan?.toLowerCase();
-    el.textContent = plan === 'pro' ? '⭐ Pro' : plan === 'starter' ? '⚡ Starter' : plan === 'agency' ? '🏢 Agency' : 'Free';
+    el.textContent = plan === 'pro' ? 'Pro' : plan === 'starter' ? 'Starter' : plan === 'agency' ? 'Agency' : 'Free';
   });
 
   // Handle avatars (from Google)

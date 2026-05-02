@@ -14,17 +14,23 @@ function showToast(message, type = 'info', duration = 3500) {
     document.body.appendChild(container);
   }
 
-  // Define icons (safe emojis)
-  const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+  const iconClasses = {
+    success: 'fa-circle-check',
+    error: 'fa-circle-xmark',
+    warning: 'fa-triangle-exclamation',
+    info: 'fa-circle-info'
+  };
 
   // SECURITY: Create toast element safely (no innerHTML)
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
 
-  // Create icon span (safe - emoji only)
+  // Create icon span with deterministic classes
   const iconSpan = document.createElement('span');
   iconSpan.className = 'toast-icon';
-  iconSpan.textContent = icons[type] || 'ℹ️'; // ← SAFE: textContent (no HTML parsing)
+  const iconEl = document.createElement('i');
+  iconEl.className = `fa-solid ${iconClasses[type] || 'fa-circle-info'}`;
+  iconSpan.appendChild(iconEl);
 
   // Create message span (safe - textContent escapes HTML entities)
   const messageSpan = document.createElement('span');
