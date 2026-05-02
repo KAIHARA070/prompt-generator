@@ -5,6 +5,13 @@
 // ── Register ──────────────────────────────────────
 async function registerUser(userData) {
   try {
+    // Rate limiting check
+    const rateLimit = checkLoginLimit(userData.email);
+    if (!rateLimit.allowed) {
+      showToast(rateLimit.message, 'error');
+      return { success: false, message: rateLimit.message };
+    }
+
     const { data, error } = await sb.auth.signUp({
       email: userData.email,
       password: userData.password,
@@ -13,7 +20,11 @@ async function registerUser(userData) {
       }
     });
 
-    if (error) return { success: false, message: error.message };
+    if (error) {
+      // Record failed attempt for rate limiting
+      recordLoginAttempt(userData.email);
+      return { success: false, message: error.message };
+    }
 
     // Update profile with extra info
     if (data.user) {
@@ -24,8 +35,11 @@ async function registerUser(userData) {
       }).eq('id', data.user.id);
     }
 
+    // Clear rate limit after successful registration
+    clearLoginAttempts(userData.email);
     return { success: true, user: data.user };
   } catch (e) {
+    recordLoginAttempt(userData.email);
     return { success: false, message: e.message || 'Ralat pendaftaran.' };
   }
 }
@@ -33,12 +47,28 @@ async function registerUser(userData) {
 // ── Login ─────────────────────────────────────────
 async function loginUser(email, password) {
   try {
+    // Rate limiting check
+    const rateLimit = checkLoginLimit(email);
+    if (!rateLimit.allowed) {
+      showToast(rateLimit.message, 'error');
+      return { success: false, message: rateLimit.message, rateLimited: true };
+    }
+
     localStorage.clear();
     const { data, error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) return { success: false, message: error.message };
+    
+    if (error) {
+      // Record failed login attempt
+      recordLoginAttempt(email);
+      return { success: false, message: error.message };
+    }
+
+    // Clear rate limit after successful login
+    clearLoginAttempts(email);
     await cacheSession();
     return { success: true, user: data.user, session: data.session };
   } catch (e) {
+    recordLoginAttempt(email);
     return { success: false, message: e.message || 'Ralat log masuk.' };
   }
 }
@@ -46,6 +76,13 @@ async function loginUser(email, password) {
 // ── Google Login ──────────────────────────────────
 async function loginWithGoogle() {
   try {
+    // Rate limiting check
+    const rateLimit = checkIpLimit();
+    if (!rateLimit.allowed) {
+      showToast(rateLimit.message, 'error');
+      return;
+    }
+
     const { error } = await sb.auth.signInWithOAuth({
       provider: 'google',
       options: {
