@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Program Affiliate — PromptBiz Pro</title>
+  <title>Program Affiliate — Prompt Generator Pro</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles/base.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/fontello.css"/>
   <link rel="stylesheet" href="css/style.css"/>
   <style>
     .aff-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
@@ -21,23 +23,23 @@
 <body>
 <div class="app-layout">
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo"><h1>✨ Prompt Generator Pro</h1><p>Business Website Builder</p></div>
+    <div class="sidebar-logo"><h1><span class="app-logo-mark">PG</span><span class="app-logo-text">Prompt Generator Pro</span></h1><p>Business Website Builder</p></div>
     <nav class="sidebar-nav">
       <div class="nav-section">
         <div class="nav-section-label">Utama</div>
-        <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> Dashboard</a>
-        <a href="generator.html" class="nav-link"><span class="nav-icon">✨</span> Jana Prompt Baru</a>
-        <a href="saved-prompts.html" class="nav-link"><span class="nav-icon">💾</span> Prompt Tersimpan</a>
+        <a href="dashboard.html" class="nav-link"><span class="nav-icon icon-home"></span> Dashboard</a>
+        <a href="generator.html" class="nav-link"><span class="nav-icon icon-magic"></span> Jana Prompt Baru</a>
+        <a href="saved-prompts.html" class="nav-link"><span class="nav-icon icon-save"></span> Prompt Tersimpan</a>
       </div>
       <div class="nav-section">
         <div class="nav-section-label">Lain-lain</div>
-        <a href="pricing.html" class="nav-link"><span class="nav-icon">💰</span> Harga & Pelan</a>
-        <a href="affiliate.html" class="nav-link active"><span class="nav-icon">🔗</span> Affiliate</a>
-        <a href="admin.html" class="nav-link" data-admin-only><span class="nav-icon">👑</span> Admin Panel</a>
+        <a href="pricing.html" class="nav-link"><span class="nav-icon icon-pricing"></span> Harga & Pelan</a>
+        <a href="affiliate.html" class="nav-link active"><span class="nav-icon icon-link"></span> Affiliate</a>
+        <a href="admin.html" class="nav-link" data-admin-only><span class="nav-icon icon-admin"></span> Admin Panel</a>
       </div>
       <div class="nav-section">
         <div class="nav-section-label">Akaun</div>
-        <a href="#" class="nav-link" data-logout><span class="nav-icon">🚪</span> Log Keluar</a>
+        <a href="#" class="nav-link" data-logout><span class="nav-icon icon-logout"></span> Log Keluar</a>
       </div>
     </nav>
     <div class="sidebar-user"><div class="user-info"><div class="user-avatar" data-user-initials>??</div><div><div class="user-name" data-user-name>Pengguna</div><div class="user-plan" data-user-plan>Free</div></div></div></div>
@@ -45,16 +47,16 @@
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <main class="main-content">
-    <div class="top-bar"><button class="hamburger" id="hamburger"><span></span><span></span><span></span></button><span style="font-weight:700">🔗 Affiliate</span><div style="width:34px"></div></div>
-    <div class="page-header"><h1 class="page-title">🔗 Program Affiliate</h1><p class="page-subtitle">Jana pendapatan pasif dengan kongsikan PromptBiz Pro!</p></div>
+    <div class="top-bar"><button class="hamburger" id="hamburger"><span></span><span></span><span></span></button><span style="font-weight:700">Prompt Generator Pro</span><div style="width:34px"></div></div>
+    <div class="page-header"><h1 class="page-title">Program Affiliate</h1><p class="page-subtitle">Jana pendapatan pasif dengan kongsikan Prompt Generator Pro!</p></div>
     <div class="page-body">
 
       <!-- Not enabled notice -->
       <div class="card" id="affDisabled" style="text-align:center;padding:48px;display:none">
-        <div style="font-size:3rem;margin-bottom:16px">🔗</div>
+        <div style="font-size:3rem;margin-bottom:16px"><i class="fa fa-link"></i></div>
         <h3 style="margin-bottom:8px">Program Affiliate</h3>
         <p style="color:var(--text-secondary);margin-bottom:20px;max-width:400px;margin-left:auto;margin-right:auto">
-          Kongsikan PromptBiz Pro dan jana <strong>komisyen 30% berulang</strong> setiap bulan daripada setiap pelanggan yang anda rujuk!
+          Kongsikan Prompt Generator Pro dan jana <strong>komisyen 30% berulang</strong> setiap bulan daripada setiap pelanggan yang anda rujuk!
         </p>
         <button class="btn btn-primary btn-lg" onclick="enableAffiliate()"><i class="fa fa-rocket"></i> Aktifkan Affiliate Saya</button>
         <p style="font-size:.78rem;color:var(--text-muted);margin-top:12px">Memerlukan pelan Starter ke atas</p>
@@ -63,13 +65,13 @@
       <!-- Affiliate dashboard -->
       <div id="affDashboard" style="display:none">
         <div class="aff-stats">
-          <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-value" id="affBalance">RM0</div><div class="stat-label">Baki Semasa</div></div>
-          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-value" id="affReferrals">0</div><div class="stat-label">Rujukan Aktif</div></div>
-          <div class="stat-card"><div class="stat-icon">🖱️</div><div class="stat-value" id="affClicks">0</div><div class="stat-label">Klik Bulan Ini</div></div>
+          <div class="stat-card"><div class="stat-icon"><span class="icon-pricing"></span></div><div class="stat-value" id="affBalance">RM0</div><div class="stat-label">Baki Semasa</div></div>
+          <div class="stat-card"><div class="stat-icon"><span class="icon-admin"></span></div><div class="stat-value" id="affReferrals">0</div><div class="stat-label">Rujukan Aktif</div></div>
+          <div class="stat-card"><div class="stat-icon"><span class="icon-calendar"></span></div><div class="stat-value" id="affClicks">0</div><div class="stat-label">Klik Bulan Ini</div></div>
         </div>
 
         <div class="card" style="margin-bottom:20px">
-          <div class="card-header"><h3 class="card-title">🔗 Link Affiliate Anda</h3></div>
+          <div class="card-header"><h3 class="card-title"><i class="fa fa-link"></i> Link Affiliate Anda</h3></div>
           <div class="aff-link-box">
             <input type="text" class="form-control" id="affLink" readonly/>
             <button class="btn btn-primary" onclick="copyAffLink()"><i class="fa fa-copy"></i> Salin</button>
@@ -80,13 +82,13 @@
             <div class="badge badge-yellow">Min. withdraw: RM50</div>
           </div>
           <div style="margin-top:16px;padding:14px;background:var(--bg-primary);border-radius:8px;border:1px solid var(--border)">
-            <p style="font-size:.85rem;color:var(--text-secondary)">💡 <strong>Contoh pendapatan:</strong> 10 pelanggan Pro (RM79/bln) × 30% = <strong style="color:#3fb950">RM237/bulan</strong> pendapatan pasif!</p>
+            <p style="font-size:.85rem;color:var(--text-secondary)"><strong>Contoh pendapatan:</strong> 10 pelanggan Pro (RM79/bln) x 30% = <strong style="color:#3fb950">RM237/bulan</strong> pendapatan pasif!</p>
           </div>
         </div>
 
         <!-- Withdraw section -->
         <div class="card" style="margin-bottom:20px">
-          <div class="card-header"><h3 class="card-title">💸 Pengeluaran Dana</h3></div>
+          <div class="card-header"><h3 class="card-title"><i class="fa fa-money-bill-wave"></i> Pengeluaran Dana</h3></div>
           <div class="withdraw-form">
             <div class="form-group"><label class="form-label">Bank</label><select class="form-control" id="wdBank"><option>Maybank</option><option>CIMB</option><option>Bank Islam</option><option>RHB</option><option>Public Bank</option><option>Hong Leong</option><option>AmBank</option><option>Bank Rakyat</option></select></div>
             <div class="form-group"><label class="form-label">No. Akaun</label><input type="text" class="form-control" id="wdAccount" placeholder="1234567890"/></div>
@@ -98,7 +100,7 @@
 
         <!-- Earnings table -->
         <div class="card">
-          <div class="card-header"><h3 class="card-title">📊 Sejarah Pendapatan</h3></div>
+          <div class="card-header"><h3 class="card-title"><i class="fa fa-chart-column"></i> Sejarah Pendapatan</h3></div>
           <div style="overflow-x:auto" id="earningsTable"></div>
         </div>
       </div>
@@ -107,7 +109,7 @@
   </main>
 </div>
 
-<div class="modal-overlay" id="confirmModal"><div class="modal" style="max-width:400px"><div class="modal-header"><h3 class="modal-title">Pengesahan</h3><button class="modal-close" onclick="closeConfirmModal()">✕</button></div><div class="modal-body"><p id="confirmMessage"></p></div><div class="modal-footer"><button class="btn btn-ghost" onclick="closeConfirmModal()">Batal</button><button class="btn btn-danger" id="confirmOk">Ya</button></div></div></div>
+<div class="modal-overlay" id="confirmModal"><div class="modal" style="max-width:400px"><div class="modal-header"><h3 class="modal-title">Pengesahan</h3><button class="modal-close" onclick="closeConfirmModal()"><i class="fa fa-xmark"></i></button></div><div class="modal-body"><p id="confirmMessage"></p></div><div class="modal-footer"><button class="btn btn-ghost" onclick="closeConfirmModal()">Batal</button><button class="btn btn-danger" id="confirmOk">Ya</button></div></div></div>
 <div id="toast-container"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -145,7 +147,7 @@ function loadAffPage(){
     `<table class="earn-table"><thead><tr><th>Tarikh</th><th>Jumlah</th><th>Kadar</th><th>Status</th></tr></thead><tbody>
     ${earnings.map(e=>`<tr><td>${new Date(e.createdAt).toLocaleDateString('ms-MY')}</td><td style="font-weight:700;color:#3fb950">RM${e.amount.toFixed(2)}</td><td>${(e.commissionRate*100)}%</td><td><span class="badge ${e.status==='approved'?'badge-green':e.status==='paid'?'badge-blue':'badge-yellow'}">${e.status}</span></td></tr>`).join('')}
     </tbody></table>`:
-    '<div class="empty-state"><div class="empty-icon">📊</div><h3>Belum Ada Pendapatan</h3><p>Kongsikan link affiliate anda untuk mula menjana pendapatan!</p></div>';
+    '<div class="empty-state"><div class="empty-icon"><i class="fa fa-chart-column"></i></div><h3>Belum Ada Pendapatan</h3><p>Kongsikan link affiliate anda untuk mula menjana pendapatan!</p></div>';
 }
 
 function enableAffiliate(){

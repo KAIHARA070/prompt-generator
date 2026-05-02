@@ -1,0 +1,40 @@
+/*
+  Fontello-style icon classes.
+  Uses local CSS class names compatible with Fontello naming conventions.
+*/
+
+[class^="icon-"]::before,
+[class*=" icon-"]::before {
+  display: inline-block;
+  width: 1em;
+  line-height: 1em;
+  text-align: center;
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-home::before { content: "\f015"; }
+.icon-magic::before { content: "\e2ca"; }
+.icon-save::before { content: "\f0c7"; }
+.icon-pricing::before { content: "\f3d1"; }
+.icon-link::before { content: "\f0c1"; }
+.icon-admin::before { content: "\f3ed"; }
+.icon-logout::before { content: "\f2f5"; }
+.icon-list::before { content: "\f03a"; }
+.icon-calendar::before { content: "\f073"; }
+.icon-star::before { content: "\f005"; }
+.icon-file::before { content: "\f15c"; }
+
+.icon-mail::before { content: "\f0e0"; }
+.icon-lock::before { content: "\f023"; }
+.icon-login::before { content: "\f2f6"; }
+.icon-google::before {
+  font-family: "Font Awesome 6 Brands";
+  font-weight: 400;
+  content: "\f1a0";
+}

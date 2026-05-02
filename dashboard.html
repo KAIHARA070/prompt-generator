@@ -1,13 +1,26 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- SECURITY: Prevent caching of sensitive data -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  
+  <!-- SECURITY: Security headers -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://supabase.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; connect-src 'self' https:;" />
+  
   <title>Dashboard — Prompt Generator Pro</title>
-  <meta name="description" content="Dashboard utama Prompt Generator Pro"/>
+  <meta name="description" content="Prompt Generator Pro dashboard"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="styles/base.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/fontello.css"/>
   <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
@@ -16,25 +29,26 @@
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <h1>✨ Prompt Generator Pro</h1>
+      <h1><span class="app-logo-mark">PG</span><span class="app-logo-text">Prompt Generator Pro</span></h1>
       <p>Business Website Builder</p>
+      <select id="langSwitcher" class="lang-switch" aria-label="Language" style="margin-top:10px;width:100%"></select>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section">
-        <div class="nav-section-label">Utama</div>
-        <a href="dashboard.html" class="nav-link active"><span class="nav-icon">🏠</span> Dashboard</a>
-        <a href="generator.html" class="nav-link"><span class="nav-icon">✨</span> Jana Prompt Baru</a>
-        <a href="saved-prompts.html" class="nav-link"><span class="nav-icon">💾</span> Prompt Tersimpan</a>
+        <div class="nav-section-label" data-i18n="dash.main">Main</div>
+        <a href="dashboard.html" class="nav-link active"><span class="nav-icon icon-home"></span> <span data-i18n="nav.dashboard">Dashboard</span></a>
+        <a href="generator.html" class="nav-link"><span class="nav-icon icon-magic"></span> <span data-i18n="dash.newPrompt">Create Prompt</span></a>
+        <a href="saved-prompts.html" class="nav-link"><span class="nav-icon icon-save"></span> <span data-i18n="dash.saved">Saved Prompts</span></a>
       </div>
       <div class="nav-section">
-        <div class="nav-section-label">Lain-lain</div>
-        <a href="pricing.html" class="nav-link"><span class="nav-icon">💰</span> Harga & Pelan</a>
-        <a href="affiliate.html" class="nav-link"><span class="nav-icon">🔗</span> Affiliate</a>
-        <a href="admin.html" class="nav-link" data-admin-only><span class="nav-icon">👑</span> Admin Panel</a>
+        <div class="nav-section-label" data-i18n="dash.other">Other</div>
+        <a href="pricing.html" class="nav-link"><span class="nav-icon icon-pricing"></span> <span data-i18n="dash.pricing">Pricing & Plans</span></a>
+        <a href="affiliate.html" class="nav-link"><span class="nav-icon icon-link"></span> <span data-i18n="nav.affiliate">Affiliate</span></a>
+        <a href="admin.html" class="nav-link" data-admin-only><span class="nav-icon icon-admin"></span> <span>Admin Panel</span></a>
       </div>
       <div class="nav-section">
-        <div class="nav-section-label">Akaun</div>
-        <a href="#" class="nav-link" data-logout><span class="nav-icon">🚪</span> Log Keluar</a>
+        <div class="nav-section-label" data-i18n="dash.account">Account</div>
+        <a href="#" class="nav-link" data-logout><span class="nav-icon icon-logout"></span> <span data-i18n="dash.logout">Log Out</span></a>
       </div>
     </nav>
     <div class="sidebar-user">
@@ -57,13 +71,13 @@
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
-      <span style="font-weight:700;font-size:.95rem">✨ Prompt Generator Pro</span>
+      <span style="font-weight:700;font-size:.95rem">Prompt Generator Pro</span>
       <div class="user-avatar" style="width:34px;height:34px;font-size:.85rem" data-user-initials>??</div>
     </div>
 
     <div class="page-header">
-      <h1 class="page-title" id="welcomeMsg">Selamat datang! 👋</h1>
-      <p class="page-subtitle" id="welcomeSub">Anda mempunyai <strong id="totalCount">0</strong> prompt tersimpan.</p>
+      <h1 class="page-title" id="welcomeMsg" data-i18n="dash.welcome">Welcome!</h1>
+      <p class="page-subtitle" id="welcomeSub"><span data-i18n="dash.savedCount">You have</span> <strong id="totalCount">0</strong> <span data-i18n="dash.savedCountSuffix">saved prompts.</span></p>
     </div>
 
     <div class="page-body">
@@ -71,36 +85,36 @@
       <!-- STATS -->
       <div class="stats-grid" id="statsGrid">
         <div class="stat-card">
-          <div class="stat-icon">📋</div>
+          <div class="stat-icon"><span class="icon-list"></span></div>
           <div class="stat-value" id="statTotal">0</div>
-          <div class="stat-label">Jumlah Prompt</div>
+          <div class="stat-label" data-i18n="dash.stat.total">Total Prompts</div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">🗓️</div>
+          <div class="stat-icon"><span class="icon-calendar"></span></div>
           <div class="stat-value" id="statWeek">0</div>
-          <div class="stat-label">Jana Minggu Ini</div>
+          <div class="stat-label" data-i18n="dash.stat.week">This Week</div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">⭐</div>
+          <div class="stat-icon"><span class="icon-star"></span></div>
           <div class="stat-value" id="statFav">0</div>
-          <div class="stat-label">Kegemaran</div>
+          <div class="stat-label" data-i18n="dash.stat.fav">Favorites</div>
         </div>
       </div>
 
       <!-- QUICK ACTIONS -->
       <div class="card" style="margin-bottom:24px">
         <div class="card-header">
-          <h2 class="card-title">Tindakan Pantas</h2>
+          <h2 class="card-title" data-i18n="dash.quick">Quick Actions</h2>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
           <a href="generator.html" class="btn btn-primary btn-lg" style="justify-content:center;text-decoration:none">
-            <i class="fa fa-wand-magic-sparkles"></i> Jana Prompt Baru
+            <i class="fa fa-wand-magic-sparkles"></i> <span data-i18n="dash.action.create">Create Prompt</span>
           </a>
           <a href="saved-prompts.html" class="btn btn-secondary btn-lg" style="justify-content:center;text-decoration:none">
-            <i class="fa fa-folder-open"></i> Lihat Semua Prompt
+            <i class="fa fa-folder-open"></i> <span data-i18n="dash.action.viewAll">View All Prompts</span>
           </a>
           <a href="saved-prompts.html?filter=favourite" class="btn btn-ghost btn-lg" style="justify-content:center;text-decoration:none">
-            <i class="fa fa-star"></i> Prompt Kegemaran
+            <i class="fa fa-star"></i> <span data-i18n="dash.action.fav">Favorite Prompts</span>
           </a>
         </div>
       </div>
@@ -108,15 +122,15 @@
       <!-- RECENT PROMPTS -->
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title">📋 Prompt Terbaru</h2>
-          <a href="saved-prompts.html" class="btn btn-ghost btn-sm">Lihat Semua <i class="fa fa-arrow-right"></i></a>
+          <h2 class="card-title" data-i18n="dash.recent">Recent Prompts</h2>
+          <a href="saved-prompts.html" class="btn btn-ghost btn-sm"><span data-i18n="dash.seeAll">See All</span> <i class="fa fa-arrow-right"></i></a>
         </div>
         <div id="recentList">
           <div class="empty-state">
-            <div class="empty-icon">📝</div>
-            <h3>Tiada Prompt Lagi</h3>
-            <p>Jana prompt pertama anda untuk memulakan!</p>
-            <a href="generator.html" class="btn btn-primary"><i class="fa fa-wand-magic-sparkles"></i> Jana Sekarang</a>
+            <div class="empty-icon"><span class="icon-file"></span></div>
+            <h3 data-i18n="dash.emptyTitle">No Prompts Yet</h3>
+            <p data-i18n="dash.emptyText">Create your first prompt to get started!</p>
+            <a href="generator.html" class="btn btn-primary"><i class="fa fa-wand-magic-sparkles"></i> <span data-i18n="dash.generateNow">Generate Now</span></a>
           </div>
         </div>
       </div>
@@ -129,8 +143,8 @@
 <div class="modal-overlay" id="promptModal">
   <div class="modal" style="max-width:780px">
     <div class="modal-header">
-      <h3 class="modal-title" id="modalTitle">Lihat Prompt</h3>
-      <button class="modal-close" onclick="closeModal('promptModal')">✕</button>
+      <h3 class="modal-title" id="modalTitle" data-i18n="dash.modal.view">View Prompt</h3>
+      <button class="modal-close" onclick="closeModal('promptModal')"><i class="fa fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px" id="modalMeta"></div>
@@ -149,15 +163,15 @@
 <div class="modal-overlay" id="confirmModal">
   <div class="modal" style="max-width:420px">
     <div class="modal-header">
-      <h3 class="modal-title">Pengesahan</h3>
-      <button class="modal-close" onclick="closeConfirmModal()">✕</button>
+      <h3 class="modal-title" data-i18n="dash.modal.confirm">Confirmation</h3>
+      <button class="modal-close" onclick="closeConfirmModal()"><i class="fa fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <p id="confirmMessage" style="color:var(--text-secondary)"></p>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeConfirmModal()">Batal</button>
-      <button class="btn btn-danger" id="confirmOk">Ya, Padam</button>
+      <button class="btn btn-ghost" onclick="closeConfirmModal()" data-i18n="dash.modal.cancel">Cancel</button>
+      <button class="btn btn-danger" id="confirmOk" data-i18n="dash.modal.delete">Yes, Delete</button>
     </div>
   </div>
 </div>
@@ -172,12 +186,15 @@
 <script src="js/subscription.js"></script>
 <script src="js/affiliate.js"></script>
 <script src="js/utils.js"></script>
+<script src="js/i18n.js"></script>
 <script>
+  initI18n('langSwitcher');
+
   // Auth guard
   const session = requireAuth();
   if (session) {
     populateUserUI(session);
-    document.getElementById('welcomeMsg').textContent = `Selamat datang, ${session.name}! 👋`;
+    document.getElementById('welcomeMsg').textContent = `${i18nText('dash.welcome','Welcome')}, ${session.name}!`;
   }
 
   // Load data
@@ -198,10 +215,10 @@
     if (!prompts.length) {
       container.innerHTML = `
         <div class="empty-state">
-          <div class="empty-icon">📝</div>
-          <h3>Tiada Prompt Lagi</h3>
-          <p>Jana prompt pertama anda untuk memulakan!</p>
-          <a href="generator.html" class="btn btn-primary"><i class="fa fa-wand-magic-sparkles"></i> Jana Sekarang</a>
+          <div class="empty-icon"><span class="icon-file"></span></div>
+          <h3>${i18nText('dash.emptyTitle','No Prompts Yet')}</h3>
+          <p>${i18nText('dash.emptyText','Create your first prompt to get started!')}</p>
+          <a href="generator.html" class="btn btn-primary"><i class="fa fa-wand-magic-sparkles"></i> ${i18nText('dash.generateNow','Generate Now')}</a>
         </div>`;
       return;
     }
@@ -210,20 +227,30 @@
       <div class="prompt-card" style="margin-bottom:12px">
         <div class="prompt-card-header">
           <div>
-            <div class="prompt-card-title">${p.business_type_label || '📋'} ${p.title}</div>
+            <div class="prompt-card-title">${plainLabel(p.business_type_label || 'Prompt')} ${p.title}</div>
             <div class="prompt-card-meta">${timeAgo(p.updated_at)} · v${p.version}</div>
           </div>
-          <button class="star-btn" onclick="toggleFavAndRefresh('${p.id}')" title="Kegemaran">
-            ${p.is_favourite ? '⭐' : '☆'}
+          <button class="star-btn" onclick="toggleFavAndRefresh('${p.id}')" title="Favorite">
+            ${p.is_favourite ? '<i class="fa fa-star"></i>' : '<i class="fa-regular fa-star"></i>'}
           </button>
         </div>
         <div class="prompt-card-actions">
-          <button class="btn btn-ghost btn-sm" onclick="viewPrompt('${p.id}')"><i class="fa fa-eye"></i> Lihat</button>
-          <a href="generator.html?edit=${p.id}" class="btn btn-ghost btn-sm"><i class="fa fa-pen"></i> Edit</a>
-          <button class="btn btn-ghost btn-sm" onclick="copyPromptAction('${p.id}')"><i class="fa fa-copy"></i> Salin</button>
+          <button class="btn btn-ghost btn-sm" onclick="viewPrompt('${p.id}')"><i class="fa fa-eye"></i> ${i18nText('dash.view', 'View')}</button>
+          <a href="generator.html?edit=${p.id}" class="btn btn-ghost btn-sm"><i class="fa fa-pen"></i> ${i18nText('dash.edit', 'Edit')}</a>
+          <button class="btn btn-ghost btn-sm" onclick="copyPromptAction('${p.id}')"><i class="fa fa-copy"></i> ${i18nText('dash.copy', 'Copy')}</button>
           <button class="btn btn-danger btn-sm" onclick="removePrompt('${p.id}')"><i class="fa fa-trash"></i></button>
         </div>
       </div>`).join('');
+  }
+
+  function plainLabel(label = '') {
+    const text = String(label).trim();
+    const firstSpace = text.indexOf(' ');
+    if (firstSpace > 0) {
+      const firstToken = text.slice(0, firstSpace);
+      if (!/[A-Za-z0-9]/.test(firstToken)) return text.slice(firstSpace + 1);
+    }
+    return text;
   }
 
   let _currentViewId = null;
@@ -234,10 +261,10 @@
     _currentViewId = id;
     document.getElementById('modalTitle').textContent = p.title;
     document.getElementById('modalMeta').innerHTML = `
-      <span class="badge badge-green">${p.business_type_label}</span>
+      <span class="badge badge-green">${plainLabel(p.business_type_label || i18nText('dash.meta.prompt','Prompt'))}</span>
       <span class="badge badge-blue">v${p.version}</span>
-      <span class="badge badge-yellow">${new Date(p.created_at).toLocaleDateString('ms-MY')}</span>`;
-    document.getElementById('modalPromptText').value = p.generated_prompt || '(Prompt kosong)';
+      <span class="badge badge-yellow">${new Date(p.created_at).toLocaleDateString(getLanguage())}</span>`;
+    document.getElementById('modalPromptText').value = p.generated_prompt || i18nText('dash.emptyPrompt', '(Empty prompt)');
     openModal('promptModal');
   }
 
@@ -265,14 +292,14 @@
   async function toggleFavAndRefresh(id) {
     await toggleFavourite(id);
     await loadDashboard();
-    showToast('Kegemaran dikemas kini!', 'success');
+    showToast(i18nText('dash.favouriteUpdated', 'Favorite updated!'), 'success');
   }
 
   function removePrompt(id) {
-    confirmAction('Padam prompt ini? Tindakan ini tidak boleh dibatalkan.', async () => {
+    confirmAction(i18nText('dash.deleteConfirm', 'Delete this prompt? This action cannot be undone.'), async () => {
       await deletePrompt(id);
       await loadDashboard();
-      showToast('Prompt dipadam.', 'success');
+      showToast(i18nText('dash.deleted', 'Prompt deleted.'), 'success');
     });
   }
 

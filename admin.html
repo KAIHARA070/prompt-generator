@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Panel — PromptBiz Pro</title>
+  
+  <!-- SECURITY: Prevent caching of sensitive data -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  
+  <!-- SECURITY: Security headers -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://supabase.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; connect-src 'self' https:;" />
+  
+  <title>Admin Panel — Prompt Generator Pro</title>
+  <link rel="stylesheet" href="styles/base.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/fontello.css"/>
   <link rel="stylesheet" href="css/style.css"/>
   <style>
     .admin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
@@ -35,20 +48,20 @@
 
 <div class="app-layout">
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo"><h1>👑 Admin Panel</h1><p>PromptBiz Pro</p></div>
+    <div class="sidebar-logo"><h1><span class="app-logo-mark">PG</span><span class="app-logo-text">Prompt Generator Pro</span></h1><p>Admin Panel</p></div>
     <nav class="sidebar-nav">
       <div class="nav-section">
         <div class="nav-section-label">Menu Utama</div>
-        <a href="#" class="nav-link active" onclick="showTab('overview', this)" data-admin-only><span class="nav-icon">📊</span> Ringkasan</a>
-        <a href="#" class="nav-link" onclick="showTab('users', this)" data-admin-only><span class="nav-icon">👥</span> Pengguna</a>
-        <a href="#" class="nav-link" onclick="showTab('subs', this)" data-admin-only><span class="nav-icon">💰</span> Langganan</a>
-        <a href="#" class="nav-link" onclick="showTab('promo', this)" data-admin-only><span class="nav-icon">🎟️</span> Kod Promo</a>
-        <a href="#" class="nav-link" onclick="showTab('affiliate', this)" data-admin-only><span class="nav-icon">🔗</span> Affiliate</a>
+        <a href="#" class="nav-link active" onclick="showTab('overview', this)" data-admin-only><span class="nav-icon icon-list"></span> Ringkasan</a>
+        <a href="#" class="nav-link" onclick="showTab('users', this)" data-admin-only><span class="nav-icon icon-admin"></span> Pengguna</a>
+        <a href="#" class="nav-link" onclick="showTab('subs', this)" data-admin-only><span class="nav-icon icon-pricing"></span> Langganan</a>
+        <a href="#" class="nav-link" onclick="showTab('promo', this)" data-admin-only><span class="nav-icon icon-star"></span> Kod Promo</a>
+        <a href="#" class="nav-link" onclick="showTab('affiliate', this)" data-admin-only><span class="nav-icon icon-link"></span> Affiliate</a>
       </div>
       <div class="nav-section">
         <div class="nav-section-label">Sistem</div>
-        <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> Dashboard User</a>
-        <a href="#" class="nav-link" data-logout><span class="nav-icon">🚪</span> Log Keluar</a>
+        <a href="dashboard.html" class="nav-link"><span class="nav-icon icon-home"></span> Dashboard User</a>
+        <a href="#" class="nav-link" data-logout><span class="nav-icon icon-logout"></span> Log Keluar</a>
       </div>
     </nav>
   </aside>
@@ -57,11 +70,11 @@
   <main class="main-content">
     <div class="top-bar">
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-      <span style="font-weight:700" id="adminUserTitle">👑 Admin Panel</span>
+      <span style="font-weight:700" id="adminUserTitle">Prompt Generator Pro</span>
     </div>
 
     <div class="page-header">
-      <h1 class="page-title">👑 Panel Pengurusan</h1>
+      <h1 class="page-title">Panel Pengurusan</h1>
       <p class="page-subtitle">Urus pengguna, langganan dan statistik platform</p>
     </div>
 
@@ -69,14 +82,14 @@
       <!-- TAB: OVERVIEW -->
       <div class="tab-content active" id="tabOverview">
         <div class="admin-grid" id="adminStatsGrid">
-          <div class="admin-stat"><div class="as-icon">👥</div><div class="as-val" id="statTotalUsers">-</div><div class="as-label">Jumlah Pengguna</div></div>
-          <div class="admin-stat"><div class="as-icon">📝</div><div class="as-val" id="statTotalPrompts">-</div><div class="as-label">Jumlah Prompt</div></div>
-          <div class="admin-stat"><div class="as-icon">💎</div><div class="as-val" id="statActiveSubs">-</div><div class="as-label">Subs Aktif</div></div>
-          <div class="admin-stat"><div class="as-icon">💰</div><div class="as-val" id="statTotalRevenue">RM0</div><div class="as-label">Anggaran MRR</div></div>
+          <div class="admin-stat"><div class="as-icon"><i class="fa fa-users"></i></div><div class="as-val" id="statTotalUsers">-</div><div class="as-label">Jumlah Pengguna</div></div>
+          <div class="admin-stat"><div class="as-icon"><i class="fa fa-file-lines"></i></div><div class="as-val" id="statTotalPrompts">-</div><div class="as-label">Jumlah Prompt</div></div>
+          <div class="admin-stat"><div class="as-icon"><i class="fa fa-gem"></i></div><div class="as-val" id="statActiveSubs">-</div><div class="as-label">Subs Aktif</div></div>
+          <div class="admin-stat"><div class="as-icon"><i class="fa fa-money-bill-wave"></i></div><div class="as-val" id="statTotalRevenue">RM0</div><div class="as-label">Anggaran MRR</div></div>
         </div>
         
         <div class="card">
-          <div class="card-header"><h3 class="card-title">👥 Pendaftaran Terbaru</h3></div>
+          <div class="card-header"><h3 class="card-title"><i class="fa fa-users"></i> Pendaftaran Terbaru</h3></div>
           <div style="overflow-x:auto">
             <table class="data-table">
               <thead><tr><th>Nama</th><th>Email</th><th>Pelan</th><th>Tarikh</th></tr></thead>
@@ -104,7 +117,7 @@
       <!-- TAB: SUBS -->
       <div class="tab-content" id="tabSubs">
         <div class="card">
-          <div class="card-header"><h3 class="card-title">💰 Langganan Aktif</h3></div>
+          <div class="card-header"><h3 class="card-title"><i class="fa fa-money-bill-wave"></i> Langganan Aktif</h3></div>
           <div style="overflow-x:auto">
             <table class="data-table">
               <thead><tr><th>User ID</th><th>Pelan</th><th>Jumlah</th><th>Kitaran</th><th>Exp</th></tr></thead>
@@ -118,7 +131,7 @@
       <div class="tab-content" id="tabPromo">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">🎟️ Kod Promosi</h3>
+            <h3 class="card-title"><i class="fa fa-ticket"></i> Kod Promosi</h3>
             <button class="btn btn-primary btn-sm" onclick="openModal('addPromoModal')"><i class="fa fa-plus"></i> Tambah</button>
           </div>
           <div style="overflow-x:auto">
@@ -133,7 +146,7 @@
       <!-- TAB: AFFILIATE -->
       <div class="tab-content" id="tabAffiliate">
         <div class="card">
-          <div class="card-header"><h3 class="card-title">🔗 Permohonan Pengeluaran (Withdrawal)</h3></div>
+          <div class="card-header"><h3 class="card-title"><i class="fa fa-link"></i> Permohonan Pengeluaran (Withdrawal)</h3></div>
           <div style="overflow-x:auto">
             <table class="data-table">
               <thead><tr><th>User</th><th>Jumlah</th><th>Bank Info</th><th>Status</th><th>Tindakan</th></tr></thead>
@@ -150,7 +163,7 @@
 <!-- MODAL: ADD PROMO -->
 <div class="modal-overlay" id="addPromoModal">
   <div class="modal" style="max-width:400px">
-    <div class="modal-header"><h3 class="modal-title">Tambah Kod Promo</h3><button class="modal-close" onclick="closeModal('addPromoModal')">✕</button></div>
+    <div class="modal-header"><h3 class="modal-title">Tambah Kod Promo</h3><button class="modal-close" onclick="closeModal('addPromoModal')"><i class="fa fa-xmark"></i></button></div>
     <div class="modal-body">
       <div class="form-group"><label class="form-label">Kod</label><input type="text" class="form-control" id="newPromoCode" placeholder="RAYA50"/></div>
       <div class="form-group"><label class="form-label">Jenis</label><select class="form-control" id="newPromoType"><option value="percentage">Percentage (%)</option><option value="fixed">Fixed (RM)</option></select></div>
@@ -160,7 +173,7 @@
   </div>
 </div>
 
-<div class="modal-overlay" id="confirmModal"><div class="modal" style="max-width:400px"><div class="modal-header"><h3 class="modal-title">Sahkan</h3><button class="modal-close" onclick="closeConfirmModal()">✕</button></div><div class="modal-body"><p id="confirmMessage"></p></div><div class="modal-footer"><button class="btn btn-ghost" onclick="closeConfirmModal()">Batal</button><button class="btn btn-danger" id="confirmOk">Ya, Sahkan</button></div></div></div>
+<div class="modal-overlay" id="confirmModal"><div class="modal" style="max-width:400px"><div class="modal-header"><h3 class="modal-title">Sahkan</h3><button class="modal-close" onclick="closeConfirmModal()"><i class="fa fa-xmark"></i></button></div><div class="modal-body"><p id="confirmMessage"></p></div><div class="modal-footer"><button class="btn btn-ghost" onclick="closeConfirmModal()">Batal</button><button class="btn btn-danger" id="confirmOk">Ya, Sahkan</button></div></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
@@ -314,7 +327,7 @@
         <td>${p.used_count || 0}</td>
         <td>
            <button class="btn btn-ghost btn-sm" onclick="togglePromo('${p.id}', ${!p.active})">
-             ${p.active ? '✅ Aktif' : '❌ Mati'}
+             ${p.active ? '<i class="fa fa-circle-check"></i> Aktif' : '<i class="fa fa-circle-xmark"></i> Mati'}
            </button>
         </td>
       </tr>
@@ -345,17 +358,61 @@
   async function loadAllWithdrawals() {
     const { data } = await sb.from('withdrawals').select('*').order('requested_at', { ascending: false });
     const tbody = document.getElementById('allWithdrawalsTable');
-    tbody.innerHTML = (data || []).map(w => `
-      <tr>
-        <td style="font-size:10px">${w.user_id}</td>
-        <td>RM${w.amount}</td>
-        <td>${w.bank_name}<br/>${w.account_number}</td>
-        <td><span class="badge ${w.status==='pending'?'badge-yellow':'badge-green'}">${w.status}</span></td>
-        <td>
-          ${w.status === 'pending' ? `<button class="btn btn-primary btn-sm" onclick="approveWithdrawal('${w.id}')">Approve</button>` : 'Selesai'}
-        </td>
-      </tr>
-    `).join('');
+    
+    // SECURITY: Clear previous content and build safely
+    tbody.innerHTML = '';
+
+    if (!data || data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">No withdrawals</td></tr>';
+      return;
+    }
+
+    // SECURITY: Create rows safely without innerHTML
+    data.forEach(w => {
+      const row = document.createElement('tr');
+
+      // User ID column
+      const userCell = document.createElement('td');
+      userCell.style.fontSize = '10px';
+      userCell.textContent = w.user_id; // ← SAFE
+      row.appendChild(userCell);
+
+      // Amount column
+      const amountCell = document.createElement('td');
+      amountCell.textContent = `RM${w.amount}`; // ← SAFE
+      row.appendChild(amountCell);
+
+      // Bank info column (safe escape)
+      const bankCell = document.createElement('td');
+      bankCell.innerHTML = `${escapeHtml(w.bank_name)}<br/>${escapeHtml(w.account_number)}`;
+      row.appendChild(bankCell);
+
+      // Status column
+      const statusCell = document.createElement('td');
+      const statusBadge = document.createElement('span');
+      statusBadge.className = `badge ${w.status === 'pending' ? 'badge-yellow' : 'badge-green'}`;
+      statusBadge.textContent = w.status; // ← SAFE
+      statusCell.appendChild(statusBadge);
+      row.appendChild(statusCell);
+
+      // Action column
+      const actionCell = document.createElement('td');
+      if (w.status === 'pending') {
+        const button = document.createElement('button');
+        button.className = 'btn btn-primary btn-sm';
+        button.textContent = 'Approve';
+        button.dataset.withdrawalId = w.id; // ← SAFE: Use data attribute
+        button.addEventListener('click', () => approveWithdrawal(w.id));
+        actionCell.appendChild(button);
+      } else {
+        const span = document.createElement('span');
+        span.textContent = 'Selesai'; // ← SAFE
+        actionCell.appendChild(span);
+      }
+      row.appendChild(actionCell);
+
+      tbody.appendChild(row);
+    });
   }
 
   async function approveWithdrawal(id) {

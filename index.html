@@ -1,66 +1,82 @@
 <!DOCTYPE html>
-<html lang="ms">
-<head>
+<html lang="en">
+<head> 
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PromptBiz Pro — Jana Landing Page AI untuk Perniagaan Malaysia</title>
+  
+  <!-- SECURITY: Prevent caching of sensitive data -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  
+  <!-- SECURITY: Security headers -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://supabase.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; connect-src 'self' https:;" />
+  
+  <title>Prompt Generator Pro — Jana Landing Page AI untuk Perniagaan Malaysia</title>
   <meta name="description" content="Jana landing page profesional dalam 60 saat menggunakan AI. Sesuai untuk restoran, butik, salon, dan 20+ jenis perniagaan Malaysia."/>
-  <meta property="og:title" content="PromptBiz Pro — AI Landing Page Generator"/>
+  <meta property="og:title" content="Prompt Generator Pro — AI Landing Page Generator"/>
   <meta property="og:description" content="Jana landing page dalam 60 saat. Cuba percuma!"/>
+  <link rel="stylesheet" href="styles/base.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/fontello.css"/>
   <style>
-    :root{--bg:#0D1117;--bg2:#161B22;--card:#1C2128;--border:#30363D;--accent:#238636;--accent-l:#2EA043;--glow:rgba(35,134,54,.3);--blue:#388BFD;--text:#E6EDF3;--text2:#8B949E;--muted:#484F58;--radius:10px}
+    :root{--bg:#0B1220;--bg2:#111827;--card:#1A2233;--border:#2D3748;--accent:#2563EB;--accent-l:#3B82F6;--glow:rgba(59,130,246,.3);--cyan:#06B6D4;--text:#F8FAFC;--text2:#94A3B8;--muted:#64748B;--radius:12px}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
     a{color:var(--accent-l);text-decoration:none}
 
     /* NAV */
-    .lp-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,17,23,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .lp-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,18,32,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
     .lp-nav.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.4)}
     .nav-logo{display:flex;align-items:center;gap:10px}
-    .nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--blue));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
-    .nav-logo-text{font-weight:800;font-size:1.05rem;background:linear-gradient(135deg,var(--accent-l),#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--cyan));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;letter-spacing:.03em;color:#fff;box-shadow:0 6px 18px rgba(37,99,235,.35)}
+    .nav-logo-text{font-weight:800;font-size:1.05rem;background:linear-gradient(135deg,#93C5FD,#67E8F9);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
     .nav-links{display:flex;align-items:center;gap:24px;font-size:.9rem}
     .nav-links a{color:var(--text2);transition:.25s}.nav-links a:hover{color:var(--text)}
     .nav-cta{display:flex;gap:10px}
+    .lang-switch{background:transparent;border:1px solid var(--border);color:var(--text2);border-radius:10px;padding:8px 10px;font-family:'Outfit',sans-serif}
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--radius);font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:.25s}
     .btn-p{background:var(--accent);color:#fff}.btn-p:hover{background:var(--accent-l);box-shadow:0 0 24px var(--glow)}
     .btn-g{background:transparent;color:var(--text2);border:1px solid var(--border)}.btn-g:hover{border-color:var(--accent);color:var(--text)}
     .btn-lg{padding:14px 28px;font-size:1rem}
+    .btn:focus-visible,.lang-switch:focus-visible,.nav-links a:focus-visible{outline:none;box-shadow:0 0 0 3px var(--glow);border-radius:10px}
 
     /* HERO */
     .hero{padding:140px 40px 80px;text-align:center;position:relative;overflow:hidden}
-    .hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(35,134,54,.12) 0%,transparent 60%);pointer-events:none}
-    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:6px 16px;font-size:.82rem;color:var(--text2);margin-bottom:24px}
-    .hero-badge span{color:var(--accent-l);font-weight:700}
+    .hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(59,130,246,.16) 0%,transparent 62%);pointer-events:none}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:8px 16px;font-size:.82rem;color:var(--text2);margin-bottom:24px}
+    .hero-badge i{color:#60A5FA}
+    .hero-badge span{color:#BFDBFE;font-weight:700}
     .hero h1{font-size:3.2rem;font-weight:800;line-height:1.2;max-width:700px;margin:0 auto 20px}
-    .hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent-l),#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero h1 em{font-style:normal;background:linear-gradient(135deg,#93C5FD,#67E8F9);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
     .hero p{font-size:1.1rem;color:var(--text2);max-width:540px;margin:0 auto 32px;line-height:1.7}
     .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
     .social-proof{display:flex;align-items:center;justify-content:center;gap:12px;color:var(--text2);font-size:.88rem}
     .avatar-stack{display:flex}
-    .avatar-stack div{width:32px;height:32px;border-radius:50%;border:2px solid var(--bg);margin-left:-10px;background:linear-gradient(135deg,var(--accent),var(--blue));display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#fff}
+    .avatar-stack div{width:32px;height:32px;border-radius:50%;border:2px solid var(--bg);margin-left:-10px;background:linear-gradient(135deg,var(--accent),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#fff}
     .avatar-stack div:first-child{margin-left:0}
 
     /* SECTIONS */
     .section{padding:80px 40px;max-width:1100px;margin:0 auto}
     .section-title{text-align:center;font-size:2rem;font-weight:800;margin-bottom:8px}
-    .section-title em{font-style:normal;background:linear-gradient(135deg,var(--accent-l),#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .section-title em{font-style:normal;background:linear-gradient(135deg,var(--accent-l),#58a6ff);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
     .section-sub{text-align:center;color:var(--text2);max-width:500px;margin:0 auto 48px;font-size:.95rem}
 
     /* FEATURES */
     .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
     .feat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 24px;transition:.3s}
     .feat-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
-    .feat-icon{font-size:2rem;margin-bottom:14px}
+    .feat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:1rem;background:rgba(59,130,246,.14);color:#93C5FD;border:1px solid rgba(59,130,246,.28)}
     .feat-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
     .feat-card p{font-size:.85rem;color:var(--text2);line-height:1.6}
 
     /* STEPS */
     .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
     .step-card{text-align:center;padding:24px 16px}
-    .step-num{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--blue));display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;margin:0 auto 14px}
+    .step-num{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;margin:0 auto 14px;color:#fff}
     .step-card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
     .step-card p{font-size:.82rem;color:var(--text2)}
 
@@ -71,13 +87,15 @@
     .test-stars{color:#e3b341;margin-bottom:10px;font-size:.9rem}
     .test-text{font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:16px;font-style:italic}
     .test-author{display:flex;align-items:center;gap:10px}
-    .test-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;color:#fff}
-    .test-name{font-size:.85rem;font-weight:600}.test-biz{font-size:.75rem;color:var(--muted)}
+    .test-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--cyan));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;color:#fff}
+    .test-name{font-size:.85rem;font-weight:600}.test-biz{font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+    .test-biz i{color:#93C5FD}
 
     /* CTA */
-    .cta-section{text-align:center;padding:100px 40px;background:linear-gradient(180deg,var(--bg) 0%,rgba(35,134,54,.08) 50%,var(--bg) 100%)}
+    .cta-section{text-align:center;padding:100px 40px;background:linear-gradient(180deg,var(--bg) 0%,rgba(37,99,235,.12) 50%,var(--bg) 100%)}
     .cta-section h2{font-size:2.2rem;font-weight:800;margin-bottom:12px}
     .cta-section p{color:var(--text2);margin-bottom:28px;font-size:1rem}
+    .cta-highlight{font-style:normal;background:linear-gradient(135deg,#93C5FD,#67E8F9);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
     /* FOOTER */
     .lp-footer{padding:40px;border-top:1px solid var(--border);text-align:center}
@@ -87,7 +105,11 @@
 
     @media(max-width:900px){.feat-grid,.test-grid{grid-template-columns:1fr 1fr}.steps-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:600px){
-      .hero h1{font-size:2rem}.lp-nav{padding:14px 16px}.nav-links{display:none}.section{padding:50px 16px}
+      .hero h1{font-size:2rem}.lp-nav{padding:14px 16px;align-items:flex-start;gap:10px}.nav-links{display:none}.section{padding:50px 16px}
+      .nav-logo-text{font-size:.92rem}
+      .nav-cta{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+      .nav-cta .lang-switch{grid-column:1/-1;width:100%}
+      .nav-cta .btn{justify-content:center;padding:10px 12px;font-size:.82rem}
       .feat-grid,.test-grid,.steps-grid{grid-template-columns:1fr}
     }
   </style>
@@ -96,44 +118,44 @@
 
 <!-- NAV -->
 <nav class="lp-nav" id="lpNav">
-  <div class="nav-logo"><div class="nav-logo-icon">✨</div><div class="nav-logo-text">PromptBiz Pro</div></div>
-  <div class="nav-links"><a href="#features">Ciri-ciri</a><a href="#how">Cara Kerja</a><a href="#testimonials">Testimoni</a><a href="pricing.html">Harga</a></div>
-  <div class="nav-cta" id="navCta"><a href="login.html" class="btn btn-g">Log Masuk</a><a href="login.html" class="btn btn-p">Daftar Percuma</a></div>
+  <div class="nav-logo"><div class="nav-logo-icon">PG</div><div class="nav-logo-text">Prompt Generator Pro</div></div>
+  <div class="nav-links"><a href="#features" data-i18n="nav.features">Features</a><a href="#how" data-i18n="nav.how">How It Works</a><a href="#testimonials" data-i18n="nav.testimonials">Testimonials</a><a href="pricing.html" data-i18n="nav.pricing">Pricing</a></div>
+  <div class="nav-cta" id="navCta"><select id="langSwitcher" class="lang-switch" aria-label="Language"></select><a href="login.html" class="btn btn-g" data-i18n="nav.login">Log In</a><a href="login.html" class="btn btn-p" data-i18n="nav.signup">Sign Up Free</a></div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">✨ <span>Baru!</span> Jana HTML sebenar dengan AI</div>
-  <h1>Jana Landing Page Perniagaan dalam <em>60 Saat</em></h1>
-  <p>AI yang faham perniagaan Malaysia — Restoran, Butik, Salon & 25+ jenis lagi. Cipta website profesional tanpa perlu tahu coding.</p>
+  <div class="hero-badge"><span class="icon-magic"></span> <span data-i18n="index.hero.badgeNew">New!</span> <span data-i18n="index.hero.badgeText">Generate production HTML with AI</span></div>
+  <h1 data-i18n="index.hero.title">Generate A Business Landing Page in 60 Seconds</h1>
+  <p data-i18n="index.hero.subtitle">AI tuned for local businesses. Build a professional site without coding.</p>
   <div class="hero-btns">
-    <a href="login.html" class="btn btn-p btn-lg"><i class="fa fa-rocket"></i> Cuba Percuma 7 Hari</a>
-    <a href="#how" class="btn btn-g btn-lg"><i class="fa fa-play"></i> Tengok Demo</a>
+    <a href="login.html" class="btn btn-p btn-lg"><i class="fa fa-rocket"></i> <span data-i18n="index.hero.ctaPrimary">Try Free for 7 Days</span></a>
+    <a href="#how" class="btn btn-g btn-lg"><i class="fa fa-play"></i> <span data-i18n="index.hero.ctaSecondary">Watch Demo</span></a>
   </div>
   <div class="social-proof">
     <div class="avatar-stack"><div>AR</div><div>SN</div><div>LW</div><div>NK</div><div>+</div></div>
-    <span>Dipercayai <strong style="color:var(--text)">2,000+</strong> pemilik perniagaan Malaysia</span>
+    <span data-i18n="index.hero.trust">Trusted by 2,000+ business owners</span>
   </div>
 </section>
 
 <!-- FEATURES -->
 <section class="section" id="features">
-  <h2 class="section-title">Kenapa Pilih <em>PromptBiz Pro</em>?</h2>
-  <p class="section-sub">Semua yang anda perlukan untuk bina kehadiran online perniagaan anda.</p>
+  <h2 class="section-title" data-i18n="index.section.why">Why Choose Prompt Generator Pro?</h2>
+  <p class="section-sub" data-i18n="index.section.whySub">Everything you need to launch your business online.</p>
   <div class="feat-grid">
-    <div class="feat-card"><div class="feat-icon">🤖</div><h3>AI Jana HTML Sebenar</h3><p>Bukan sekadar teks — AI kami menghasilkan kod HTML lengkap yang boleh terus digunakan sebagai website.</p></div>
-    <div class="feat-card"><div class="feat-icon">🏪</div><h3>25+ Template Perniagaan</h3><p>Restoran, salon, butik, kontraktor, ejen hartanah, dan banyak lagi template khusus Malaysia.</p></div>
-    <div class="feat-card"><div class="feat-icon">📱</div><h3>Responsive & Mobile-Ready</h3><p>Setiap landing page yang dijana secara automatik menyesuaikan saiz pada semua peranti.</p></div>
-    <div class="feat-card"><div class="feat-icon">💾</div><h3>Simpan & Urus Projek</h3><p>Simpan semua prompt dan projek anda. Cari, filter, edit, dan urus dengan mudah.</p></div>
-    <div class="feat-card"><div class="feat-icon">💬</div><h3>WhatsApp Integration</h3><p>Setiap landing page termasuk butang WhatsApp click-to-chat yang siap digunakan.</p></div>
-    <div class="feat-card"><div class="feat-icon">📤</div><h3>Eksport Pelbagai Format</h3><p>Eksport dalam .txt, PDF, DOCX, atau HTML. Salin terus ke clipboard atau guna di Claude/ChatGPT.</p></div>
+    <div class="feat-card"><div class="feat-icon"><i class="fa-solid fa-robot"></i></div><h3>AI Jana HTML Sebenar</h3><p>Bukan sekadar teks — AI kami menghasilkan kod HTML lengkap yang boleh terus digunakan sebagai website.</p></div>
+    <div class="feat-card"><div class="feat-icon"><i class="fa-solid fa-store"></i></div><h3>25+ Template Perniagaan</h3><p>Restoran, salon, butik, kontraktor, ejen hartanah, dan banyak lagi template khusus Malaysia.</p></div>
+    <div class="feat-card"><div class="feat-icon"><i class="fa-solid fa-mobile-screen-button"></i></div><h3>Responsive & Mobile-Ready</h3><p>Setiap landing page yang dijana secara automatik menyesuaikan saiz pada semua peranti.</p></div>
+    <div class="feat-card"><div class="feat-icon"><i class="fa-solid fa-folder-open"></i></div><h3>Simpan & Urus Projek</h3><p>Simpan semua prompt dan projek anda. Cari, filter, edit, dan urus dengan mudah.</p></div>
+    <div class="feat-card"><div class="feat-icon"><i class="fa-brands fa-whatsapp"></i></div><h3>WhatsApp Integration</h3><p>Setiap landing page termasuk butang WhatsApp click-to-chat yang siap digunakan.</p></div>
+    <div class="feat-card"><div class="feat-icon"><i class="fa-solid fa-file-export"></i></div><h3>Eksport Pelbagai Format</h3><p>Eksport dalam .txt, PDF, DOCX, atau HTML. Salin terus ke clipboard atau guna di Claude/ChatGPT.</p></div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
 <section class="section" id="how">
-  <h2 class="section-title">Cara <em>Mudahnya</em></h2>
-  <p class="section-sub">Hanya 4 langkah untuk landing page profesional.</p>
+  <h2 class="section-title" data-i18n="index.section.how">How It Works</h2>
+  <p class="section-sub" data-i18n="index.section.howSub">Just 4 simple steps.</p>
   <div class="steps-grid">
     <div class="step-card"><div class="step-num">1</div><h3>Pilih Jenis Perniagaan</h3><p>Pilih daripada 25+ kategori perniagaan Malaysia.</p></div>
     <div class="step-card"><div class="step-num">2</div><h3>Isi Maklumat</h3><p>Masukkan nama, penerangan, warna & maklumat hubungan.</p></div>
@@ -144,34 +166,37 @@
 
 <!-- TESTIMONIALS -->
 <section class="section" id="testimonials">
-  <h2 class="section-title">Apa Kata <em>Pelanggan</em> Kami</h2>
-  <p class="section-sub">Ribuan pemilik perniagaan Malaysia sudah menggunakan PromptBiz Pro.</p>
+  <h2 class="section-title" data-i18n="index.section.testimonials">What Customers Say</h2>
+  <p class="section-sub" data-i18n="index.section.testimonialsSub">Thousands of businesses already use Prompt Generator Pro.</p>
   <div class="test-grid">
-    <div class="test-card"><div class="test-stars">★★★★★</div><div class="test-text">"Saya jimat RM2,000 kos web designer! Landing page yang dijana sangat cantik dan profesional. Pelanggan restoran saya pun puji."</div><div class="test-author"><div class="test-avatar">AR</div><div><div class="test-name">Ahmad Rizal</div><div class="test-biz">🍜 Pemilik Restoran, KL</div></div></div></div>
-    <div class="test-card"><div class="test-stars">★★★★★</div><div class="test-text">"Sebagai freelancer, saya guna PromptBiz untuk buat landing page client saya. Sangat pantas dan hasilnya memang WOW!"</div><div class="test-author"><div class="test-avatar">SN</div><div><div class="test-name">Siti Nurhaliza</div><div class="test-biz">🎨 Freelance Designer, Penang</div></div></div></div>
-    <div class="test-card"><div class="test-stars">★★★★★</div><div class="test-text">"Program affiliate dia pun best! Saya share link, dapat komisyen 30% setiap bulan. Dah collect RM800+ setakat ini."</div><div class="test-author"><div class="test-avatar">LW</div><div><div class="test-name">Lee Wei Ming</div><div class="test-biz">💻 Digital Marketer, JB</div></div></div></div>
+    <div class="test-card"><div class="test-stars">★★★★★</div><div class="test-text">"Saya jimat RM2,000 kos web designer! Landing page yang dijana sangat cantik dan profesional. Pelanggan restoran saya pun puji."</div><div class="test-author"><div class="test-avatar">AR</div><div><div class="test-name">Ahmad Rizal</div><div class="test-biz"><i class="fa-solid fa-utensils"></i> Pemilik Restoran, KL</div></div></div></div>
+    <div class="test-card"><div class="test-stars">★★★★★</div><div class="test-text">"Sebagai freelancer, saya guna Prompt Generator Pro untuk buat landing page client saya. Sangat pantas dan hasilnya memang WOW!"</div><div class="test-author"><div class="test-avatar">SN</div><div><div class="test-name">Siti Nurhaliza</div><div class="test-biz"><i class="fa-solid fa-pen-ruler"></i> Freelance Designer, Penang</div></div></div></div>
+    <div class="test-card"><div class="test-stars">★★★★★</div><div class="test-text">"Program affiliate dia pun best! Saya share link, dapat komisyen 30% setiap bulan. Dah collect RM800+ setakat ini."</div><div class="test-author"><div class="test-avatar">LW</div><div><div class="test-name">Lee Wei Ming</div><div class="test-biz"><i class="fa-solid fa-chart-line"></i> Digital Marketer, JB</div></div></div></div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-section">
-  <h2>Jangan Tunggu Lagi. <em style="font-style:normal;background:linear-gradient(135deg,var(--accent-l),#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Mulakan Hari Ini.</em></h2>
-  <p>Cuba percuma 7 hari — tiada kad kredit diperlukan.</p>
-  <a href="login.html" class="btn btn-p btn-lg" style="font-size:1.05rem"><i class="fa fa-rocket"></i> Cuba Percuma Sekarang</a>
+  <h2><span data-i18n="index.cta.title">Start Today</span></h2>
+  <p data-i18n="index.cta.subtitle">7-day free trial. No credit card required.</p>
+  <a href="login.html" class="btn btn-p btn-lg"><i class="fa fa-rocket"></i> <span data-i18n="index.cta.button">Start Free Now</span></a>
 </section>
 
 <!-- FOOTER -->
 <footer class="lp-footer">
   <div class="footer-links">
-    <a href="pricing.html">Harga</a>
+    <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
     <a href="affiliate.html">Affiliate</a>
-    <a href="login.html">Log Masuk</a>
+    <a href="login.html" data-i18n="nav.login">Log In</a>
     <a href="admin.html">Admin</a>
   </div>
-  <p class="footer-copy">© 2025 PromptBiz Pro. Semua hak terpelihara.</p>
+  <p class="footer-copy">© 2025 Prompt Generator Pro. <span data-i18n="index.footer.copy">All rights reserved.</span></p>
 </footer>
 
+<script src="js/i18n.js"></script>
 <script>
+  initI18n('langSwitcher');
+
   // Navbar scroll effect
   window.addEventListener('scroll',()=>{document.getElementById('lpNav').classList.toggle('scrolled',window.scrollY>50)});
 
@@ -179,7 +204,9 @@
   try{
     const s=JSON.parse(localStorage.getItem('pgp_session')||'null');
     if(s&&new Date(s.expiresAt)>new Date()){
-      document.getElementById('navCta').innerHTML=`<a href="dashboard.html" class="btn btn-p">Dashboard →</a>`;
+      const wrap = document.getElementById('navCta');
+      wrap.innerHTML = `<select id="langSwitcher" class="lang-switch" aria-label="Language"></select><a href="dashboard.html" class="btn btn-p">${i18nText('nav.dashboard','Dashboard')} →</a>`;
+      initI18n('langSwitcher');
     }
   }catch(e){}
 

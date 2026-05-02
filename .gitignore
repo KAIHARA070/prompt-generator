@@ -1,2 +1,27 @@
 node_modules/
 .env
+.env.local
+.env*.local
+
+# Security Documentation (Internal Use Only)
+/security/
+*.audit.md
+*.security.md
+
+# Logs & Temporary Files
+logs/
+*.log
+.DS_Store
+tmp/
+temp/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build & Distribution
+dist/
+build/
+*.tsbuildinfo

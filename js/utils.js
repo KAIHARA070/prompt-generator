@@ -4,23 +4,45 @@
 
 // ── Toast Notifications ───────────────────────────
 function showToast(message, type = 'info', duration = 3500) {
+  // SECURITY: Get or create container
   let container = document.getElementById('toast-container');
   if (!container) {
     container = document.createElement('div');
     container.id = 'toast-container';
+    container.setAttribute('role', 'status');
+    container.setAttribute('aria-live', 'polite');
     document.body.appendChild(container);
   }
 
-  const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+  const iconClasses = {
+    success: 'fa-circle-check',
+    error: 'fa-circle-xmark',
+    warning: 'fa-triangle-exclamation',
+    info: 'fa-circle-info'
+  };
+
+  // SECURITY: Create toast element safely (no innerHTML)
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
-  toast.innerHTML = `
-    <span class="toast-icon">${icons[type] || 'ℹ️'}</span>
-    <span class="toast-message">${message}</span>
-  `;
 
+  // Create icon span with deterministic classes
+  const iconSpan = document.createElement('span');
+  iconSpan.className = 'toast-icon';
+  const iconEl = document.createElement('i');
+  iconEl.className = `fa-solid ${iconClasses[type] || 'fa-circle-info'}`;
+  iconSpan.appendChild(iconEl);
+
+  // Create message span (safe - textContent escapes HTML entities)
+  const messageSpan = document.createElement('span');
+  messageSpan.className = 'toast-message';
+  messageSpan.textContent = message; // ← SAFE: textContent prevents XSS
+
+  // Assemble toast
+  toast.appendChild(iconSpan);
+  toast.appendChild(messageSpan);
   container.appendChild(toast);
 
+  // Auto-dismiss
   setTimeout(() => {
     toast.classList.add('toast-exit');
     setTimeout(() => toast.remove(), 350);
