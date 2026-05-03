@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Prompt Generator Pro — Log Masuk</title>
-  <meta name="description" content="Log masuk atau daftar untuk menggunakan Business Prompt Generator Pro"/>
+  <title>Prompt Generator Pro — Daftar Akaun</title>
+  <meta name="description" content="Daftar akaun untuk menggunakan Business Prompt Generator Pro"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -65,12 +65,6 @@
     .form-err.show{display:block}
 
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
-    .check-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;font-size:.85rem}
-    .check-row label{display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--text2)}
-    .check-row input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px}
-    .check-row a{color:var(--accent-l);text-decoration:none;font-size:.82rem}
-    .check-row a:hover{text-decoration:underline}
 
     .btn-auth{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:.25s;display:flex;align-items:center;justify-content:center;gap:10px}
     .btn-auth:hover{background:var(--accent-l);box-shadow:0 0 24px var(--accent-glow)}
@@ -158,41 +152,12 @@
     <select id="langSwitcher" class="form-control" style="width: auto; padding: 4px 8px; font-size: 0.75rem; height: auto;"></select>
   </div>
   <div class="auth-tabs">
-    <button class="auth-tab active" id="tabLogin" data-i18n="login.signin" onclick="switchTab('login')">Log Masuk</button>
-    <button class="auth-tab" id="tabRegister" data-i18n="nav.signup" onclick="switchTab('register')">Daftar</button>
+    <a href="login.html" class="auth-tab" data-i18n="login.signin">Log Masuk</a>
+    <a href="register.html" class="auth-tab active" data-i18n="nav.signup">Daftar</a>
   </div>
 
-  <!-- ── LOGIN FORM ── -->
-  <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
-    <div class="form-group">
-      <label class="form-label" data-i18n="login.email">Email</label>
-      <input type="email" id="loginEmail" class="form-control" placeholder="nama@email.com" required/>
-      <div class="form-err" id="loginEmailErr"></div>
-    </div>
-    <div class="form-group">
-      <label class="form-label" data-i18n="login.password">Kata Laluan</label>
-      <div class="pw-wrap">
-        <input type="password" id="loginPassword" class="form-control" data-i18n-placeholder="login.passwordPlaceholder" placeholder="Masukkan kata laluan" required/>
-        <button type="button" class="pw-toggle" onclick="togglePw('loginPassword',this)"><i class="fa fa-eye"></i></button>
-      </div>
-      <div class="form-err" id="loginPasswordErr"></div>
-    </div>
-    <div class="check-row">
-      <label><input type="checkbox" id="rememberMe"/> <span data-i18n="login.remember">Ingat Saya</span></label>
-      <a href="#" data-i18n="login.forgot">Terlupa Kata Laluan?</a>
-    </div>
-    <button type="submit" class="btn-auth" id="loginBtn">
-      <i class="fa fa-right-to-bracket"></i> <span data-i18n="login.signin">Log Masuk</span>
-    </button>
-    <div class="divider">Atau</div>
-    <button type="button" class="btn-auth" style="background:#fff; color:#333; border:1px solid #ddd;" onclick="loginWithGoogle()">
-      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" style="margin-right:8px"/> <span data-i18n="login.continueGoogle">Log Masuk dengan Google</span>
-    </button>
-    <div class="auth-switch"><span data-i18n="login.noAccount">Belum ada akaun?</span> <a href="#" onclick="switchTab('register')" data-i18n="login.createOne">Daftar sekarang</a></div>
-  </form>
-
   <!-- ── REGISTER FORM ── -->
-  <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
+  <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
     <div class="form-group">
       <label class="form-label">Nama Penuh</label>
       <input type="text" id="regName" class="form-control" placeholder="Ahmad bin Abdullah" required/>
@@ -244,7 +209,7 @@
     <button type="button" class="btn-auth" style="background:#fff; color:#333; border:1px solid #ddd;" onclick="loginWithGoogle()">
       <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" style="margin-right:8px"/> <span data-i18n="login.continueGoogle">Daftar dengan Google</span>
     </button>
-    <div class="auth-switch"><span data-i18n="register.haveAccount">Sudah ada akaun?</span> <a href="#" onclick="switchTab('login')" data-i18n="login.signin">Log masuk</a></div>
+    <div class="auth-switch"><span data-i18n="register.haveAccount">Sudah ada akaun?</span> <a href="login.html" data-i18n="login.signin">Log masuk</a></div>
   </form>
 </div>
 
@@ -263,13 +228,6 @@
     const s = JSON.parse(localStorage.getItem('pgp_cached_session') || 'null');
     if (s && s.userId) window.location.href = 'dashboard.html';
   })();
-
-  function switchTab(tab) {
-    document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
-    document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
-    document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
-    document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
-  }
 
   function togglePw(id, btn) {
     const el = document.getElementById(id);
@@ -306,32 +264,6 @@
     t.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span style="font-size:.88rem">${msg}</span>`;
     c.appendChild(t);
     setTimeout(()=>{ t.classList.add('toast-exit'); setTimeout(()=>t.remove(),350); }, 3500);
-  }
-
-  async function handleLogin(e) {
-    e.preventDefault();
-    ['loginEmail','loginPassword'].forEach(id=>clearErr(id+'Err'));
-    const email = document.getElementById('loginEmail').value.trim();
-    const pass  = document.getElementById('loginPassword').value;
-
-    let ok = true;
-    if (!email) { showErr('loginEmailErr', i18nText('login.err.emailRequired', 'Email diperlukan')); ok=false; }
-    if (!pass)  { showErr('loginPasswordErr', i18nText('login.err.passwordRequired', 'Kata laluan diperlukan')); ok=false; }
-    if (!ok) return;
-
-    const btn = document.getElementById('loginBtn');
-    btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> ' + i18nText('login.processing', 'Memproses...');
-
-    const res = await loginUser(email, pass);
-    btn.disabled = false; btn.innerHTML = '<i class="fa fa-right-to-bracket"></i> ' + i18nText('login.signin', 'Log Masuk');
-    if (res.success) {
-      await cacheSession();
-      showToast(i18nText('login.toast.welcome', 'Selamat datang!'), 'success');
-      setTimeout(() => window.location.href = 'dashboard.html', 800);
-    } else {
-      showToast(res.message, 'error');
-      showErr('loginPasswordErr', res.message);
-    }
   }
 
   async function handleRegister(e) {

@@ -11,6 +11,13 @@ async function savePrompt(promptData) {
       return null;
     }
 
+    // Rate limiting check
+    const rateLimit = checkPromptSaveLimit(session.userId);
+    if (!rateLimit.allowed) {
+      showToast(rateLimit.message, 'error');
+      return null;
+    }
+
     const { data, error } = await sb.from('prompts').insert({
       user_id: session.userId,
       title: promptData.title || promptData.formData?.businessName || 'Tanpa Tajuk',
@@ -23,7 +30,7 @@ async function savePrompt(promptData) {
 
     if (error) {
       console.error('savePrompt DB error:', error);
-      showToast('Gagal menyimpan ke database: ' + error.message, 'error');
+      showToast('Gagal menyimpan prompt. Sila coba lagi.', 'error');
       return null;
     }
     return data;

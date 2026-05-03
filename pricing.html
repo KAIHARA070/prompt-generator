@@ -72,18 +72,19 @@
       <span style="font-weight:800;font-size:1rem;background:linear-gradient(135deg,var(--accent-light),#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">PromptBiz Pro</span>
     </a>
     <div style="display:flex;gap:10px" id="navActions">
-      <a href="login.html" class="btn btn-ghost btn-sm">Log Masuk</a>
-      <a href="login.html" class="btn btn-primary btn-sm">Daftar Percuma</a>
+      <select id="langSwitcher" class="btn btn-ghost btn-sm" style="width: auto;"></select>
+      <a href="login.html" class="btn btn-ghost btn-sm" data-i18n="nav.login">Log Masuk</a>
+      <a href="login.html" class="btn btn-primary btn-sm" data-i18n="nav.signup">Daftar Percuma</a>
     </div>
   </nav>
 
   <!-- HERO -->
   <section class="pricing-hero">
-    <h1>Pilih Pelan <span>Yang Sesuai</span></h1>
-    <p>Mulakan percuma, naik taraf bila anda sedia. Semua pelan berbayar datang dengan <strong>7 hari percubaan percuma</strong>.</p>
+    <h1 data-i18n="pricing.title">Pilih Pelan <span>Yang Sesuai</span></h1>
+    <p data-i18n="pricing.subtitle">Mulakan percuma, naik taraf bila anda sedia. Semua pelan berbayar datang dengan <strong>7 hari percubaan percuma</strong>.</p>
     <div class="billing-toggle">
-      <button class="active" id="btnMonthly" onclick="setBilling('monthly')">Bulanan</button>
-      <button id="btnYearly" onclick="setBilling('yearly')">Tahunan <span class="save-badge">Jimat 35%</span></button>
+      <button class="active" id="btnMonthly" onclick="setBilling('monthly')" data-i18n="pricing.monthly">Bulanan</button>
+      <button id="btnYearly" onclick="setBilling('yearly')"><span data-i18n="pricing.yearly">Tahunan</span> <span class="save-badge" data-i18n="pricing.save">Jimat 35%</span></button>
     </div>
   </section>
 
@@ -92,40 +93,40 @@
 
   <!-- PROMO CODE -->
   <div class="promo-section">
-    <p style="font-size:.85rem;color:var(--text-secondary);margin-bottom:10px">Ada kod promo?</p>
+    <p style="font-size:.85rem;color:var(--text-secondary);margin-bottom:10px" data-i18n="pricing.promo">Ada kod promo?</p>
     <div class="promo-row">
-      <input type="text" id="promoInput" placeholder="Masukkan kod promo"/>
-      <button class="btn btn-secondary btn-sm" onclick="applyPromo()">Guna</button>
+      <input type="text" id="promoInput" data-i18n-placeholder="pricing.promoPlaceholder" placeholder="Masukkan kod promo"/>
+      <button class="btn btn-secondary btn-sm" onclick="applyPromo()" data-i18n="pricing.promoApply">Guna</button>
     </div>
     <p id="promoMsg" style="font-size:.82rem;margin-top:8px"></p>
   </div>
 
   <!-- FAQ -->
   <section class="faq-section">
-    <h2>❓ Soalan Lazim</h2>
+    <h2 data-i18n="pricing.faq">❓ Soalan Lazim</h2>
     <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Bolehkah saya batalkan bila-bila masa? <i class="fa fa-chevron-down"></i></div>
-      <div class="faq-a">Ya! Anda boleh batalkan subscription anda pada bila-bila masa. Tiada kontrak jangka panjang. Anda masih boleh menggunakan ciri-ciri premium sehingga tempoh langganan tamat.</div>
+      <div class="faq-q" data-i18n="pricing.faq.q1">Bolehkah saya batalkan bila-bila masa? <i class="fa fa-chevron-down"></i></div>
+      <div class="faq-a" data-i18n="pricing.faq.a1">Ya! Anda boleh batalkan subscription anda pada bila-bila masa. Tiada kontrak jangka panjang. Anda masih boleh menggunakan ciri-ciri premium sehingga tempoh langganan tamat.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Apakah AI yang digunakan? <i class="fa fa-chevron-down"></i></div>
-      <div class="faq-a">Kami menggunakan Claude (Anthropic) sebagai AI utama dan GPT-4 sebagai backup. Kedua-duanya adalah model AI terkemuka dunia yang menghasilkan kod HTML berkualiti tinggi.</div>
+      <div class="faq-q" data-i18n="pricing.faq.q2">Apakah AI yang digunakan? <i class="fa fa-chevron-down"></i></div>
+      <div class="faq-a" data-i18n="pricing.faq.a2">Kami menggunakan Claude (Anthropic) sebagai AI utama dan GPT-4 sebagai backup. Kedua-duanya adalah model AI terkemuka dunia yang menghasilkan kod HTML berkualiti tinggi.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Berapa lama masa untuk jana landing page? <i class="fa fa-chevron-down"></i></div>
-      <div class="faq-a">Biasanya antara 15-30 saat. AI kami akan menghasilkan kod HTML lengkap yang boleh terus digunakan. Anda boleh preview hasilnya sebelum menyimpan.</div>
+      <div class="faq-q" data-i18n="pricing.faq.q3">Berapa lama masa untuk jana landing page? <i class="fa fa-chevron-down"></i></div>
+      <div class="faq-a" data-i18n="pricing.faq.a3">Biasanya antara 15-30 saat. AI kami akan menghasilkan kod HTML lengkap yang boleh terus digunakan. Anda boleh preview hasilnya sebelum menyimpan.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Adakah kod HTML boleh diedit? <i class="fa fa-chevron-down"></i></div>
-      <div class="faq-a">Sudah tentu! Kod HTML yang dijana adalah milik anda sepenuhnya. Anda boleh edit, ubah suai, dan gunakan tanpa sebarang sekatan. Tiada watermark untuk pelan berbayar.</div>
+      <div class="faq-q" data-i18n="pricing.faq.q4">Adakah kod HTML boleh diedit? <i class="fa fa-chevron-down"></i></div>
+      <div class="faq-a" data-i18n="pricing.faq.a4">Sudah tentu! Kod HTML yang dijana adalah milik anda sepenuhnya. Anda boleh edit, ubah suai, dan gunakan tanpa sebarang sekatan. Tiada watermark untuk pelan berbayar.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Apakah kaedah pembayaran yang diterima? <i class="fa fa-chevron-down"></i></div>
-      <div class="faq-a">Kami menerima FPX (online banking Malaysia), kad kredit/debit (Visa, Mastercard), dan e-wallet melalui toyyibPay dan Billplz. Untuk pelanggan antarabangsa, kami juga menyokong Stripe.</div>
+      <div class="faq-q" data-i18n="pricing.faq.q5">Apakah kaedah pembayaran yang diterima? <i class="fa fa-chevron-down"></i></div>
+      <div class="faq-a" data-i18n="pricing.faq.a5">Kami menerima FPX (online banking Malaysia), kad kredit/debit (Visa, Mastercard), dan e-wallet melalui toyyibPay dan Billplz. Untuk pelanggan antarabangsa, kami juga menyokong Stripe.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Bagaimana program affiliate berfungsi? <i class="fa fa-chevron-down"></i></div>
-      <div class="faq-a">Daftar sebagai affiliate (percuma untuk pelan Starter ke atas), kongsi link unik anda, dan jana komisyen 30% berulang setiap bulan daripada setiap pelanggan yang anda rujuk. Minimum pengeluaran RM50.</div>
+      <div class="faq-q" data-i18n="pricing.faq.q6">Bagaimana program affiliate berfungsi? <i class="fa fa-chevron-down"></i></div>
+      <div class="faq-a" data-i18n="pricing.faq.a6">Daftar sebagai affiliate (percuma untuk pelan Starter ke atas), kongsi link unik anda, dan jana komisyen 30% berulang setiap bulan daripada setiap pelanggan yang anda rujuk. Minimum pengeluaran RM50.</div>
     </div>
   </section>
 
@@ -133,12 +134,12 @@
   <div class="modal-overlay checkout-modal" id="checkoutModal">
     <div class="modal">
       <div class="modal-header">
-        <h3 class="modal-title">🔒 Pembayaran Selamat</h3>
+        <h3 class="modal-title" data-i18n="pricing.modal.title">🔒 Pembayaran Selamat</h3>
         <button class="modal-close" onclick="closeModal('checkoutModal')">✕</button>
       </div>
       <div class="modal-body">
         <div class="order-summary" id="orderSummary"></div>
-        <p style="font-size:.85rem;font-weight:700;margin-bottom:10px;color:var(--text-secondary)">Pilih kaedah pembayaran:</p>
+        <p style="font-size:.85rem;font-weight:700;margin-bottom:10px;color:var(--text-secondary)" data-i18n="pricing.modal.choose">Pilih kaedah pembayaran:</p>
         <div class="payment-methods">
           <div class="payment-method selected" onclick="selectPayment(this,'toyyibpay')">
             <div class="pm-icon">🇲🇾</div>
@@ -154,9 +155,9 @@
           </div>
         </div>
         <button class="btn btn-primary btn-block btn-lg" id="payBtn" onclick="processCheckout()" style="margin-top:16px">
-          <i class="fa fa-lock"></i> <span id="payBtnText">Bayar Sekarang</span>
+          <i class="fa fa-lock"></i> <span id="payBtnText" data-i18n="pricing.modal.pay">Bayar Sekarang</span>
         </button>
-        <p style="text-align:center;font-size:.75rem;color:var(--text-muted);margin-top:12px"><i class="fa fa-shield-halved"></i> Dijamin: SSL 256-bit · Pembayaran 100% selamat</p>
+        <p style="text-align:center;font-size:.75rem;color:var(--text-muted);margin-top:12px"><i class="fa fa-shield-halved"></i> <span data-i18n="pricing.modal.secure">Dijamin: SSL 256-bit · Pembayaran 100% selamat</span></p>
       </div>
     </div>
   </div>
@@ -165,12 +166,15 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/subscription.js"></script>
   <script src="js/affiliate.js"></script>
   <script src="js/utils.js"></script>
   <script>
+    initI18n('langSwitcher');
+
     let billing = 'monthly';
     let selectedPlan = null;
     let selectedPayment = 'toyyibpay';
@@ -181,8 +185,10 @@
       const s = getSession();
       if (s) {
         document.getElementById('navActions').innerHTML = `
-          <a href="dashboard.html" class="btn btn-ghost btn-sm">Dashboard</a>
-          <a href="#" class="btn btn-ghost btn-sm" data-logout>Log Keluar</a>`;
+          <select id="langSwitcherDashboard" class="btn btn-ghost btn-sm" style="width: auto;"></select>
+          <a href="dashboard.html" class="btn btn-ghost btn-sm" data-i18n="nav.dashboard">Dashboard</a>
+          <a href="#" class="btn btn-ghost btn-sm" data-logout data-i18n="dash.logout">Log Keluar</a>`;
+        initI18n('langSwitcherDashboard');
       }
     })();
 

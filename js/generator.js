@@ -170,7 +170,7 @@ const BUSINESS_TEMPLATES = {
     ]
   },
   propDev : { 
-    label:'🏢 Pemaju Hartanah', icon:'🏢', category:'Hartanah', tone:'Mewah & Eksklusif',
+    label:'Pemaju Hartanah', icon:'🏢', category:'Hartanah', tone:'Mewah & Eksklusif',
     sections:['Projek','Konsep','Kemudahan','Daftar Minat'],
     fields: [
       { id:'project_status', label:'Status Projek', type:'text', placeholder:'Pre-launch, Under-construction, Ready to move...' },
@@ -320,7 +320,7 @@ Ini adalah website ${tpl.label || type} yang memerlukan rekabentuk profesional, 
 function buildInfoSection(d, tpl) {
   const lines = [
     `═══════════════════════════════════════════════════════`,
-    `📋 MAKLUMAT PERNIAGAAN`,
+    `MAKLUMAT PERNIAGAAN`,
     `═══════════════════════════════════════════════════════`,
     ``,
     `Nama Perniagaan   : ${d.businessName || '-'}`,
@@ -354,7 +354,7 @@ function buildInfoSection(d, tpl) {
   if (d.images && d.images.length > 0) {
     lines.push(
       ``,
-      `🖼️ GALERI IMEJ UNTUK DIGUNAKAN:`,
+      `GALERI IMEJ UNTUK DIGUNAKAN:`,
       ...d.images.map((img, i) => `${i+1}. ${img}`)
     );
   }
@@ -367,7 +367,7 @@ function buildProductSection(d) {
   
   const lines = [
     `═══════════════════════════════════════════════════════`,
-    `🛍️ KATALOG PRODUK / PERKHIDMATAN`,
+    `KATALOG PRODUK / PERKHIDMATAN`,
     `═══════════════════════════════════════════════════════`,
     `Sila bina grid produk yang menarik dengan butang "Order WhatsApp" untuk setiap produk:`,
     ``
@@ -461,12 +461,12 @@ function buildFeaturesSection(d, businessType, tpl) {
   // Tambah info QR jika ada
   let qrNote = '';
   if (d.qrInfo && d.qrInfo.url) {
-    qrNote = `\n\n💳 ARAHAN PEMBAYARAN:\n- Sila sertakan bahagian pembayaran menggunakan QR Code (${d.qrInfo.type || 'Pilihan'})\n- URL Gambar QR: ${d.qrInfo.url}`;
+    qrNote = `\n\nARAHAN PEMBAYARAN:\n- Sila sertakan bahagian pembayaran menggunakan QR Code (${d.qrInfo.type || 'Pilihan'})\n- URL Gambar QR: ${d.qrInfo.url}`;
   }
 
   return [
     `═══════════════════════════════════════════════════════`,
-    `🏪 CIRI KHUSUS JENIS PERNIAGAAN`,
+    `CIRI KHUSUS JENIS PERNIAGAAN`,
     `═══════════════════════════════════════════════════════`,
     ``,
     `Bahagian yang MESTI ada:`,
@@ -525,7 +525,7 @@ function buildTechnicalSection(tpl) {
 function buildOutputFormat(d) {
   return [
     `═══════════════════════════════════════════════════════`,
-    `📄 FORMAT OUTPUT & ARAHAN PENTING`,
+    `FORMAT OUTPUT & ARAHAN PENTING`,
     `═══════════════════════════════════════════════════════`,
     ``,
     `Berikan SATU fail HTML yang LENGKAP dengan:`,
@@ -534,13 +534,13 @@ function buildOutputFormat(d) {
     `3. TIADA fail luaran kecuali CDN (Google Fonts, Font Awesome)`,
     ``,
     `PENTING — Pastikan:`,
-    `✅ WhatsApp link: https://wa.me/${(d.contact?.whatsapp||'601XXXXXXXX').replace(/\D/g,'')}`,
-    `✅ Semua butang CTA menonjol dan mendorong tindakan`,
-    `✅ Landing page boleh "convert" (ada clear value proposition)`,
-    `✅ Kod LENGKAP, bukan sebahagian atau placeholder`,
-    `✅ Responsif sempurna pada mobile (320px - 428px)`,
-    `✅ Navbar sticky dengan logo dan menu`,
-    `✅ Footer dengan hak cipta dan link penting`,
+    `- WhatsApp link: https://wa.me/${(d.contact?.whatsapp||'601XXXXXXXX').replace(/\D/g,'')}`,
+    `- Semua butang CTA menonjol dan mendorong tindakan`,
+    `- Landing page boleh "convert" (ada clear value proposition)`,
+    `- Kod LENGKAP, bukan sebahagian atau placeholder`,
+    `- Responsif sempurna pada mobile (320px - 428px)`,
+    `- Navbar sticky dengan logo dan menu`,
+    `- Footer dengan hak cipta dan link penting`,
     ``,
     `Hasilkan kod HTML yang PRODUCTION-READY, indah, dan berfungsi penuh.`
   ].join('\n');

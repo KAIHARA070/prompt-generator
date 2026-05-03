@@ -45,25 +45,28 @@
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <h1>✨ Prompt Generator Pro</h1>
+      <h1>✨ <span data-i18n="nav.dashboard">Prompt Generator Pro</span></h1>
       <p>Business Website Builder</p>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section">
-        <div class="nav-section-label">Utama</div>
-        <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> Dashboard</a>
-        <a href="generator.html" class="nav-link active"><span class="nav-icon">✨</span> Jana Prompt Baru</a>
-        <a href="saved-prompts.html" class="nav-link"><span class="nav-icon">💾</span> Prompt Tersimpan</a>
+        <div class="nav-section-label" data-i18n="dash.main">Utama</div>
+        <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> <span data-i18n="nav.dashboard">Dashboard</span></a>
+        <a href="generator.html" class="nav-link active"><span class="nav-icon">✨</span> <span data-i18n="dash.newPrompt">Jana Prompt Baru</span></a>
+        <a href="saved-prompts.html" class="nav-link"><span class="nav-icon">💾</span> <span data-i18n="dash.saved">Prompt Tersimpan</span></a>
       </div>
       <div class="nav-section">
-        <div class="nav-section-label">Lain-lain</div>
-        <a href="pricing.html" class="nav-link"><span class="nav-icon">💰</span> Harga & Pelan</a>
-        <a href="affiliate.html" class="nav-link"><span class="nav-icon">🔗</span> Affiliate</a>
-        <a href="admin.html" class="nav-link" data-admin-only><span class="nav-icon">👑</span> Admin Panel</a>
+        <div class="nav-section-label" data-i18n="dash.other">Lain-lain</div>
+        <a href="pricing.html" class="nav-link"><span class="nav-icon">💰</span> <span data-i18n="dash.pricing">Harga & Pelan</span></a>
+        <a href="affiliate.html" class="nav-link"><span class="nav-icon">🔗</span> <span data-i18n="nav.affiliate">Affiliate</span></a>
+        <a href="admin.html" class="nav-link" data-admin-only><span class="nav-icon">👑</span> <span data-i18n="nav.admin">Admin Panel</span></a>
       </div>
       <div class="nav-section">
-        <div class="nav-section-label">Akaun</div>
-        <a href="#" class="nav-link" data-logout><span class="nav-icon">🚪</span> Log Keluar</a>
+        <div class="nav-section-label" data-i18n="dash.account">Akaun</div>
+        <a href="#" class="nav-link" data-logout><span class="nav-icon">🚪</span> <span data-i18n="dash.logout">Log Keluar</span></a>
+      </div>
+      <div class="nav-section" style="margin-top: auto; padding-top: 20px;">
+        <select id="langSwitcher" class="form-control" style="width: 100%; font-size: 0.8rem; height: 32px;"></select>
       </div>
     </nav>
     <div class="sidebar-user">
@@ -81,13 +84,13 @@
   <main class="main-content">
     <div class="top-bar">
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-      <span style="font-weight:700;font-size:.95rem">✨ Jana Prompt Baru</span>
+      <span style="font-weight:700;font-size:.95rem" data-i18n="dash.newPrompt">✨ Jana Prompt Baru</span>
       <div style="width:34px"></div>
     </div>
 
     <div class="page-header">
-      <h1 class="page-title">✨ Jana Prompt Baru</h1>
-      <p class="page-subtitle">Ikuti langkah-langkah berikut untuk menjana prompt AI yang lengkap.</p>
+      <h1 class="page-title" data-i18n="dash.newPrompt">✨ Jana Prompt Baru</h1>
+      <p class="page-subtitle" data-i18n="generator.subtitle">Ikuti langkah-langkah berikut untuk menjana prompt AI yang lengkap.</p>
     </div>
 
     <div class="page-body">
@@ -95,15 +98,15 @@
       <div class="stats-dashboard" style="margin-bottom: 28px;">
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px;">
           <div class="stat-card" style="text-align: center; background: var(--bg-card); padding: 12px; border-radius: var(--radius); border: 1px solid var(--border);">
-            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Kelengkapan</div>
+            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;" data-i18n="generator.completion">Kelengkapan</div>
             <div id="completionRate" style="font-size: 1.2rem; font-weight: 700; color: var(--accent-light);">0%</div>
           </div>
           <div class="stat-card" style="text-align: center; background: var(--bg-card); padding: 12px; border-radius: var(--radius); border: 1px solid var(--border);">
-            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Diisi</div>
+            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;" data-i18n="generator.filled">Diisi</div>
             <div id="fieldCount" style="font-size: 1.2rem; font-weight: 700;">0/12</div>
           </div>
           <div class="stat-card" style="text-align: center; background: var(--bg-card); padding: 12px; border-radius: var(--radius); border: 1px solid var(--border);">
-            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Produk</div>
+            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;" data-i18n="generator.products">Produk</div>
             <div id="productCount" style="font-size: 1.2rem; font-weight: 700;">0</div>
           </div>
         </div>
@@ -113,33 +116,33 @@
       <div class="card">
         <!-- STEP 1: Business Type -->
         <div class="step-content active" id="step1">
-          <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px">Pilih Jenis Perniagaan</h2>
-          <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:20px">Pilih kategori yang paling sesuai dengan perniagaan anda.</p>
+          <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px" data-i18n="generator.step1.title">Pilih Jenis Perniagaan</h2>
+          <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:20px" data-i18n="generator.step1.sub">Pilih kategori yang paling sesuai dengan perniagaan anda.</p>
           <div style="margin-bottom:16px">
-            <input type="text" class="form-control" id="bizSearch" placeholder="🔍 Cari jenis perniagaan..." oninput="filterBiz(this.value)" style="max-width:360px"/>
+            <input type="text" class="form-control" id="bizSearch" data-i18n-placeholder="saved.search" placeholder="🔍 Cari jenis perniagaan..." oninput="filterBiz(this.value)" style="max-width:360px"/>
           </div>
           <div id="bizGrid"></div>
           <div class="nav-btns">
             <div></div>
-            <button class="btn btn-primary" onclick="goStep(2)" id="nextStep1" disabled>Seterusnya <i class="fa fa-arrow-right"></i></button>
+            <button class="btn btn-primary" onclick="goStep(2)" id="nextStep1" disabled><span data-i18n="generator.next">Seterusnya</span> <i class="fa fa-arrow-right"></i></button>
           </div>
         </div>
 
         <!-- STEP 2: Basic Info -->
         <div class="step-content" id="step2">
-          <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px">Maklumat Asas Perniagaan</h2>
-          <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:20px">Berikan maklumat yang tepat untuk prompt yang lebih berkualiti.</p>
+          <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px" data-i18n="generator.step2.title">Maklumat Asas Perniagaan</h2>
+          <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:20px" data-i18n="generator.step2.sub">Berikan maklumat yang tepat untuk prompt yang lebih berkualiti.</p>
           <div class="form-grid-2">
             <div class="form-group">
-              <label class="form-label">Nama Perniagaan *</label>
+              <label class="form-label" data-i18n="generator.bizName">Nama Perniagaan *</label>
               <input type="text" class="form-control" id="bizName" placeholder="Contoh: Restoran Pak Ali"/>
             </div>
             <div class="form-group">
-              <label class="form-label">Lokasi</label>
+              <label class="form-label" data-i18n="generator.location">Lokasi</label>
               <input type="text" class="form-control" id="bizLocation" placeholder="Contoh: Kuala Lumpur"/>
             </div>
             <div class="form-group">
-              <label class="form-label">Bahasa Website</label>
+              <label class="form-label" data-i18n="generator.language">Bahasa Website</label>
               <select class="form-control" id="bizLanguage">
                 <option value="ms">Bahasa Malaysia 🇲🇾</option>
                 <option value="en">English 🇬🇧</option>
@@ -148,67 +151,67 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Penerangan Perniagaan *</label>
+            <label class="form-label" data-i18n="generator.description">Penerangan Perniagaan *</label>
             <textarea class="form-control" id="bizDesc" rows="4" placeholder="Terangkan tentang perniagaan anda, sejarah, dan apa yang anda tawarkan..."></textarea>
           </div>
           <div class="form-group">
-            <label class="form-label">Khalayak Sasaran</label>
+            <label class="form-label" data-i18n="generator.audience">Khalayak Sasaran</label>
             <input type="text" class="form-control" id="bizAudience" placeholder="Contoh: Ibu bapa muda berumur 25-40 tahun"/>
           </div>
           <div class="form-group">
-            <label class="form-label">Kelebihan Unik (USP)</label>
+            <label class="form-label" data-i18n="generator.usp">Kelebihan Unik (USP)</label>
             <textarea class="form-control" id="bizUsp" rows="3" placeholder="Apa yang membezakan anda dari pesaing? Kenapa pelanggan perlu pilih anda?"></textarea>
           </div>
 
           <!-- DYNAMIC FIELDS CONTAINER -->
           <div id="dynamicFields" class="form-grid-2" style="margin-top:20px; grid-column: 1 / -1; border-top: 1px solid var(--border); padding-top: 20px; display: none;">
             <div style="grid-column: 1 / -1; margin-bottom: 10px;">
-              <h3 style="font-size: 1rem; color: var(--accent-light);">✨ Maklumat Khusus <span id="dynTitle">Perniagaan</span></h3>
-              <p style="font-size: 0.8rem; color: var(--text-muted);">Sila isi maklumat tambahan ini untuk hasil prompt yang lebih tepat.</p>
+              <h3 style="font-size: 1rem; color: var(--accent-light);">✨ <span data-i18n="generator.specialInfo">Maklumat Khusus</span> <span id="dynTitle">Perniagaan</span></h3>
+              <p style="font-size: 0.8rem; color: var(--text-muted);" data-i18n="generator.specialInfoSub">Sila isi maklumat tambahan ini untuk hasil prompt yang lebih tepat.</p>
             </div>
             <!-- Dinamik fields akan masuk sini -->
           </div>
 
           <!-- Product Catalog Section (NEW) -->
           <div style="grid-column: 1 / -1; margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px;">
-            <h3 style="font-size: 1rem; color: var(--accent-light); margin-bottom: 15px;">🛍️ Katalog Produk & Harga (Optional)</h3>
+            <h3 style="font-size: 1rem; color: var(--accent-light); margin-bottom: 15px;">🛍️ <span data-i18n="generator.catalog">Katalog Produk & Harga (Optional)</span></h3>
             <div id="productList" style="display: flex; flex-direction: column; gap: 15px;">
               <!-- Products will be added here -->
             </div>
             <button class="btn btn-ghost btn-full" onclick="addProduct()" style="margin-top: 12px; border: 1px dashed var(--border);">
-              <i class="fa fa-plus"></i> Tambah Produk / Servis
+              <i class="fa fa-plus"></i> <span data-i18n="generator.addProduct">Tambah Produk / Servis</span>
             </button>
           </div>
 
           <div class="nav-btns">
-            <button class="btn btn-ghost" onclick="goStep(1)"><i class="fa fa-arrow-left"></i> Kembali</button>
-            <button class="btn btn-primary" onclick="goStep(3)">Seterusnya <i class="fa fa-arrow-right"></i></button>
+            <button class="btn btn-ghost" onclick="goStep(1)"><i class="fa fa-arrow-left"></i> <span data-i18n="dash.modal.cancel">Kembali</span></button>
+            <button class="btn btn-primary" onclick="goStep(3)"><span data-i18n="generator.next">Seterusnya</span> <i class="fa fa-arrow-right"></i></button>
           </div>
         </div>
 
         <!-- STEP 3: Design -->
         <div class="step-content" id="step3">
-          <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px">Reka Bentuk & Gaya</h2>
-          <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:20px">Tetapkan palet warna dan gaya visual untuk website anda.</p>
+          <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px" data-i18n="generator.step3.title">Reka Bentuk & Gaya</h2>
+          <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:20px" data-i18n="generator.step3.sub">Tetapkan palet warna dan gaya visual untuk website anda.</p>
           <div class="color-row">
             <div class="color-box">
-              <label>Warna Utama</label>
+              <label data-i18n="generator.colorPrimary">Warna Utama</label>
               <input type="color" id="colorPrimary" value="#1a1a2e"/>
               <small style="color:var(--text-muted);font-size:.75rem" id="colorPrimaryHex">#1a1a2e</small>
             </div>
             <div class="color-box">
-              <label>Warna Sekunder</label>
+              <label data-i18n="generator.colorSecondary">Warna Sekunder</label>
               <input type="color" id="colorSecondary" value="#e94560"/>
               <small style="color:var(--text-muted);font-size:.75rem" id="colorSecondaryHex">#e94560</small>
             </div>
             <div class="color-box">
-              <label>Warna Aksen</label>
+              <label data-i18n="generator.colorAccent">Warna Aksen</label>
               <input type="color" id="colorAccent" value="#0f3460"/>
               <small style="color:var(--text-muted);font-size:.75rem" id="colorAccentHex">#0f3460</small>
             </div>
           </div>
           <div class="form-group" style="margin-top:20px">
-            <label class="form-label">Nada Komunikasi</label>
+            <label class="form-label" data-i18n="generator.tone">Nada Komunikasi</label>
             <div class="tone-grid" id="toneGrid">
               <div class="tone-option" onclick="selectTone(this,'Profesional & Formal')">🎩 Profesional & Formal</div>
               <div class="tone-option" onclick="selectTone(this,'Kasual & Mesra')">😊 Kasual & Mesra</div>
@@ -219,7 +222,7 @@
             </div>
           </div>
           <div class="form-group" style="margin-top:20px">
-            <label class="form-label">Gaya Animasi</label>
+            <label class="form-label" data-i18n="generator.animation">Gaya Animasi</label>
             <select class="form-control" id="animationStyle">
               <option value="fade">Fade In (Lembut)</option>
               <option value="slide">Slide Up (Dinamik)</option>
@@ -228,7 +231,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Tema Utama</label>
+            <label class="form-label" data-i18n="generator.theme">Tema Utama</label>
             <div style="display:flex;gap:12px">
               <label style="flex:1;cursor:pointer"><input type="radio" name="themeMode" value="light" checked/> ☀️ Light Mode</label>
               <label style="flex:1;cursor:pointer"><input type="radio" name="themeMode" value="dark"/> 🌙 Dark Mode</label>
@@ -236,31 +239,31 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Teks Call-to-Action (CTA)</label>
+            <label class="form-label" data-i18n="generator.cta">Teks Call-to-Action (CTA)</label>
             <input type="text" class="form-control" id="bizCta" placeholder="Contoh: Hubungi Kami Sekarang, Tempah Sekarang, Beli Sekarang" oninput="updateProgress()"/>
           </div>
 
           <!-- Image Gallery Section (NEW) -->
           <div class="form-group" style="margin-top:20px">
-            <label class="form-label">📸 Galeri Imej (URL)</label>
+            <label class="form-label">📸 <span data-i18n="generator.gallery">Galeri Imej (URL)</span></label>
             <div id="imageList" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;">
               <input type="text" class="form-control biz-image-input" placeholder="https://example.com/image1.jpg" oninput="updateProgress()"/>
             </div>
-            <button class="btn btn-ghost btn-sm" onclick="addImageInput()"><i class="fa fa-plus"></i> Tambah Imej</button>
+            <button class="btn btn-ghost btn-sm" onclick="addImageInput()"><i class="fa fa-plus"></i> <span data-i18n="generator.addImage">Tambah Imej</span></button>
           </div>
           <div class="nav-btns">
-            <button class="btn btn-ghost" onclick="goStep(2)"><i class="fa fa-arrow-left"></i> Kembali</button>
-            <button class="btn btn-primary" onclick="goStep(4)">Seterusnya <i class="fa fa-arrow-right"></i></button>
+            <button class="btn btn-ghost" onclick="goStep(2)"><i class="fa fa-arrow-left"></i> <span data-i18n="dash.modal.cancel">Kembali</span></button>
+            <button class="btn btn-primary" onclick="goStep(4)"><span data-i18n="generator.next">Seterusnya</span> <i class="fa fa-arrow-right"></i></button>
           </div>
         </div>
 
         <!-- STEP 4: Contact -->
         <div class="step-content" id="step4">
-          <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px">Maklumat Hubungan</h2>
-          <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:20px">Maklumat ini akan dimasukkan terus ke dalam prompt.</p>
+          <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px" data-i18n="generator.step4.title">Maklumat Hubungan</h2>
+          <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:20px" data-i18n="generator.step4.sub">Maklumat ini akan dimasukkan terus ke dalam prompt.</p>
           <div class="form-grid-2">
             <div class="form-group">
-              <label class="form-label">Nombor Telefon</label>
+              <label class="form-label" data-i18n="generator.phone">Nombor Telefon</label>
               <input type="text" class="form-control" id="contactPhone" placeholder="03-1234 5678"/>
             </div>
             <div class="form-group">
@@ -272,7 +275,7 @@
               <input type="email" class="form-control" id="contactEmail" placeholder="info@perniagaan.com"/>
             </div>
             <div class="form-group">
-              <label class="form-label">Alamat / Lokasi</label>
+              <label class="form-label" data-i18n="generator.address">Alamat / Lokasi</label>
               <input type="text" class="form-control" id="contactAddress" placeholder="No. 1, Jalan Contoh, KL"/>
             </div>
             <div class="form-group">
@@ -287,10 +290,10 @@
 
           <!-- QR Payment Section (NEW) -->
           <div class="form-group" style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px;">
-            <label class="form-label">💳 Maklumat Pembayaran (QR Code)</label>
+            <label class="form-label">💳 <span data-i18n="generator.qr">Maklumat Pembayaran (QR Code)</span></label>
             <div class="form-grid-2">
               <div class="form-group">
-                <label class="form-label">Jenis QR</label>
+                <label class="form-label" data-i18n="generator.qrType">Jenis QR</label>
                 <select class="form-control" id="qrType">
                   <option value="DuitNow">DuitNow</option>
                   <option value="TNG eWallet">TNG eWallet</option>
@@ -300,19 +303,19 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label">URL Gambar QR</label>
+                <label class="form-label" data-i18n="generator.qrUrl">URL Gambar QR</label>
                 <input type="text" class="form-control" id="qrUrl" placeholder="https://link-ke-gambar-qr.jpg"/>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Ciri-ciri Tambahan (pilih yang berkenaan)</label>
-            <p style="font-size: .75rem; color: var(--text-muted); margin-bottom: 12px;">* Isi butiran jika ada permintaan khusus, atau biarkan kosong untuk ditentukan oleh AI.</p>
+            <label class="form-label" data-i18n="generator.extra">Ciri-ciri Tambahan (pilih yang berkenaan)</label>
+            <p style="font-size: .75rem; color: var(--text-muted); margin-bottom: 12px;" data-i18n="generator.extraSub">* Isi butiran jika ada permintaan khusus, atau biarkan kosong untuk ditentukan oleh AI.</p>
             <div class="extra-features-list" id="extraFeatures">
               
               <!-- Booking System -->
               <div class="extra-item-wrapper">
-                <label class="checkbox-item"><input type="checkbox" value="Sistem tempahan online" onchange="toggleExtraForm(this, 'form_booking')"/> <span>📅 Sistem tempahan online</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Sistem tempahan online" onchange="toggleExtraForm(this, 'form_booking')"/> <span>📅 <span data-i18n="generator.extra.booking">Sistem tempahan online</span></span></label>
                 <div id="form_booking" class="extra-sub-form">
                   <input type="text" class="form-control form-control-sm" placeholder="Contoh: Temujanji servis, tempahan meja, atau slot masa..."/>
                 </div>
@@ -320,7 +323,7 @@
 
               <!-- Gallery -->
               <div class="extra-item-wrapper">
-                <label class="checkbox-item"><input type="checkbox" value="Galeri foto/video" onchange="toggleExtraForm(this, 'form_gallery')"/> <span>🖼️ Galeri foto/video</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Galeri foto/video" onchange="toggleExtraForm(this, 'form_gallery')"/> <span>🖼️ <span data-i18n="generator.extra.gallery">Galeri foto/video</span></span></label>
                 <div id="form_gallery" class="extra-sub-form">
                   <input type="text" class="form-control form-control-sm" placeholder="Contoh: Kategori produk, video testimoni, atau portfolio..."/>
                 </div>
@@ -328,7 +331,7 @@
 
               <!-- Testimonials -->
               <div class="extra-item-wrapper">
-                <label class="checkbox-item"><input type="checkbox" value="Testimoni pelanggan" onchange="toggleExtraForm(this, 'form_testimoni')"/> <span>⭐ Testimoni pelanggan</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Testimoni pelanggan" onchange="toggleExtraForm(this, 'form_testimoni')"/> <span>⭐ <span data-i18n="generator.extra.testimonials">Testimoni pelanggan</span></span></label>
                 <div id="form_testimoni" class="extra-sub-form">
                   <input type="text" class="form-control form-control-sm" placeholder="Contoh: Fokus pada kepuasan pelanggan atau hasil kerja..."/>
                 </div>
@@ -336,7 +339,7 @@
 
               <!-- FAQ -->
               <div class="extra-item-wrapper">
-                <label class="checkbox-item"><input type="checkbox" value="FAQ section" onchange="toggleExtraForm(this, 'form_faq')"/> <span>❓ FAQ section</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="FAQ section" onchange="toggleExtraForm(this, 'form_faq')"/> <span>❓ <span data-i18n="generator.extra.faq">FAQ section</span></span></label>
                 <div id="form_faq" class="extra-sub-form">
                   <input type="text" class="form-control form-control-sm" placeholder="Sertakan soalan khusus jika ada..."/>
                 </div>
@@ -344,7 +347,7 @@
 
               <!-- Maps -->
               <div class="extra-item-wrapper">
-                <label class="checkbox-item"><input type="checkbox" value="Peta Google Maps" onchange="toggleExtraForm(this, 'form_maps')"/> <span>📍 Peta Google Maps</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Peta Google Maps" onchange="toggleExtraForm(this, 'form_maps')"/> <span>📍 <span data-i18n="generator.extra.maps">Peta Google Maps</span></span></label>
                 <div id="form_maps" class="extra-sub-form">
                   <input type="text" class="form-control form-control-sm" placeholder="Nama lokasi atau koordinat khusus..."/>
                 </div>
@@ -352,7 +355,7 @@
 
               <!-- WhatsApp -->
               <div class="extra-item-wrapper">
-                <label class="checkbox-item"><input type="checkbox" value="WhatsApp chat button" onchange="toggleExtraForm(this, 'form_wa')"/> <span>💬 WhatsApp floating button</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="WhatsApp chat button" onchange="toggleExtraForm(this, 'form_wa')"/> <span>💬 <span data-i18n="generator.extra.wa">WhatsApp floating button</span></span></label>
                 <div id="form_wa" class="extra-sub-form">
                   <input type="text" class="form-control form-control-sm" placeholder="Teks mesej automatik (Contoh: Nak tanya pasal servis...)"/>
                 </div>
@@ -360,7 +363,7 @@
 
               <!-- Blog -->
               <div class="extra-item-wrapper">
-                <label class="checkbox-item"><input type="checkbox" value="Blog / Artikel" onchange="toggleExtraForm(this, 'form_blog')"/> <span>📝 Blog / Artikel</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Blog / Artikel" onchange="toggleExtraForm(this, 'form_blog')"/> <span>📝 <span data-i18n="generator.extra.blog">Blog / Artikel</span></span></label>
                 <div id="form_blog" class="extra-sub-form">
                   <input type="text" class="form-control form-control-sm" placeholder="Topik utama blog..."/>
                 </div>
@@ -368,7 +371,7 @@
 
               <!-- Calculator -->
               <div class="extra-item-wrapper">
-                <label class="checkbox-item"><input type="checkbox" value="Kalkulator harga" onchange="toggleExtraForm(this, 'form_calc')"/> <span>🧮 Kalkulator harga</span></label>
+                <label class="checkbox-item"><input type="checkbox" value="Kalkulator harga" onchange="toggleExtraForm(this, 'form_calc')"/> <span>🧮 <span data-i18n="generator.extra.calc">Kalkulator harga</span></span></label>
                 <div id="form_calc" class="extra-sub-form">
                   <input type="text" class="form-control form-control-sm" placeholder="Jenis kalkulator (Contoh: Kos renovasi, BMI, pinjaman...)"/>
                 </div>
@@ -377,28 +380,28 @@
             </div>
           </div>
           <div class="nav-btns">
-            <button class="btn btn-ghost" onclick="goStep(3)"><i class="fa fa-arrow-left"></i> Kembali</button>
-            <button class="btn btn-primary" onclick="goStep(5)">Jana Prompt <i class="fa fa-wand-magic-sparkles"></i></button>
+            <button class="btn btn-ghost" onclick="goStep(3)"><i class="fa fa-arrow-left"></i> <span data-i18n="dash.modal.cancel">Kembali</span></button>
+            <button class="btn btn-primary" onclick="goStep(5)"><span data-i18n="dash.newPrompt">Jana Prompt</span> <i class="fa fa-wand-magic-sparkles"></i></button>
           </div>
         </div>
 
         <!-- STEP 5: Result -->
         <div class="step-content" id="step5">
-          <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px">✅ Prompt Anda Telah Dijana!</h2>
-          <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:20px">Semak prompt di bawah, kemudian simpan atau gunakan terus.</p>
+          <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px" data-i18n="generator.step5.title">✅ Prompt Anda Telah Dijana!</h2>
+          <p style="color:var(--text-secondary);font-size:.88rem;margin-bottom:20px" data-i18n="generator.step5.sub">Semak prompt di bawah, kemudian simpan atau gunakan terus.</p>
           <div class="summary-grid" id="summaryGrid"></div>
           <div style="margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
-            <label class="form-label" style="margin:0">Prompt Lengkap</label>
+            <label class="form-label" style="margin:0" data-i18n="dash.meta.prompt">Prompt Lengkap</label>
             <div style="display:flex;gap:8px">
-              <button class="btn btn-ghost btn-sm" onclick="copyGenerated()"><i class="fa fa-copy"></i> Salin</button>
+              <button class="btn btn-ghost btn-sm" onclick="copyGenerated()"><i class="fa fa-copy"></i> <span data-i18n="dash.copy">Salin</span></button>
               <button class="btn btn-ghost btn-sm" onclick="downloadGenerated()"><i class="fa fa-download"></i> .txt</button>
-              <button class="btn btn-blue btn-sm" onclick="openClaudeGenerated()"><i class="fa fa-robot"></i> Claude</button>
+              <button class="btn btn-blue btn-sm" onclick="openClaudeGenerated()"><i class="fa fa-robot"></i> <span data-i18n="saved.useClaude">Claude</span></button>
             </div>
           </div>
           <textarea class="form-control" id="generatedOutput" style="min-height:340px;font-family:monospace;font-size:.78rem;resize:vertical" readonly></textarea>
           <div class="nav-btns">
-            <button class="btn btn-ghost" onclick="goStep(4)"><i class="fa fa-arrow-left"></i> Kembali</button>
-            <button class="btn btn-primary" onclick="saveGenerated()"><i class="fa fa-floppy-disk"></i> Simpan Prompt</button>
+            <button class="btn btn-ghost" onclick="goStep(4)"><i class="fa fa-arrow-left"></i> <span data-i18n="dash.modal.cancel">Kembali</span></button>
+            <button class="btn btn-primary" onclick="saveGenerated()"><i class="fa fa-floppy-disk"></i> <span data-i18n="dash.edit">Simpan Prompt</span></button>
           </div>
         </div>
       </div>
@@ -410,11 +413,15 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
+<script src="js/rate-limiting.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/generator.js"></script>
 <script src="js/utils.js"></script>
 <script>
+initI18n('langSwitcher');
+
 const session = requireAuth();
 if (session) populateUserUI(session);
 
@@ -423,24 +430,24 @@ let selectedTone    = '';
 let generatedText   = '';
 let editingId       = null;
 
-const STEPS = ['','Pilih Jenis Perniagaan','Maklumat Asas','Reka Bentuk','Hubungan & Ciri','Prompt Dijana'];
+const STEPS = ['', i18nText('generator.step1.title', 'Pilih Jenis Perniagaan'), i18nText('generator.step2.title', 'Maklumat Asas'), i18nText('generator.step3.title', 'Reka Bentuk'), i18nText('generator.step4.title', 'Hubungan & Ciri'), i18nText('generator.step5.title', 'Prompt Dijana')];
 const PCTS  = [0,20,40,60,80,100];
 
 function goStep(n) {
-  if (n === 2 && !selectedBizType) { showToast('Sila pilih jenis perniagaan dahulu.','error'); return; }
+  if (n === 2 && !selectedBizType) { showToast(i18nText('generator.toast.selectBiz', 'Sila pilih jenis perniagaan dahulu.'), 'error'); return; }
   if (n === 5) {
     try {
       buildPrompt();
     } catch (e) {
       console.error("Build prompt error:", e);
-      showToast('Gagal menjana prompt: ' + e.message, 'error');
+      showToast(i18nText('generator.toast.fail', 'Gagal menjana prompt: ') + e.message, 'error');
       return;
     }
   }
   document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
   document.getElementById('step'+n).classList.add('active');
-  document.getElementById('stepNum').textContent = n;
-  document.getElementById('stepLabel').textContent = STEPS[n];
+  // document.getElementById('stepNum').textContent = n;
+  // document.getElementById('stepLabel').textContent = STEPS[n];
   document.getElementById('progressFill').style.width = PCTS[n] + '%';
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -462,7 +469,7 @@ function renderBizGrid(filter='') {
     });
     html += `</div></div>`;
   });
-  document.getElementById('bizGrid').innerHTML = html || '<p style="color:var(--text-muted)">Tiada hasil carian.</p>';
+  document.getElementById('bizGrid').innerHTML = html || `<p style="color:var(--text-muted)">${i18nText('saved.emptyTitle', 'Tiada hasil carian.')}</p>`;
 }
 
 function filterBiz(v) { renderBizGrid(v); }
@@ -498,7 +505,7 @@ function selectBiz(key) {
     container.style.display = 'none';
   }
   
-  showToast('Dipilih: ' + tpl.label, 'success');
+  showToast(i18nText('generator.toast.selected', 'Dipilih: ') + tpl.label, 'success');
 }
 
 function selectTone(el, tone) {
@@ -539,14 +546,14 @@ function addProduct() {
   div.style = 'background: var(--bg-primary); padding: 12px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 10px;';
   div.innerHTML = `
     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-      <span style="font-weight: 600; font-size: 0.85rem; color: var(--accent-light);">Produk/Servis</span>
+      <span style="font-weight: 600; font-size: 0.85rem; color: var(--accent-light);">${i18nText('generator.catalog', 'Produk/Servis')}</span>
       <button onclick="this.parentElement.parentElement.remove(); updateProductCount();" style="background:none; border:none; color:var(--accent-secondary); cursor:pointer;">✕</button>
     </div>
     <div class="form-grid-2">
-      <input type="text" class="form-control form-control-sm p-name" placeholder="Nama Produk" oninput="updateProgress()">
-      <input type="text" class="form-control form-control-sm p-price" placeholder="Harga (RM)" oninput="updateProgress()">
+      <input type="text" class="form-control form-control-sm p-name" placeholder="${i18nText('generator.productName', 'Nama Produk')}" oninput="updateProgress()">
+      <input type="text" class="form-control form-control-sm p-price" placeholder="${i18nText('generator.productPrice', 'Harga (RM)')}" oninput="updateProgress()">
     </div>
-    <textarea class="form-control form-control-sm p-desc" style="margin-top:8px" placeholder="Penerangan ringkas..." rows="2" oninput="updateProgress()"></textarea>
+    <textarea class="form-control form-control-sm p-desc" style="margin-top:8px" placeholder="${i18nText('generator.productDesc', 'Penerangan ringkas...')}" rows="2" oninput="updateProgress()"></textarea>
   `;
   list.appendChild(div);
   updateProductCount();
@@ -603,7 +610,7 @@ function buildPrompt() {
   });
 
   const formData = {
-    businessName   : document.getElementById('bizName').value.trim() || 'Perniagaan Anda',
+    businessName   : document.getElementById('bizName').value.trim() || i18nText('generator.defaultBizName', 'Perniagaan Anda'),
     location       : document.getElementById('bizLocation').value.trim(),
     description    : document.getElementById('bizDesc').value.trim(),
     targetAudience : document.getElementById('bizAudience').value.trim(),
@@ -613,7 +620,7 @@ function buildPrompt() {
     accentColor    : document.getElementById('colorAccent').value,
     tone           : selectedTone || (BUSINESS_TEMPLATES[selectedBizType]?.tone || 'Profesional & Mesra'),
     style          : 'Moden, bersih, dan profesional',
-    cta            : document.getElementById('bizCta').value.trim() || 'Hubungi Kami Sekarang',
+    cta            : document.getElementById('bizCta').value.trim() || i18nText('generator.defaultCta', 'Hubungi Kami Sekarang'),
     language       : document.getElementById('bizLanguage').value,
     animationStyle : document.getElementById('animationStyle').value,
     themeMode      : document.querySelector('input[name="themeMode"]:checked')?.value || 'light',
@@ -654,12 +661,12 @@ function buildPrompt() {
 
   // Summary
   const items = [
-    {label:'Jenis Perniagaan', value: tpl.label || '-'},
-    {label:'Nama Perniagaan',  value: formData.businessName},
-    {label:'Lokasi',           value: formData.location || '-'},
-    {label:'Nada',             value: formData.tone},
-    {label:'CTA',              value: formData.cta},
-    {label:'Ciri Tambahan',    value: extras.length ? extras.length + ' dipilih' : '-'}
+    {label: i18nText('generator.step1.title', 'Jenis Perniagaan'), value: tpl.label || '-'},
+    {label: i18nText('generator.bizName', 'Nama Perniagaan'),  value: formData.businessName},
+    {label: i18nText('generator.location', 'Lokasi'),           value: formData.location || '-'},
+    {label: i18nText('generator.tone', 'Nada'),             value: formData.tone},
+    {label: 'CTA',              value: formData.cta},
+    {label: i18nText('generator.extra', 'Ciri Tambahan'),    value: extras.length ? extras.length + ' ' + i18nText('generator.selected', 'dipilih') : '-'}
   ];
   document.getElementById('summaryGrid').innerHTML = items.map(i=>`
     <div class="summary-item"><div class="s-label">${i.label}</div><div class="s-value">${i.value}</div></div>`).join('');
@@ -673,13 +680,13 @@ function downloadGenerated(){ exportAsTxt(generatedText, document.getElementById
 function openClaudeGenerated() { openInClaude(generatedText); }
 
 async function saveGenerated() {
-  if (!generatedText) { showToast('Jana prompt dahulu!','error'); return; }
+  if (!generatedText) { showToast(i18nText('generator.toast.fail', 'Jana prompt dahulu!'), 'error'); return; }
   const tpl = BUSINESS_TEMPLATES[selectedBizType] || {};
-  const name = document.getElementById('bizName').value.trim() || 'Tanpa Nama';
+  const name = document.getElementById('bizName').value.trim() || i18nText('generator.defaultBizName', 'Tanpa Nama');
 
   if (editingId) {
     await updatePrompt(editingId, { title: name, generated_prompt: generatedText, business_type_label: tpl.label });
-    showToast('Prompt dikemas kini!','success');
+    showToast(i18nText('dash.favouriteUpdated', 'Prompt dikemas kini!'), 'success');
   } else {
     await savePrompt({
       title            : name,
@@ -689,7 +696,7 @@ async function saveGenerated() {
       formData         : { businessName: name },
       tags             : [selectedBizType, tpl.category||''].filter(Boolean)
     });
-    showToast('Prompt disimpan!','success');
+    showToast(i18nText('dash.favouriteUpdated', 'Prompt disimpan!'), 'success');
   }
   clearDraft();
   setTimeout(() => window.location.href = 'saved-prompts.html', 900);

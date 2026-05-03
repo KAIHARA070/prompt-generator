@@ -35,20 +35,26 @@
 
 <div class="app-layout">
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo"><h1>👑 Admin Panel</h1><p>PromptBiz Pro</p></div>
+    <div class="sidebar-logo">
+      <h1>👑 <span data-i18n="nav.admin">Admin Panel</span></h1>
+      <p>PromptBiz Pro</p>
+    </div>
     <nav class="sidebar-nav">
       <div class="nav-section">
-        <div class="nav-section-label">Menu Utama</div>
-        <a href="#" class="nav-link active" onclick="showTab('overview', this)" data-admin-only><span class="nav-icon">📊</span> Ringkasan</a>
-        <a href="#" class="nav-link" onclick="showTab('users', this)" data-admin-only><span class="nav-icon">👥</span> Pengguna</a>
-        <a href="#" class="nav-link" onclick="showTab('subs', this)" data-admin-only><span class="nav-icon">💰</span> Langganan</a>
-        <a href="#" class="nav-link" onclick="showTab('promo', this)" data-admin-only><span class="nav-icon">🎟️</span> Kod Promo</a>
-        <a href="#" class="nav-link" onclick="showTab('affiliate', this)" data-admin-only><span class="nav-icon">🔗</span> Affiliate</a>
+        <div class="nav-section-label" data-i18n="admin.menu">Menu Utama</div>
+        <a href="#" class="nav-link active" onclick="showTab('overview', this)" data-admin-only><span class="nav-icon">📊</span> <span data-i18n="admin.overview">Ringkasan</span></a>
+        <a href="#" class="nav-link" onclick="showTab('users', this)" data-admin-only><span class="nav-icon">👥</span> <span data-i18n="admin.users">Pengguna</span></a>
+        <a href="#" class="nav-link" onclick="showTab('subs', this)" data-admin-only><span class="nav-icon">💰</span> <span data-i18n="admin.subs">Langganan</span></a>
+        <a href="#" class="nav-link" onclick="showTab('promo', this)" data-admin-only><span class="nav-icon">🎟️</span> <span data-i18n="admin.promo">Kod Promo</span></a>
+        <a href="#" class="nav-link" onclick="showTab('affiliate', this)" data-admin-only><span class="nav-icon">🔗</span> <span data-i18n="nav.affiliate">Affiliate</span></a>
       </div>
       <div class="nav-section">
-        <div class="nav-section-label">Sistem</div>
-        <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> Dashboard User</a>
-        <a href="#" class="nav-link" data-logout><span class="nav-icon">🚪</span> Log Keluar</a>
+        <div class="nav-section-label" data-i18n="admin.system">Sistem</div>
+        <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span> <span data-i18n="admin.userDash">Dashboard User</span></a>
+        <a href="#" class="nav-link" data-logout><span class="nav-icon">🚪</span> <span data-i18n="dash.logout">Log Keluar</span></a>
+      </div>
+      <div class="nav-section" style="margin-top: auto; padding-top: 20px;">
+        <select id="langSwitcher" class="form-control" style="width: 100%; font-size: 0.8rem; height: 32px;"></select>
       </div>
     </nav>
   </aside>
@@ -57,30 +63,30 @@
   <main class="main-content">
     <div class="top-bar">
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-      <span style="font-weight:700" id="adminUserTitle">👑 Admin Panel</span>
+      <span style="font-weight:700" id="adminUserTitle">👑 <span data-i18n="nav.admin">Admin Panel</span></span>
     </div>
 
     <div class="page-header">
-      <h1 class="page-title">👑 Panel Pengurusan</h1>
-      <p class="page-subtitle">Urus pengguna, langganan dan statistik platform</p>
+      <h1 class="page-title" data-i18n="admin.manage">👑 Panel Pengurusan</h1>
+      <p class="page-subtitle" data-i18n="admin.manageSub">Urus pengguna, langganan dan statistik platform</p>
     </div>
 
     <div class="page-body">
       <!-- TAB: OVERVIEW -->
       <div class="tab-content active" id="tabOverview">
         <div class="admin-grid" id="adminStatsGrid">
-          <div class="admin-stat"><div class="as-icon">👥</div><div class="as-val" id="statTotalUsers">-</div><div class="as-label">Jumlah Pengguna</div></div>
-          <div class="admin-stat"><div class="as-icon">📝</div><div class="as-val" id="statTotalPrompts">-</div><div class="as-label">Jumlah Prompt</div></div>
-          <div class="admin-stat"><div class="as-icon">💎</div><div class="as-val" id="statActiveSubs">-</div><div class="as-label">Subs Aktif</div></div>
-          <div class="admin-stat"><div class="as-icon">💰</div><div class="as-val" id="statTotalRevenue">RM0</div><div class="as-label">Anggaran MRR</div></div>
+          <div class="admin-stat"><div class="as-icon">👥</div><div class="as-val" id="statTotalUsers">-</div><div class="as-label" data-i18n="admin.totalUsers">Jumlah Pengguna</div></div>
+          <div class="admin-stat"><div class="as-icon">📝</div><div class="as-val" id="statTotalPrompts">-</div><div class="as-label" data-i18n="admin.totalPrompts">Jumlah Prompt</div></div>
+          <div class="admin-stat"><div class="as-icon">💎</div><div class="as-val" id="statActiveSubs">-</div><div class="as-label" data-i18n="admin.activeSubs">Subs Aktif</div></div>
+          <div class="admin-stat"><div class="as-icon">💰</div><div class="as-val" id="statTotalRevenue">RM0</div><div class="as-label" data-i18n="admin.revenue">Anggaran MRR</div></div>
         </div>
         
         <div class="card">
-          <div class="card-header"><h3 class="card-title">👥 Pendaftaran Terbaru</h3></div>
+          <div class="card-header"><h3 class="card-title" data-i18n="admin.recentReg">👥 Pendaftaran Terbaru</h3></div>
           <div style="overflow-x:auto">
             <table class="data-table">
-              <thead><tr><th>Nama</th><th>Email</th><th>Pelan</th><th>Tarikh</th></tr></thead>
-              <tbody id="recentUsersTable"><tr><td colspan="4" style="text-align:center;padding:40px">Memuatkan...</td></tr></tbody>
+              <thead><tr><th data-i18n="admin.table.name">Nama</th><th data-i18n="admin.table.email">Email</th><th data-i18n="admin.table.plan">Pelan</th><th data-i18n="admin.table.date">Tarikh</th></tr></thead>
+              <tbody id="recentUsersTable"><tr><td colspan="4" style="text-align:center;padding:40px" data-i18n="admin.loading">Memuatkan...</td></tr></tbody>
             </table>
           </div>
         </div>
@@ -89,12 +95,12 @@
       <!-- TAB: USERS -->
       <div class="tab-content" id="tabUsers">
         <div style="display:flex;gap:12px;margin-bottom:20px">
-          <input type="text" class="form-control" id="userSearch" placeholder="Cari nama atau email..." oninput="debounceSearch()"/>
+          <input type="text" class="form-control" id="userSearch" data-i18n-placeholder="admin.searchUser" placeholder="Cari nama atau email..." oninput="debounceSearch()"/>
         </div>
         <div class="card">
           <div style="overflow-x:auto">
             <table class="data-table">
-              <thead><tr><th>Nama</th><th>Email</th><th>Pelan</th><th>Status</th><th>Tindakan</th></tr></thead>
+              <thead><tr><th data-i18n="admin.table.name">Nama</th><th data-i18n="admin.table.email">Email</th><th data-i18n="admin.table.plan">Pelan</th><th>Status</th><th data-i18n="admin.table.action">Tindakan</th></tr></thead>
               <tbody id="allUsersTable"></tbody>
             </table>
           </div>
@@ -104,10 +110,10 @@
       <!-- TAB: SUBS -->
       <div class="tab-content" id="tabSubs">
         <div class="card">
-          <div class="card-header"><h3 class="card-title">💰 Langganan Aktif</h3></div>
+          <div class="card-header"><h3 class="card-title" data-i18n="admin.activeSubsTitle">💰 Langganan Aktif</h3></div>
           <div style="overflow-x:auto">
             <table class="data-table">
-              <thead><tr><th>User ID</th><th>Pelan</th><th>Jumlah</th><th>Kitaran</th><th>Exp</th></tr></thead>
+              <thead><tr><th>User ID</th><th data-i18n="admin.table.plan">Pelan</th><th data-i18n="admin.table.amount">Jumlah</th><th data-i18n="admin.table.cycle">Kitaran</th><th>Exp</th></tr></thead>
               <tbody id="allSubsTable"></tbody>
             </table>
           </div>
@@ -118,12 +124,12 @@
       <div class="tab-content" id="tabPromo">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">🎟️ Kod Promosi</h3>
-            <button class="btn btn-primary btn-sm" onclick="openModal('addPromoModal')"><i class="fa fa-plus"></i> Tambah</button>
+            <h3 class="card-title" data-i18n="admin.promoCodes">🎟️ Kod Promosi</h3>
+            <button class="btn btn-primary btn-sm" onclick="openModal('addPromoModal')"><i class="fa fa-plus"></i> <span data-i18n="admin.add">Tambah</span></button>
           </div>
           <div style="overflow-x:auto">
             <table class="data-table">
-              <thead><tr><th>Kod</th><th>Jenis</th><th>Nilai</th><th>Kegunaan</th><th>Status</th></tr></thead>
+              <thead><tr><th data-i18n="admin.table.code">Kod</th><th data-i18n="admin.table.type">Jenis</th><th data-i18n="admin.table.value">Nilai</th><th data-i18n="admin.table.usage">Kegunaan</th><th>Status</th></tr></thead>
               <tbody id="allPromosTable"></tbody>
             </table>
           </div>
@@ -133,10 +139,10 @@
       <!-- TAB: AFFILIATE -->
       <div class="tab-content" id="tabAffiliate">
         <div class="card">
-          <div class="card-header"><h3 class="card-title">🔗 Permohonan Pengeluaran (Withdrawal)</h3></div>
+          <div class="card-header"><h3 class="card-title" data-i18n="admin.withdrawRequests">🔗 Permohonan Pengeluaran (Withdrawal)</h3></div>
           <div style="overflow-x:auto">
             <table class="data-table">
-              <thead><tr><th>User</th><th>Jumlah</th><th>Bank Info</th><th>Status</th><th>Tindakan</th></tr></thead>
+              <thead><tr><th>User</th><th data-i18n="admin.table.amount">Jumlah</th><th data-i18n="admin.table.bankInfo">Bank Info</th><th>Status</th><th data-i18n="admin.table.action">Tindakan</th></tr></thead>
               <tbody id="allWithdrawalsTable"></tbody>
             </table>
           </div>
@@ -150,29 +156,33 @@
 <!-- MODAL: ADD PROMO -->
 <div class="modal-overlay" id="addPromoModal">
   <div class="modal" style="max-width:400px">
-    <div class="modal-header"><h3 class="modal-title">Tambah Kod Promo</h3><button class="modal-close" onclick="closeModal('addPromoModal')">✕</button></div>
+    <div class="modal-header"><h3 class="modal-title" data-i18n="admin.addPromo">Tambah Kod Promo</h3><button class="modal-close" onclick="closeModal('addPromoModal')">✕</button></div>
     <div class="modal-body">
-      <div class="form-group"><label class="form-label">Kod</label><input type="text" class="form-control" id="newPromoCode" placeholder="RAYA50"/></div>
-      <div class="form-group"><label class="form-label">Jenis</label><select class="form-control" id="newPromoType"><option value="percentage">Percentage (%)</option><option value="fixed">Fixed (RM)</option></select></div>
-      <div class="form-group"><label class="form-label">Nilai</label><input type="number" class="form-control" id="newPromoValue" placeholder="50"/></div>
+      <div class="form-group"><label class="form-label" data-i18n="admin.table.code">Kod</label><input type="text" class="form-control" id="newPromoCode" placeholder="RAYA50"/></div>
+      <div class="form-group"><label class="form-label" data-i18n="admin.table.type">Jenis</label><select class="form-control" id="newPromoType"><option value="percentage">Percentage (%)</option><option value="fixed">Fixed (RM)</option></select></div>
+      <div class="form-group"><label class="form-label" data-i18n="admin.table.value">Nilai</label><input type="number" class="form-control" id="newPromoValue" placeholder="50"/></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('addPromoModal')">Batal</button><button class="btn btn-primary" onclick="createNewPromo()">Simpan</button></div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('addPromoModal')" data-i18n="dash.modal.cancel">Batal</button><button class="btn btn-primary" onclick="createNewPromo()" data-i18n="dash.save">Simpan</button></div>
   </div>
 </div>
 
-<div class="modal-overlay" id="confirmModal"><div class="modal" style="max-width:400px"><div class="modal-header"><h3 class="modal-title">Sahkan</h3><button class="modal-close" onclick="closeConfirmModal()">✕</button></div><div class="modal-body"><p id="confirmMessage"></p></div><div class="modal-footer"><button class="btn btn-ghost" onclick="closeConfirmModal()">Batal</button><button class="btn btn-danger" id="confirmOk">Ya, Sahkan</button></div></div></div>
+<div class="modal-overlay" id="confirmModal"><div class="modal" style="max-width:400px"><div class="modal-header"><h3 class="modal-title" data-i18n="dash.modal.confirm">Sahkan</h3><button class="modal-close" onclick="closeConfirmModal()">✕</button></div><div class="modal-body"><p id="confirmMessage"></p></div><div class="modal-footer"><button class="btn btn-ghost" onclick="closeConfirmModal()" data-i18n="dash.modal.cancel">Batal</button><button class="btn btn-danger" id="confirmOk" data-i18n="dash.modal.delete">Ya, Sahkan</button></div></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
+<script src="js/rate-limiting.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/utils.js"></script>
 
 <script>
+  initI18n('langSwitcher');
+
   // Auth Guard
   const sessionData = requireAuth();
   if (sessionData && !sessionData.isAdmin) {
-    alert("Akses Ditolak: Anda bukan Admin.");
+    alert(i18nText('admin.accessDenied', 'Akses Ditolak: Anda bukan Admin.'));
     window.location.href = "dashboard.html";
   }
 
@@ -185,7 +195,7 @@
       await loadRecentUsers();
     } catch (e) {
       console.error(e);
-      showToast("Gagal memuatkan data admin", "error");
+      showToast(i18nText('admin.failLoad', 'Gagal memuatkan data admin'), "error");
     }
     toggleLoader(false);
   }
@@ -212,7 +222,7 @@
     const { data } = await sb.from('profiles').select('*').order('created_at', { ascending: false }).limit(5);
     const tbody = document.getElementById('recentUsersTable');
     if (!data || data.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Tiada pengguna terbaru</td></tr>';
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center">${i18nText('admin.noUsers', 'Tiada pengguna terbaru')}</td></tr>`;
       return;
     }
     tbody.innerHTML = data.map(u => `
@@ -220,7 +230,7 @@
         <td style="font-weight:600">${u.name}</td>
         <td>${u.email}</td>
         <td><span class="badge ${u.plan === 'free' ? 'badge-blue' : 'badge-green'}">${u.plan || 'free'}</span></td>
-        <td>${new Date(u.created_at).toLocaleDateString('ms-MY')}</td>
+        <td>${new Date(u.created_at).toLocaleDateString(getLanguage())}</td>
       </tr>
     `).join('');
   }
@@ -270,14 +280,14 @@
   async function updateUserPlan(userId, plan) {
     const { error } = await sb.from('profiles').update({ plan }).eq('id', userId);
     if (error) showToast(error.message, "error");
-    else showToast("Pelan pengguna dikemaskini", "success");
+    else showToast(i18nText('admin.planUpdated', 'Pelan pengguna dikemaskini'), "success");
   }
 
   async function toggleUserAdmin(userId, isAdmin) {
     const { error } = await sb.from('profiles').update({ is_admin: isAdmin }).eq('id', userId);
     if (error) showToast(error.message, "error");
     else {
-      showToast("Status admin dikemaskini", "success");
+      showToast(i18nText('admin.adminStatusUpdated', 'Status admin dikemaskini'), "success");
       loadAllUsers();
     }
   }
@@ -298,7 +308,7 @@
         <td>${s.plan}</td>
         <td>RM${s.amount}</td>
         <td>${s.billing_cycle}</td>
-        <td>${s.expires_at ? new Date(s.expires_at).toLocaleDateString() : '∞'}</td>
+        <td>${s.expires_at ? new Date(s.expires_at).toLocaleDateString(getLanguage()) : '∞'}</td>
       </tr>
     `).join('');
   }
@@ -314,7 +324,7 @@
         <td>${p.used_count || 0}</td>
         <td>
            <button class="btn btn-ghost btn-sm" onclick="togglePromo('${p.id}', ${!p.active})">
-             ${p.active ? '✅ Aktif' : '❌ Mati'}
+             ${p.active ? '✅ ' + i18nText('admin.active', 'Aktif') : '❌ ' + i18nText('admin.inactive', 'Mati')}
            </button>
         </td>
       </tr>
@@ -326,12 +336,12 @@
     const type = document.getElementById('newPromoType').value;
     const value = document.getElementById('newPromoValue').value;
     
-    if(!code || !value) { showToast("Sila isi kod dan nilai", "error"); return; }
+    if(!code || !value) { showToast(i18nText('admin.fillPromo', "Sila isi kod dan nilai"), "error"); return; }
     
     const { error } = await sb.from('promo_codes').insert({ code, type, value: parseFloat(value) });
     if (error) showToast(error.message, "error");
     else {
-      showToast("Kod promo dicipta!", "success");
+      showToast(i18nText('admin.promoCreated', "Kod promo dicipta!"), "success");
       closeModal('addPromoModal');
       loadAllPromos();
     }
@@ -359,11 +369,11 @@
   }
 
   async function approveWithdrawal(id) {
-    if (!confirm("Sahkan pengeluaran ini telah dibayar?")) return;
+    if (!confirm(i18nText('admin.approveConfirm', "Sahkan pengeluaran ini telah dibayar?"))) return;
     const { error } = await sb.from('withdrawals').update({ status: 'approved', approved_at: new Date().toISOString() }).eq('id', id);
     if (error) showToast(error.message, "error");
     else {
-      showToast("Withdrawal disahkan!", "success");
+      showToast(i18nText('admin.withdrawalApproved', "Withdrawal disahkan!"), "success");
       loadAllWithdrawals();
     }
   }
