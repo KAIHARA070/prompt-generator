@@ -3,10 +3,14 @@
 // =====================================================
 // NOTE: Keys are anon (read-only). Service role handled backend-only.
 
-const SUPABASE_URL  = 'https://ddwdwbhcnonbhmlipuvm.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_REOH4QcENBCviLSQJg3Tdg_N98y5CG7';
+// Read dari environment variables (injected by Vercel at build-time)
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
 
-// Gunakan window.sb untuk mengelakkan konflik dengan global 'supabase'
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  throw new Error('Missing Supabase environment variables');
+}
+
 if (!window.sb) {
   try {
     window.sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -16,5 +20,4 @@ if (!window.sb) {
   }
 }
 
-// Global variable untuk digunakan dalam skrip lain
 var sb = window.sb;
