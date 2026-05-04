@@ -54,10 +54,10 @@ export const ValidationSchemas = {
     'restaurant', 'cafe', 'bakery', 'foodtruck',
     'fashion', 'hijab', 'kids', 'salon', 'spa', 'skincare', 'gym',
     'tuition', 'onlineCourse', 'kindergarten',
-    'contractor', 'accounting', 'legal', 'real_estate',
+    'contractor', 'accounting', 'legal', 'real_estate', 'property', 'propDev',
     'itService', 'webDesign', 'app',
     'event', 'photography', 'logistics', 'ecommerce',
-    'weddingCard', 'businessCard'
+    'weddingCard', 'businessCard', 'homestay', 'rumahSewa'
   ]).nullable(),
 
   tags: z.array(z.string().max(50)).max(10, 'Too many tags').optional(),

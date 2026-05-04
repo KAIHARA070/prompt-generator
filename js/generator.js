@@ -159,7 +159,23 @@ const BUSINESS_TEMPLATES = {
     ]
   },
 
-  // ── HARTANAH ──────────────────────────────────
+  // ── HARTANAH & PENGINAPAN ─────────────────────
+  homestay : { 
+    label:'🏡 Homestay / Inap Desa', icon:'🏡', category:'Hartanah', tone:'Selesa & Mesra',
+    sections:['Galeri Gambar','Kemudahan','Kadar Sewaan','Peraturan','Lokasi'],
+    fields: [
+      { id:'capacity', label:'Kapasiti Maksimum', type:'text', placeholder:'10 orang, 3 bilik tidur...' },
+      { id:'amenities', label:'Kemudahan Utama', type:'text', placeholder:'Kolam renang, BBQ pit, Wifi, Netflix...' }
+    ]
+  },
+  rumahSewa : { 
+    label:'🔑 Rumah Sewa', icon:'🔑', category:'Hartanah', tone:'Dipercayai & Terang',
+    sections:['Maklumat Hartanah','Gambar','Kemudahan','Syarat Sewaan','Hubungi'],
+    fields: [
+      { id:'property_specs', label:'Spesifikasi Rumah', type:'text', placeholder:'3 Bilik 2 Bilik Air, Fully Furnished...' },
+      { id:'rental_rate', label:'Kadar Sewa & Deposit', type:'text', placeholder:'RM1000/bulan, Deposit 2+1...' }
+    ]
+  },
   property : { 
     label:'🏠 Ejen Hartanah', icon:'🏠', category:'Hartanah', tone:'Profesional & Amanah',
     sections:['Senarai Properti','Ejen','Kalkulator','Hubungi'],
@@ -437,6 +453,8 @@ function buildFeaturesSection(d, businessType, tpl) {
     tuition    : `- Program mengikut umur/tahap\n- Profil guru\n- Jadual kelas\n- Form pendaftaran`,
     onlineCourse:`- Senarai kursus dengan harga\n- Preview kurikulum\n- Profil pengajar\n- Testimoni pelajar\n- FAQ`,
     contractor : `- Senarai perkhidmatan pembinaan\n- Gallery portfolio projek\n- Testimoni klien\n- Form sebutharga percuma`,
+    homestay   : `- Galeri gambar bilik dan kemudahan (kolam renang, ruang tamu, dapur dll)\n- Senarai lengkap kemudahan yang disediakan\n- Jadual harga / kadar sewa\n- Peraturan homestay (House rules)\n- Peta lokasi dan tempat menarik berhampiran\n- Butang tempah sekarang (WhatsApp/form)`,
+    rumahSewa  : `- Maklumat spesifikasi rumah (bilik, keluasan, perabot)\n- Galeri gambar keadaan rumah terkini\n- Senarai kemudahan berdekatan (sekolah, kedai, LRT)\n- Maklumat harga sewa dan deposit\n- Terma dan syarat sewaan\n- Butang hubungi pemilik/ejen (WhatsApp)`,
     property   : `- Grid listing hartanah (gambar, harga, lokasi)\n- Kalkulator ansuran\n- Profil ejen\n- WhatsApp terus dengan ejen`,
     workshop   : `- Senarai servis dengan harga anggaran\n- Kereta yang dikhidmati\n- Testimoni pelanggan\n- Lokasi & waktu operasi`,
     ecommerce  : `- Grid produk dengan filter kategori\n- Badge "Terlaris" / "Baru"\n- Butang "Tambah Troli" atau "Order WhatsApp"\n- Section testimoni dengan bintang rating\n- FAQ pembayaran & penghantaran`,
